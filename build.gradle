@@ -1,13 +1,13 @@
 buildscript {
     repositories {
         mavenLocal()
-        mavenCentral()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         jcenter()
     }
     dependencies {
         classpath 'de.richsource.gradle.plugins:gwt-gradle-plugin:0.6'
-        classpath 'com.android.tools.build:gradle:1.5.0'
+        classpath 'com.android.tools.build:gradle:2.3.2'
         classpath 'com.mobidevelop.robovm:robovm-gradle-plugin:2.3.1'
     }
 }
@@ -28,7 +28,7 @@ allprojects {
 
     repositories {
         mavenLocal()
-        mavenCentral()
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
