@@ -10,7 +10,7 @@ public class BaseStage extends Stage {
     private BaseScreen mScreen;
 
     public BaseStage(BaseScreen screen) {
-        super(new ScalingViewport(Scaling.stretch, Constant.SCREEN_WIDTH, Constant.SCREEN_HEIGHT, new OrthographicCamera()));
+        super(new ScalingViewport(Scaling.stretch, Constants.WORLD_WIDTH, Constants.WORLD_HEIGHT, new OrthographicCamera()));
 
         mScreen = screen;
     }
