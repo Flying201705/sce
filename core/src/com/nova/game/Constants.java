@@ -5,7 +5,12 @@ public class Constants {
     public static final int WORLD_HEIGHT = 720;
 
     public static final int MAHJ_COUNT = 136;
-    public static final int MAHJ_IMAGE_COUNT = 139;
+    public static final int MAHJ_DOTS_INDEX = 1; // 筒
+    public static final int MAHJ_BAMBOO_INDEX = 2; // 条
+    public static final int MAHJ_CHARACTERS_INDEX = 3; // 万
+    public static final int MAHJ_WINDS_DRAGONS_INDEX = 4; // 风牌 和 箭牌
+
+    public static final int MAHJ_IMAGE_EACH_COUNT = 34; //每一种牌图片总数
 
     public static final String[] COMMON_CHAT_MESSAGE = {
             "快点吧,我等的花儿都谢了!",
