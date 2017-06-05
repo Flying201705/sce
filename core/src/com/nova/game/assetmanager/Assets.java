@@ -20,38 +20,31 @@ public class Assets {
             mAssetManager = new AssetManager();
         }
 
+        addTexture("ScenceGame/1/mingmah_");
+        addTexture("ScenceGame/2/handmah_");
+        addTexture("ScenceGame/2/mingmah_");
+        addTexture("ScenceGame/3/mingmah_");
+
+        mAssetManager.finishLoading();
+    }
+
+    public Texture getMahjHandMeTexture(int index) {
+        return mAssetManager.get("ScenceGame/2/handmah_" + index + ".png");
+    }
+
+    private void addTexture(String path) {
         int i, j, index;
-
-        for (i = 0, j = 1, index = 1; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
-            if (j > 9) {
+        for (i = 0, j = 1, index = 0; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
+            if (index > 2) {
+                if (j > 4) {
+                    j = 1;
+                    index++;
+                }
+            } else if (j > 9) {
                 j = 1;
                 index++;
             }
-            mAssetManager.load("ScenceGame/1/mingmah_" + (index * 10 + j) + ".png", Texture.class);
-        }
-
-        for (i = 0, j = 1, index = 1; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
-            if (j > 9) {
-                j = 1;
-                index++;
-            }
-            mAssetManager.load("ScenceGame/2/handmah_" + (index * 10 + j) + ".png", Texture.class);
-        }
-
-        for (i = 0, j = 1, index = 1; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
-            if (j > 9) {
-                j = 1;
-                index++;
-            }
-            mAssetManager.load("ScenceGame/2/mingmah_" + (index * 10 + j) + ".png", Texture.class);
-        }
-
-        for (i = 0, j = 1, index = 1; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
-            if (j > 9) {
-                j = 1;
-                index++;
-            }
-            mAssetManager.load("ScenceGame/3/mingmah_" + (index * 10 + j) + ".png", Texture.class);
+            mAssetManager.load(path + (index * 10 + j) + ".png", Texture.class);
         }
         mAssetManager.finishLoading();
     }
@@ -59,9 +52,5 @@ public class Assets {
     public void clearMahjTexture() {
         mAssetManager.dispose();
         mAssetManager = null;
-    }
-
-    public Texture getMahjHandMeTexture(int index) {
-        return mAssetManager.get("ScenceGame/2/handmah_" + index+ ".png");
     }
 }

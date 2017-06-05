@@ -42,7 +42,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(BaseGame game) {
         super(game);
-//        mController.startGame();
+        mController.startGame();
     }
 
     @Override
@@ -94,13 +94,13 @@ public class GameScreen extends BaseScreen {
     }
 
     private void addMahjongsData() {
-//        HashMap<Integer, MahjGroupData> playerDatas = mController.getGroupDatas();
-//
-//        if (playerDatas.isEmpty()) {
-//            return;
-//        }
+        HashMap<Integer, MahjGroupData> playerDatas = mController.getGroupDatas();
 
-        HandMahjongs myHands = new HandMahjongs(0, /*playerDatas.get(0).getDatas()*/mahjhand);
+        if (playerDatas.isEmpty()) {
+            return;
+        }
+
+        HandMahjongs myHands = new HandMahjongs(0, playerDatas.get(0).getDatas());
         myHands.setPosition(120, 62, Align.bottomLeft);
         mStage.addActor(myHands);
 
