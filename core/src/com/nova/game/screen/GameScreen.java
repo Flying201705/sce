@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.nova.game.actor.HandMahjongs;
 import com.nova.game.actor.TimeUnit;
@@ -12,6 +14,7 @@ import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.assetmanager.Assets;
 import com.nova.game.model.MahjGameController;
+import com.nova.game.widget.SceButton;
 
 import java.util.HashMap;
 
@@ -23,14 +26,23 @@ public class GameScreen extends BaseScreen {
     private Texture mBg;
     private TimeUnit mTime;
     private Assets mAssents;
+    private SceButton mStartBt;
 
     private MahjGameController mController = MahjGameController.create("local");
 
     private int[] mahjhand = new int[]{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19};
 
+    private TimeUnit.AnimationFinishedListener mAnimListener = new TimeUnit.AnimationFinishedListener() {
+        @Override
+        public void onFinished() {
+            addMahjongsData();
+            mStartBt.remove();
+        }
+    };
+
     public GameScreen(BaseGame game) {
         super(game);
-        mController.startGame();
+//        mController.startGame();
     }
 
     @Override
@@ -47,25 +59,18 @@ public class GameScreen extends BaseScreen {
 
         mTime = new TimeUnit();
         mTime.setPosition(570, 295);
+        mTime.setOnAnimationFinishedListener(mAnimListener);
         mStage.addActor(mTime);
 
-        HashMap<Integer, MahjGroupData> playerDatas = mController.getGroupDatas();
-
-        HandMahjongs myHands = new HandMahjongs(0, playerDatas.get(0).getDatas());
-        myHands.setPosition(120, 62, Align.bottomLeft);
-        mStage.addActor(myHands);
-
-        HandMahjongs leftHands = new HandMahjongs(3, mahjhand);
-        leftHands.setPosition(60, 600, Align.topLeft);
-        mStage.addActor(leftHands);
-
-        HandMahjongs rightHands = new HandMahjongs(1, mahjhand);
-        rightHands.setPosition(1250, 600, Align.bottomRight);
-        mStage.addActor(rightHands);
-
-        HandMahjongs topHands = new HandMahjongs(2, mahjhand);
-        topHands.setPosition(300, 660, Align.topRight);
-        mStage.addActor(topHands);
+        mStartBt = new SceButton("ScenceGame/bt_start.png");
+        mStartBt.setPosition(540, 100);
+        mStartBt.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mTime.startTime();
+            }
+        });
+        mStage.addActor(mStartBt);
     }
 
     @Override
@@ -86,5 +91,29 @@ public class GameScreen extends BaseScreen {
         mBatch.dispose();
         mBg.dispose();
         mStage.dispose();
+    }
+
+    private void addMahjongsData() {
+//        HashMap<Integer, MahjGroupData> playerDatas = mController.getGroupDatas();
+//
+//        if (playerDatas.isEmpty()) {
+//            return;
+//        }
+
+        HandMahjongs myHands = new HandMahjongs(0, /*playerDatas.get(0).getDatas()*/mahjhand);
+        myHands.setPosition(120, 62, Align.bottomLeft);
+        mStage.addActor(myHands);
+
+        HandMahjongs leftHands = new HandMahjongs(3, mahjhand);
+        leftHands.setPosition(60, 600, Align.topLeft);
+        mStage.addActor(leftHands);
+
+        HandMahjongs rightHands = new HandMahjongs(1, mahjhand);
+        rightHands.setPosition(1250, 600, Align.bottomRight);
+        mStage.addActor(rightHands);
+
+        HandMahjongs topHands = new HandMahjongs(2, mahjhand);
+        topHands.setPosition(300, 660, Align.topRight);
+        mStage.addActor(topHands);
     }
 }
