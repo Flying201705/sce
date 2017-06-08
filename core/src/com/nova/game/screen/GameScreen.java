@@ -27,6 +27,8 @@ public class GameScreen extends BaseScreen {
     private TimeUnit mTime;
     private Assets mAssents;
     private SceButton mStartBt;
+    private HandMahjongs mMyHands, mLeftHands, mRightHands, mTopHands;
+    private boolean mShowMahjong = false;
 
     private MahjGameController mController = MahjGameController.create("local");
 
@@ -35,7 +37,7 @@ public class GameScreen extends BaseScreen {
     private TimeUnit.AnimationFinishedListener mAnimListener = new TimeUnit.AnimationFinishedListener() {
         @Override
         public void onFinished() {
-            addMahjongsData();
+            mShowMahjong = true;
             mStartBt.remove();
         }
     };
@@ -71,6 +73,22 @@ public class GameScreen extends BaseScreen {
             }
         });
         mStage.addActor(mStartBt);
+
+        mMyHands = new HandMahjongs(0);
+        mMyHands.setPosition(120, 62);
+        mStage.addActor(mMyHands);
+
+        mLeftHands = new HandMahjongs(3);
+        mLeftHands.setPosition(60, 600);
+        mStage.addActor(mLeftHands);
+
+        mRightHands = new HandMahjongs(1);
+        mRightHands.setPosition(1250, 600);
+        mStage.addActor(mRightHands);
+
+        mTopHands = new HandMahjongs(2);
+        mTopHands.setPosition(300, 660);
+        mStage.addActor(mTopHands);
     }
 
     @Override
@@ -80,6 +98,8 @@ public class GameScreen extends BaseScreen {
         mBatch.begin();
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mBatch.end();
+
+        updateMahjong();
 
         mStage.act();
         mStage.draw();
@@ -93,27 +113,23 @@ public class GameScreen extends BaseScreen {
         mStage.dispose();
     }
 
-    private void addMahjongsData() {
+    private void updateMahjong() {
+        if (!mShowMahjong) {
+            return;
+        }
+
         HashMap<Integer, MahjGroupData> playerDatas = mController.getGroupDatas();
 
         if (playerDatas.isEmpty()) {
             return;
         }
 
-        HandMahjongs myHands = new HandMahjongs(0, playerDatas.get(0).getDatas());
-        myHands.setPosition(120, 62, Align.bottomLeft);
-        mStage.addActor(myHands);
+        mMyHands.setMahjs(0, playerDatas.get(0).getDatas());
 
-        HandMahjongs leftHands = new HandMahjongs(3, mahjhand);
-        leftHands.setPosition(60, 600, Align.topLeft);
-        mStage.addActor(leftHands);
+        mLeftHands.setMahjs(3, playerDatas.get(3).getDatas());
 
-        HandMahjongs rightHands = new HandMahjongs(1, mahjhand);
-        rightHands.setPosition(1250, 600, Align.bottomRight);
-        mStage.addActor(rightHands);
+        mRightHands.setMahjs(1, playerDatas.get(1).getDatas());
 
-        HandMahjongs topHands = new HandMahjongs(2, mahjhand);
-        topHands.setPosition(300, 660, Align.topRight);
-        mStage.addActor(topHands);
+        mTopHands.setMahjs(2, playerDatas.get(2).getDatas());
     }
 }

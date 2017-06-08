@@ -13,71 +13,77 @@ import nova.common.game.mahjong.data.MahjData;
 
 public class HandMahjongs extends Group {
     private Assets mAssets;
-    private int[] mMahjs;
+    private Group mHands;
+    private ArrayList<MahjData> mMahjs;
 
-    public HandMahjongs() {
+    public HandMahjongs(int where) {
         mAssets = Assets.getInstance();
-    }
-
-    public HandMahjongs(int where, int[] mahjs) {
-        this();
-        setMahjs(where, mahjs);
-    }
-
-    public HandMahjongs(int where, ArrayList<MahjData> mahjs) {
-        this();
-        HorizontalGroup group_0 = new HorizontalGroup();
-        group_0.space(-2);
-        for (MahjData mahj : mahjs) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjHandMeTexture(mahj.getIndex()));
-            mahjActor.setScale(0.8f);
-            group_0.addActor(mahjActor);
-        }
-        addActor(group_0);
-    }
-
-    public void setMahjs(int where, int[] mahjs) {
-        mMahjs = mahjs;
         switch (where) {
             case 0:
                 HorizontalGroup group_0 = new HorizontalGroup();
                 group_0.space(-2);
-                for (int mahj : mMahjs) {
-                    MahjActor mahjActor = new MahjActor(mAssets.getMahjHandMeTexture(mahj));
-                    mahjActor.setScale(0.8f);
-                    group_0.addActor(mahjActor);
-                }
-                addActor(group_0);
+                mHands = group_0;
                 break;
             case 1:
                 VerticalGroup group_1 = new VerticalGroup();
                 group_1.space(-52);
-                Texture texture = new Texture("ScenceGame/hand_right.png");
-                for (int mahj : mMahjs) {
-                    MahjActor mahjActor = new MahjActor(texture);
-                    group_1.addActor(mahjActor);
-                }
-                addActor(group_1);
+                mHands = group_1;
                 break;
             case 2:
                 HorizontalGroup group_2 = new HorizontalGroup();
                 group_2.space(-5);
-                Texture texture_2 = new Texture("ScenceGame/hand_top.png");
-                for (int mahj : mMahjs) {
-                    MahjActor mahjActor = new MahjActor(texture_2);
-                    group_2.addActor(mahjActor);
-                }
-                addActor(group_2);
+                mHands = group_2;
                 break;
             case 3:
                 VerticalGroup group_3 = new VerticalGroup();
                 group_3.space(-52);
-                Texture texture_3 = new Texture("ScenceGame/hand_left.png");
-                for (int mahj : mMahjs) {
-                    MahjActor mahjActor = new MahjActor(texture_3);
-                    group_3.addActor(mahjActor);
+                mHands = group_3;
+                break;
+        }
+        addActor(mHands);
+    }
+
+    public HandMahjongs(int where, ArrayList<MahjData> mahjs) {
+        this(where);
+        setMahjs(where, mahjs);
+    }
+
+    public void setMahjs(int where, ArrayList<MahjData> mahjs) {
+        if (mahjs != null && mMahjs != null && mahjs.containsAll(mMahjs)) {
+            return;
+        }
+
+        mMahjs = mahjs;
+        mHands.clear();
+
+        switch (where) {
+            case 0:
+                for (MahjData mahj : mahjs) {
+                    MahjActor mahjActor = new MahjActor(mAssets.getMahjHandMeTexture(mahj.getIndex()));
+                    mahjActor.setScale(0.8f);
+                    mHands.addActor(mahjActor);
                 }
-                addActor(group_3);
+                break;
+            case 1:
+                Texture texture = new Texture("ScenceGame/hand_right.png");
+                for (MahjData mahj : mMahjs) {
+                    MahjActor mahjActor = new MahjActor(texture);
+                    mHands.addActor(mahjActor);
+                }
+                break;
+            case 2:
+                Texture texture_2 = new Texture("ScenceGame/hand_top.png");
+                for (MahjData mahj : mMahjs) {
+                    MahjActor mahjActor = new MahjActor(texture_2);
+                    mHands.addActor(mahjActor);
+                }
+                break;
+            case 3:
+                Texture texture_3 = new Texture("ScenceGame/hand_left.png");
+                for (MahjData mahj : mMahjs) {
+                    MahjActor mahjActor = new MahjActor(texture_3);
+                    mHands.addActor(mahjActor);
+                }
                 break;
             default:
                 break;
