@@ -4,14 +4,21 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
-import com.nova.game.actor.HandMahjongs;
+import com.nova.game.actor.LeftHandMahjongs;
+import com.nova.game.actor.LeftOutMahjongs;
+import com.nova.game.actor.MyHandMahjongs;
+import com.nova.game.actor.MyOutMahjongs;
+import com.nova.game.actor.RightHandMahjongs;
+import com.nova.game.actor.RightOutMahjongs;
 import com.nova.game.actor.TimeUnit;
 import com.nova.game.BaseGame;
 import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
+import com.nova.game.actor.TopHandMahjongs;
+import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.assetmanager.Assets;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.widget.SceButton;
@@ -27,7 +34,14 @@ public class GameScreen extends BaseScreen {
     private TimeUnit mTime;
     private Assets mAssents;
     private SceButton mStartBt;
-    private HandMahjongs mMyHands, mLeftHands, mRightHands, mTopHands;
+    private MyHandMahjongs mMyHands;
+    private RightHandMahjongs mRightHands;
+    private TopHandMahjongs mTopHands;
+    private LeftHandMahjongs mLeftHands;
+    private MyOutMahjongs mMyOuts;
+    private RightOutMahjongs mRightOuts;
+    private TopOutMahjongs mTopOuts;
+    private LeftOutMahjongs mLeftOuts;
     private boolean mShowMahjong = false;
 
     private MahjGameController mController = MahjGameController.create("local");
@@ -74,21 +88,37 @@ public class GameScreen extends BaseScreen {
         });
         mStage.addActor(mStartBt);
 
-        mMyHands = new HandMahjongs(0);
+        mMyHands = new MyHandMahjongs();
         mMyHands.setPosition(120, 62);
         mStage.addActor(mMyHands);
 
-        mLeftHands = new HandMahjongs(3);
+        mLeftHands = new LeftHandMahjongs();
         mLeftHands.setPosition(60, 600);
         mStage.addActor(mLeftHands);
 
-        mRightHands = new HandMahjongs(1);
-        mRightHands.setPosition(1250, 600);
+        mRightHands = new RightHandMahjongs();
+        mRightHands.setPosition(1220, 100);
         mStage.addActor(mRightHands);
 
-        mTopHands = new HandMahjongs(2);
+        mTopHands = new TopHandMahjongs();
         mTopHands.setPosition(300, 660);
         mStage.addActor(mTopHands);
+
+        mMyOuts = new MyOutMahjongs();
+        mMyOuts.setBounds(400, 100, 500, 300);
+        mStage.addActor(mMyOuts);
+
+        mRightOuts = new RightOutMahjongs();
+        mRightOuts.setBounds(1000, 200, 500, 300);
+        mStage.addActor(mRightOuts);
+
+        mTopOuts = new TopOutMahjongs();
+        mTopOuts.setBounds(400, 300, 500, 300);
+        mStage.addActor(mTopOuts);
+
+        mLeftOuts = new LeftOutMahjongs();
+        mLeftOuts.setBounds(300, 200, 500, 300);
+        mStage.addActor(mLeftOuts);
     }
 
     @Override
@@ -124,12 +154,14 @@ public class GameScreen extends BaseScreen {
             return;
         }
 
-        mMyHands.setMahjs(0, playerDatas.get(0).getDatas());
+        mMyHands.updateMahjs(0, playerDatas.get(0));
+        mLeftHands.updateMahjs(3, playerDatas.get(3));
+        mRightHands.updateMahjs(1, playerDatas.get(1));
+        mTopHands.updateMahjs(2, playerDatas.get(2));
 
-        mLeftHands.setMahjs(3, playerDatas.get(3).getDatas());
-
-        mRightHands.setMahjs(1, playerDatas.get(1).getDatas());
-
-        mTopHands.setMahjs(2, playerDatas.get(2).getDatas());
+        mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
+        mRightOuts.setOutMahjongs(playerDatas.get(1).getOutDatas());
+        mTopOuts.setOutMahjongs(playerDatas.get(2).getOutDatas());
+        mLeftOuts.setOutMahjongs(playerDatas.get(3).getOutDatas());
     }
 }

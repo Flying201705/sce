@@ -28,8 +28,20 @@ public class Assets {
         mAssetManager.finishLoading();
     }
 
+    public Texture getMahjMatchLeftTexture(int index) {
+        return mAssetManager.get("ScenceGame/3/mingmah_" + index + ".png");
+    }
+
+    public Texture getMahjMatchMeTexture(int index) {
+        return mAssetManager.get("ScenceGame/2/mingmah_" + index + ".png");
+    }
+
     public Texture getMahjHandMeTexture(int index) {
         return mAssetManager.get("ScenceGame/2/handmah_" + index + ".png");
+    }
+
+    public Texture getMahjMatchRightTexture(int index) {
+        return mAssetManager.get("ScenceGame/1/mingmah_" + index + ".png");
     }
 
     private void addTexture(String path) {

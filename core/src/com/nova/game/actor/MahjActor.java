@@ -9,14 +9,22 @@ public class MahjActor extends Actor {
     private MahjData mMahjData;
     private Texture mImage;
 
+    public MahjActor() {
+
+    }
+
     public MahjActor(Texture texture) {
-        mImage = texture;
-        setSize(mImage.getWidth(), mImage.getHeight());
+        setImage(texture);
     }
 
     public MahjActor(Texture texture, MahjData mahjData) {
         this(texture);
         mMahjData = mahjData;
+    }
+
+    public void setImage(Texture image) {
+        this.mImage = image;
+        setSize(mImage.getWidth() * getScaleX(), mImage.getHeight() * getScaleY());
     }
 
     @Override
@@ -27,7 +35,9 @@ public class MahjActor extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(mImage, getX(), getY(), getWidth(), getHeight());
+        if (mImage != null) {
+            batch.draw(mImage, getX(), getY(), getWidth(), getHeight());
+        }
     }
 
     public MahjData getMahjData() {
