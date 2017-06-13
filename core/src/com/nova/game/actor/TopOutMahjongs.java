@@ -1,20 +1,20 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
 
 import nova.common.game.mahjong.data.MahjData;
 
-public class TopOutMahjongs extends Table {
+public class TopOutMahjongs extends Group {
     private Assets mAssets;
     private ArrayList<MahjData> mOutMahjs;
 
     public TopOutMahjongs() {
         mAssets = Assets.getInstance();
-        align(Align.bottomRight);
     }
 
     public void setOutMahjongs(ArrayList<MahjData> mahjs) {
@@ -25,15 +25,24 @@ public class TopOutMahjongs extends Table {
         mOutMahjs = mahjs;
         clear();
 
-        int count = 0;
-        for (int i = mahjs.size(); i > 0; i--) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahjs.get(i - 1).getIndex()));
+        for (MahjData mahjData : mahjs) {
+            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahjData.getIndex()));
             mahjActor.setScale(0.5f);
-            if (count >= 10) {
-                row();
+            addActor(mahjActor);
+        }
+
+        int count = 0;
+        float currX = getWidth(), currY = 0;
+        SnapshotArray<Actor> children = getChildren();
+        for (Actor actor : children) {
+            if (count > 10) {
                 count = 0;
+                currX = getWidth();
+                currY += actor.getHeight();
             }
-            add(mahjActor);
+            currX -= actor.getWidth();
+
+            actor.setPosition(currX, currY);
             count++;
         }
     }
