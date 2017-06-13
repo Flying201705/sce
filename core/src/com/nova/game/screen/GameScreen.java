@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -42,16 +43,14 @@ public class GameScreen extends BaseScreen {
     private RightOutMahjongs mRightOuts;
     private TopOutMahjongs mTopOuts;
     private LeftOutMahjongs mLeftOuts;
-    private boolean mShowMahjong = false;
+    private boolean mIsDealt = false;
 
     private MahjGameController mController = MahjGameController.create("local");
-
-    private int[] mahjhand = new int[]{11, 11, 11, 12, 13, 14, 15, 16, 17, 18, 19, 19, 19};
 
     private TimeUnit.AnimationFinishedListener mAnimListener = new TimeUnit.AnimationFinishedListener() {
         @Override
         public void onFinished() {
-            mShowMahjong = true;
+            mIsDealt = true;
             mStartBt.remove();
         }
     };
@@ -105,19 +104,19 @@ public class GameScreen extends BaseScreen {
         mStage.addActor(mTopHands);
 
         mMyOuts = new MyOutMahjongs();
-        mMyOuts.setBounds(400, 100, 500, 300);
+        mMyOuts.setBounds(390, 100, 500, 205);
         mStage.addActor(mMyOuts);
 
         mRightOuts = new RightOutMahjongs();
-        mRightOuts.setBounds(1000, 200, 500, 300);
+        mRightOuts.setBounds(1000, 200, 205, 305);
         mStage.addActor(mRightOuts);
 
         mTopOuts = new TopOutMahjongs();
-        mTopOuts.setBounds(400, 300, 500, 300);
+        mTopOuts.setBounds(390, 415, 500, 205);
         mStage.addActor(mTopOuts);
 
         mLeftOuts = new LeftOutMahjongs();
-        mLeftOuts.setBounds(300, 200, 500, 300);
+        mLeftOuts.setBounds(100, 200, 205, 305);
         mStage.addActor(mLeftOuts);
     }
 
@@ -129,10 +128,13 @@ public class GameScreen extends BaseScreen {
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mBatch.end();
 
+        updateTimeUint();
         updateMahjong();
 
         mStage.act();
         mStage.draw();
+
+        mStage.setDebugAll(true);
     }
 
     @Override
@@ -144,7 +146,7 @@ public class GameScreen extends BaseScreen {
     }
 
     private void updateMahjong() {
-        if (!mShowMahjong) {
+        if (!mIsDealt) {
             return;
         }
 
@@ -159,9 +161,27 @@ public class GameScreen extends BaseScreen {
         mRightHands.updateMahjs(1, playerDatas.get(1));
         mTopHands.updateMahjs(2, playerDatas.get(2));
 
-        mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
-        mRightOuts.setOutMahjongs(playerDatas.get(1).getOutDatas());
-        mTopOuts.setOutMahjongs(playerDatas.get(2).getOutDatas());
-        mLeftOuts.setOutMahjongs(playerDatas.get(3).getOutDatas());
+        if (playerDatas.get(0) != null) {
+            mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
+        }
+        if (playerDatas.get(1) != null) {
+            mRightOuts.setOutMahjongs(playerDatas.get(1).getOutDatas());
+        }
+        if (playerDatas.get(2) != null) {
+            mTopOuts.setOutMahjongs(playerDatas.get(2).getOutDatas());
+        }
+        if (playerDatas.get(3) != null) {
+            mLeftOuts.setOutMahjongs(playerDatas.get(3).getOutDatas());
+        }
+    }
+
+    private void updateTimeUint() {
+        if (!mIsDealt) {
+            return;
+        }
+
+        if (!mTime.isAnimation()) {
+            mTime.updateCurrPlayer(mController.getCurrentPlayer());
+        }
     }
 }

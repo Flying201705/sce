@@ -15,6 +15,8 @@ public class TimeUnit extends Actor {
     private Animation<Texture> mTimeAnim;
     private float mAnimationTime;
     private boolean mShowAnim;
+    private int mCurrPlayer = -1;
+
     private AnimationFinishedListener mListener;
 
     public interface AnimationFinishedListener {
@@ -39,13 +41,17 @@ public class TimeUnit extends Actor {
 
         if (mShowAnim) {
             mAnimationTime += Gdx.graphics.getDeltaTime();
-            if (mAnimationTime > 3f) {
+            if (mAnimationTime > 2f) {
                 mShowAnim = false;
                 if (mListener != null) {
                     mListener.onFinished();
                 }
             }
             batch.draw(mTimeAnim.getKeyFrame(mAnimationTime), getX(), getY());
+        } else {
+            if (mCurrPlayer > -1) {
+                batch.draw(mTimePoint.get(mCurrPlayer), getX(), getY());
+            }
         }
     }
 
@@ -67,5 +73,13 @@ public class TimeUnit extends Actor {
     public void startTime() {
         mAnimationTime = 0.0f;
         mShowAnim = true;
+    }
+
+    public boolean isAnimation() {
+       return mShowAnim;
+    }
+
+    public void updateCurrPlayer(int curr) {
+        mCurrPlayer = curr;
     }
 }

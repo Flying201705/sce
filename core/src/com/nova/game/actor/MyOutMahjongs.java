@@ -16,7 +16,7 @@ public class MyOutMahjongs extends Table {
 
     public MyOutMahjongs() {
         mAssets = Assets.getInstance();
-        align(Align.left);
+        align(Align.topLeft);
     }
 
     public void setOutMahjongs(ArrayList<MahjData> mahjs) {

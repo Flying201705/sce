@@ -21,11 +21,11 @@ public class RightOutMahjongs extends HorizontalGroup {
         for (int i = 0; i < 3; i++) {
             VerticalGroup group = new VerticalGroup();
             group.space(-15);
-            group.align(Align.bottom);
-            group.columnAlign(Align.bottom);
             addActor(group);
             mGroups.add(group);
         }
+
+        align(Align.bottomLeft);
     }
 
     public void setOutMahjongs(ArrayList<MahjData> mahjs) {
