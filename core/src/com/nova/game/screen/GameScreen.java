@@ -55,6 +55,13 @@ public class GameScreen extends BaseScreen {
         }
     };
 
+    private MyHandMahjongs.handOutDataCallback mCallBack = new MyHandMahjongs.handOutDataCallback() {
+        @Override
+        public void handleOutData(int index) {
+            mController.handleOutData(index);
+        }
+    };
+
     public GameScreen(BaseGame game) {
         super(game);
         mController.startGame();
@@ -65,6 +72,8 @@ public class GameScreen extends BaseScreen {
         mStage = new BaseStage(this);
         Gdx.input.setInputProcessor(mStage);
         Gdx.input.setCatchBackKey(true);
+
+        mStage.setDebugAll(true);
 
         mAssents = Assets.getInstance();
         mAssents.loadMahjTexture();
@@ -89,6 +98,7 @@ public class GameScreen extends BaseScreen {
 
         mMyHands = new MyHandMahjongs();
         mMyHands.setPosition(120, 62);
+        mMyHands.sethandOutDataCallback(mCallBack);
         mStage.addActor(mMyHands);
 
         mLeftHands = new LeftHandMahjongs();
@@ -112,7 +122,7 @@ public class GameScreen extends BaseScreen {
         mStage.addActor(mRightOuts);
 
         mTopOuts = new TopOutMahjongs();
-        mTopOuts.setBounds(390, 415, 500, 205);
+        mTopOuts.setBounds(390, 420, 500, 200);
         mStage.addActor(mTopOuts);
 
         mLeftOuts = new LeftOutMahjongs();
@@ -133,8 +143,6 @@ public class GameScreen extends BaseScreen {
 
         mStage.act();
         mStage.draw();
-
-        mStage.setDebugAll(true);
     }
 
     @Override

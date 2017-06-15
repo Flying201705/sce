@@ -3,9 +3,8 @@ package com.nova.game.actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nova.game.data.MahjData;
+
+import nova.common.game.mahjong.data.MahjData;
 
 public class MahjActor extends Actor {
     private MahjData mMahjData;
@@ -34,6 +33,10 @@ public class MahjActor extends Actor {
         mIsStandUp = standUp;
     }
 
+    public boolean isStandUp() {
+        return mIsStandUp;
+    }
+
     public void setImage(Texture image) {
         this.mImage = image;
         setSize(mImage.getWidth() * getScaleX(), mImage.getHeight() * getScaleY());
@@ -54,6 +57,10 @@ public class MahjActor extends Actor {
             }
             batch.draw(mImage, getX(), y, getWidth(), getHeight());
         }
+    }
+
+    public void setMahjData(MahjData mahjData) {
+        this.mMahjData = mahjData;
     }
 
     public MahjData getMahjData() {

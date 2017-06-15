@@ -1,31 +1,20 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
+import com.badlogic.gdx.utils.SnapshotArray;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import nova.common.game.mahjong.data.MahjData;
 
-public class RightOutMahjongs extends HorizontalGroup {
+public class RightOutMahjongs extends Group {
     private Assets mAssets;
     private ArrayList<MahjData> mOutMahjs;
-    private List<VerticalGroup> mGroups = new ArrayList<VerticalGroup>();
 
     public RightOutMahjongs() {
         mAssets = Assets.getInstance();
-
-        for (int i = 0; i < 3; i++) {
-            VerticalGroup group = new VerticalGroup();
-            group.space(-15);
-            addActor(group);
-            mGroups.add(group);
-        }
-
-        align(Align.bottomLeft);
     }
 
     public void setOutMahjongs(ArrayList<MahjData> mahjs) {
@@ -34,18 +23,26 @@ public class RightOutMahjongs extends HorizontalGroup {
 //        }
 
         mOutMahjs = mahjs;
+        clear();
 
-        int i;
-        for (i = 0; i < 3; i++) {
-            mGroups.get(i).clear();
+        for (int i = mahjs.size() - 1; i >= 0; i--) {
+            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchRightTexture(mahjs.get(i).getIndex()));
+            addActor(mahjActor);
         }
 
-        VerticalGroup group;
+        float currX = 0, currY = 0;
+        SnapshotArray<Actor> children = getChildren();
+        for (int j = children.size - 1; j >= 0; j--) {
+            Actor actor = children.get(j);
 
-        for (i = mahjs.size(); i > 0; i--) {
-            group = mGroups.get(i / 10);
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchRightTexture(mahjs.get(i - 1).getIndex()));
-            group.addActor(mahjActor);
+            if (currY + actor.getHeight() > getHeight()) {
+                currX += actor.getWidth();
+                currY = 0;
+            }
+
+            actor.setPosition(currX, currY);
+
+            currY += actor.getHeight() - 15;
         }
     }
 }

@@ -31,7 +31,7 @@ public class MyOutMahjongs extends Table {
         for (MahjData mahj : mahjs) {
             MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahj.getIndex()));
             mahjActor.setScale(0.5f);
-            if (count >= 10) {
+            if (count > 10) {
                 row();
                 count = 0;
             }
