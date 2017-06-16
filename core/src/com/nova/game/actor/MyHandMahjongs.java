@@ -36,32 +36,28 @@ public class MyHandMahjongs extends HorizontalGroup {
 
         mLastestMahj = new MahjActor();
         mLastestMahj.setScale(0.8f);
+        mLastestMahj.setCanStandUp(true);
 
         addActor(mMatchs);
         addActor(mHands);
         addActor(mLastestMahj);
 
-        addListener(new ClickListener() {
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-                Actor hitA = hit(x, y, true);
-                if (hitA instanceof MahjActor) {
-                    if (((MahjActor) hitA).isStandUp()) {
-                        handleOutData(((MahjActor) hitA).getMahjData().getIndex());
-                    } else {
-                        SnapshotArray<Actor> children = mHands.getChildren();
-                        for (Actor actor : children) {
-                            if (actor instanceof MahjActor) {
-                                ((MahjActor) actor).standUp(false);
-                            }
-                        }
-                        ((MahjActor) hitA).standUp(true);
-                    }
-                }
-
-                return super.touchDown(event, x, y, pointer, button);
-            }
-        });
+//        addListener(new ClickListener() {
+//            @Override
+//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+//                Actor hitA = hit(x, y, true);
+//                if (hitA instanceof MahjActor) {
+//                    if (((MahjActor) hitA).isStandUp()) {
+//                        handleOutData(((MahjActor) hitA).getMahjData().getIndex());
+//                    } else {
+//                        clearStandUpMahjong();
+//                        ((MahjActor) hitA).standUp(true);
+//                    }
+//                }
+//
+//                return super.touchDown(event, x, y, pointer, button);
+//            }
+//        });
     }
 
     public void updateMahjs(int where, MahjGroupData mahjGroupData) {
@@ -108,9 +104,23 @@ public class MyHandMahjongs extends HorizontalGroup {
     public void setLastestMahjong(MahjData mahjong) {
         if (mahjong != null && mahjong.getIndex() != 0) {
             mLastestMahj.setVisible(true);
+            mLastestMahj.setMahjData(mahjong);
             mLastestMahj.setImage(mAssets.getMahjHandMeTexture(mahjong.getIndex()));
         } else {
+            mLastestMahj.standUp(false);
             mLastestMahj.setVisible(false);
+        }
+    }
+
+    public void clearStandUpMahjong() {
+        SnapshotArray<Actor> children = mHands.getChildren();
+        for (Actor actor : children) {
+            if (actor instanceof MahjActor) {
+                ((MahjActor) actor).standUp(false);
+            }
+        }
+        if (mLastestMahj.isVisible() && mLastestMahj.isStandUp()) {
+            mLastestMahj.standUp(false);
         }
     }
 

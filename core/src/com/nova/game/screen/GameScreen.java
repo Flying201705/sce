@@ -6,10 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
+import com.nova.game.actor.MahjActor;
 import com.nova.game.actor.MyHandMahjongs;
 import com.nova.game.actor.MyOutMahjongs;
 import com.nova.game.actor.RightHandMahjongs;
@@ -151,6 +154,29 @@ public class GameScreen extends BaseScreen {
         mBatch.dispose();
         mBg.dispose();
         mStage.dispose();
+    }
+
+    @Override
+    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+        Vector2 tmp = new Vector2(screenX, screenY);
+        mStage.screenToStageCoordinates(tmp);
+        Actor actor = mStage.hit(tmp.x, tmp.y, true);
+        if (actor instanceof MahjActor) {
+            MahjActor mahjActor = (MahjActor) actor;
+            if (mahjActor.isCanStandUp()) {
+                if (mahjActor.isStandUp()) {
+                    mController.handleOutData((mahjActor.getMahjData().getIndex()));
+                } else {
+                    mMyHands.clearStandUpMahjong();
+                    mahjActor.standUp(true);
+                }
+            } else {
+                mMyHands.clearStandUpMahjong();
+            }
+        } else {
+            mMyHands.clearStandUpMahjong();
+        }
+        return true;
     }
 
     private void updateMahjong() {

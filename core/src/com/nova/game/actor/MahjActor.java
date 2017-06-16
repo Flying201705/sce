@@ -29,6 +29,10 @@ public class MahjActor extends Actor {
         mIsCanStandUp = canStandUp;
     }
 
+    public boolean isCanStandUp() {
+        return mIsCanStandUp;
+    }
+
     public void standUp(boolean standUp) {
         mIsStandUp = standUp;
     }

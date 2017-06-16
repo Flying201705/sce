@@ -1,9 +1,11 @@
 package com.nova.game.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 
@@ -14,8 +16,13 @@ public class TimeUnit extends Actor {
     private Array<Texture> mTimePoint = new Array<Texture>();
     private Animation<Texture> mTimeAnim;
     private float mAnimationTime;
+    private float mTimeCount;
     private boolean mShowAnim;
+    private boolean mShowTime;
     private int mCurrPlayer = -1;
+    private int mPlayerTimes;
+
+    private BitmapFont mFont;
 
     private AnimationFinishedListener mListener;
 
@@ -33,6 +40,10 @@ public class TimeUnit extends Actor {
         mTimePoint.add(new Texture("Actors/TimePoint3.png"));
 
         mTimeAnim = new Animation<Texture>(FRAME_DURATION, mTimePoint, Animation.PlayMode.LOOP);
+
+        mFont = new BitmapFont();
+        mFont.setColor(Color.RED);
+        mFont.getData().setScale(3f);
     }
 
     @Override
@@ -53,6 +64,18 @@ public class TimeUnit extends Actor {
                 batch.draw(mTimePoint.get(mCurrPlayer), getX(), getY());
             }
         }
+
+        if (mShowTime) {
+            mTimeCount += Gdx.graphics.getDeltaTime();
+            if (mTimeCount >= 1f) {
+                mTimeCount = 0f;
+                mPlayerTimes--;
+                if (mPlayerTimes < 0) {
+                    mPlayerTimes = 0;
+                }
+            }
+            mFont.draw(batch, String.valueOf(mPlayerTimes), getX() + 54, getY() + 84);
+        }
     }
 
     @Override
@@ -60,6 +83,7 @@ public class TimeUnit extends Actor {
         super.clear();
         mBg.dispose();
         mTimePoint.clear();
+        mFont.dispose();
     }
 
     public void setOnAnimationFinishedListener(AnimationFinishedListener listener) {
@@ -80,6 +104,16 @@ public class TimeUnit extends Actor {
     }
 
     public void updateCurrPlayer(int curr) {
+        if (curr >= 0) {
+            mShowTime = true;
+        } else {
+            mShowTime = false;
+        }
+
+        if (mCurrPlayer != curr) {
+            mPlayerTimes = 4;
+            mTimeCount = 0f;
+        }
         mCurrPlayer = curr;
     }
 }
