@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
 import com.nova.game.actor.MahjActor;
+import com.nova.game.actor.Match;
 import com.nova.game.actor.MyHandMahjongs;
 import com.nova.game.actor.MyOutMahjongs;
 import com.nova.game.actor.RightHandMahjongs;
@@ -131,6 +132,9 @@ public class GameScreen extends BaseScreen {
         mLeftOuts = new LeftOutMahjongs();
         mLeftOuts.setBounds(100, 200, 205, 305);
         mStage.addActor(mLeftOuts);
+
+        Match match = new Match();
+        mStage.addActor(match);
     }
 
     @Override
