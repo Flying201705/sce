@@ -28,9 +28,12 @@ import com.nova.game.assetmanager.Assets;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.widget.SceButton;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.util.MahjConstant;
 
 public class GameScreen extends BaseScreen {
     private BaseStage mStage;
@@ -47,6 +50,7 @@ public class GameScreen extends BaseScreen {
     private RightOutMahjongs mRightOuts;
     private TopOutMahjongs mTopOuts;
     private LeftOutMahjongs mLeftOuts;
+    private Match mMatch;
     private boolean mIsDealt = false;
 
     private MahjGameController mController = MahjGameController.create("local");
@@ -77,7 +81,7 @@ public class GameScreen extends BaseScreen {
         Gdx.input.setInputProcessor(mStage);
         Gdx.input.setCatchBackKey(true);
 
-        mStage.setDebugAll(true);
+        mStage.setDebugAll(false);
 
         mAssents = Assets.getInstance();
         mAssents.loadMahjTexture();
@@ -133,8 +137,8 @@ public class GameScreen extends BaseScreen {
         mLeftOuts.setBounds(100, 200, 205, 305);
         mStage.addActor(mLeftOuts);
 
-        Match match = new Match();
-        mStage.addActor(match);
+        mMatch = new Match();
+        mStage.addActor(mMatch);
     }
 
     @Override
@@ -200,16 +204,45 @@ public class GameScreen extends BaseScreen {
         mTopHands.updateMahjs(2, playerDatas.get(2));
 
         if (playerDatas.get(0) != null) {
+            if (playerDatas.get(0).getOperateType() != 0) {
+                mMatch.setPosition(550, 150);
+                mMatch.update(playerDatas.get(0).getOperateType());
+                playerDatas.get(0).setOperateType(0);
+            }
             mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
         }
         if (playerDatas.get(1) != null) {
+            if (playerDatas.get(1).getOperateType() != 0) {
+                mMatch.setPosition(980, 340);
+                mMatch.update(playerDatas.get(1).getOperateType() );
+                playerDatas.get(1).setOperateType(0);
+            }
             mRightOuts.setOutMahjongs(playerDatas.get(1).getOutDatas());
         }
         if (playerDatas.get(2) != null) {
+            if (playerDatas.get(2).getOperateType() != 0) {
+                mMatch.setPosition(550, 450);
+                mMatch.update(playerDatas.get(2).getOperateType() );
+                playerDatas.get(2).setOperateType(0);
+            }
             mTopOuts.setOutMahjongs(playerDatas.get(2).getOutDatas());
         }
         if (playerDatas.get(3) != null) {
+            if (playerDatas.get(3).getOperateType() != 0) {
+                mMatch.setPosition(200, 340);
+                mMatch.update(playerDatas.get(3).getOperateType() );
+                playerDatas.get(3).setOperateType(0);
+            }
             mLeftOuts.setOutMahjongs(playerDatas.get(3).getOutDatas());
+        }
+
+        ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
+        if (outDatas != null && outDatas.size() > 0) {
+            int matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
+
+            if (matchType > 0) {
+
+            }
         }
     }
 
