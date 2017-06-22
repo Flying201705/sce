@@ -16,6 +16,7 @@ import com.nova.game.actor.MahjActor;
 import com.nova.game.actor.Match;
 import com.nova.game.actor.MyHandMahjongs;
 import com.nova.game.actor.MyOutMahjongs;
+import com.nova.game.actor.OperationButton;
 import com.nova.game.actor.RightHandMahjongs;
 import com.nova.game.actor.RightOutMahjongs;
 import com.nova.game.actor.TimeUnit;
@@ -51,15 +52,23 @@ public class GameScreen extends BaseScreen {
     private TopOutMahjongs mTopOuts;
     private LeftOutMahjongs mLeftOuts;
     private Match mMatch;
+    private OperationButton mOperationButton;
     private boolean mIsDealt = false;
+
+    private int mCurrPlayer = -1;
 
     private MahjGameController mController = MahjGameController.create("local");
 
-    private TimeUnit.AnimationFinishedListener mAnimListener = new TimeUnit.AnimationFinishedListener() {
+    private TimeUnit.TimeUnitListener mTimeListener = new TimeUnit.TimeUnitListener() {
         @Override
-        public void onFinished() {
+        public void onAnimationFinished() {
             mIsDealt = true;
             mStartBt.remove();
+        }
+
+        @Override
+        public void onTimeOut() {
+            mOperationButton.clearAll();
         }
     };
 
@@ -67,6 +76,14 @@ public class GameScreen extends BaseScreen {
         @Override
         public void handleOutData(int index) {
             mController.handleOutData(index);
+        }
+    };
+
+    private OperationButton.ButtonClickListener mButtonClick = new OperationButton.ButtonClickListener() {
+        @Override
+        public void operate(int type) {
+            mTime.stopThinkingTime();
+            mController.handleMatchData(type);
         }
     };
 
@@ -91,7 +108,7 @@ public class GameScreen extends BaseScreen {
 
         mTime = new TimeUnit();
         mTime.setPosition(570, 295);
-        mTime.setOnAnimationFinishedListener(mAnimListener);
+        mTime.setTimeUnitListener(mTimeListener);
         mStage.addActor(mTime);
 
         mStartBt = new SceButton("ScenceGame/bt_start.png");
@@ -139,6 +156,11 @@ public class GameScreen extends BaseScreen {
 
         mMatch = new Match();
         mStage.addActor(mMatch);
+
+        mOperationButton = new OperationButton();
+        mOperationButton.setBounds(0, 100, 1280, 200);
+        mOperationButton.setButtonClickListener(mButtonClick);
+        mStage.addActor(mOperationButton);
     }
 
     @Override
@@ -238,10 +260,14 @@ public class GameScreen extends BaseScreen {
 
         ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
         if (outDatas != null && outDatas.size() > 0) {
+            Gdx.app.log("liuhao", "outData = " + outDatas.get(outDatas.size() - 1).getIndex());
             int matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
 
-            if (matchType > 0) {
-
+            Gdx.app.log("liuhao", "matchType = " + matchType);
+            if (matchType > 0 && mCurrPlayer != mController.getCurrentPlayer()) {
+                mCurrPlayer = mController.getCurrentPlayer();
+                mTime.startThinkingTime();
+                mOperationButton.update(matchType);
             }
         }
     }

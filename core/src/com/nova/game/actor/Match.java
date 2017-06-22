@@ -23,7 +23,7 @@ public class Match extends Actor {
         mPengImage = new Texture("Animation/eff_peng.png");
         mGangImage = new Texture("Animation/eff_gang.png");
         mChiImage = new Texture("Animation/eff_chi.png");
-        mTingImage = new Texture("Animation/eff_chi.png");
+        mTingImage = new Texture("Animation/eff_ting.png");
         mHuImage = new Texture("Animation/eff_hu.png");
 
         setSize(mPengImage.getWidth(), mPengImage.getHeight());
@@ -31,7 +31,6 @@ public class Match extends Actor {
     }
 
     public void update(int type) {
-        Gdx.app.log("liuhao", "action update type = " + type);
         if (mType == 0) {
             mType = type;
             switch (mType) {
@@ -59,7 +58,6 @@ public class Match extends Actor {
             SequenceAction action = new SequenceAction(Actions.repeat(3, sequenceAction), Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    Gdx.app.log("liuhao", "action stop");
                     mType = 0;
                 }
             }));

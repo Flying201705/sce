@@ -19,15 +19,17 @@ public class TimeUnit extends Actor {
     private float mTimeCount;
     private boolean mShowAnim;
     private boolean mShowTime;
+    private boolean mThinkingTimes;
     private int mCurrPlayer = -1;
     private int mPlayerTimes;
 
     private BitmapFont mFont;
 
-    private AnimationFinishedListener mListener;
+    private TimeUnitListener mListener;
 
-    public interface AnimationFinishedListener {
-        void onFinished();
+    public interface TimeUnitListener {
+        void onAnimationFinished();
+        void onTimeOut();
     }
 
     public TimeUnit() {
@@ -55,7 +57,7 @@ public class TimeUnit extends Actor {
             if (mAnimationTime > 2f) {
                 mShowAnim = false;
                 if (mListener != null) {
-                    mListener.onFinished();
+                    mListener.onAnimationFinished();
                 }
             }
             batch.draw(mTimeAnim.getKeyFrame(mAnimationTime), getX(), getY());
@@ -72,6 +74,9 @@ public class TimeUnit extends Actor {
                 mPlayerTimes--;
                 if (mPlayerTimes < 0) {
                     mPlayerTimes = 0;
+                    if (mThinkingTimes && mListener != null) {
+                        mListener.onTimeOut();
+                    }
                 }
             }
             mFont.draw(batch, String.valueOf(mPlayerTimes), getX() + 54, getY() + 84);
@@ -86,11 +91,11 @@ public class TimeUnit extends Actor {
         mFont.dispose();
     }
 
-    public void setOnAnimationFinishedListener(AnimationFinishedListener listener) {
+    public void setTimeUnitListener(TimeUnitListener listener) {
         mListener = listener;
     }
 
-    public void removeOnAnimationFinishedListener() {
+    public void removeTimeUnitListener() {
         mListener = null;
     }
 
@@ -104,16 +109,30 @@ public class TimeUnit extends Actor {
     }
 
     public void updateCurrPlayer(int curr) {
-        if (curr >= 0) {
-            mShowTime = true;
-        } else {
-            mShowTime = false;
-        }
+        mShowTime = curr >= 0;
 
         if (mCurrPlayer != curr) {
-            mPlayerTimes = 4;
-            mTimeCount = 0f;
+            resetTime();
         }
         mCurrPlayer = curr;
+    }
+
+    public void startThinkingTime() {
+        if (!mThinkingTimes) {
+            mThinkingTimes = true;
+            resetTime();
+        }
+    }
+
+    public void stopThinkingTime() {
+        if (mThinkingTimes) {
+            mThinkingTimes = false;
+            resetTime();
+        }
+    }
+
+    private void resetTime() {
+        mPlayerTimes = 4;
+        mTimeCount = 0f;
     }
 }
