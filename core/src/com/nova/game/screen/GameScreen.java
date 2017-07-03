@@ -35,6 +35,7 @@ import java.util.HashMap;
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.game.mahjong.util.MahjConstant;
+import nova.common.game.mahjong.util.TestMahjConstant;
 
 public class GameScreen extends BaseScreen {
     private BaseStage mStage;
@@ -89,6 +90,7 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(BaseGame game) {
         super(game);
+        TestMahjConstant.setDebug(1);
         mController.startGame();
     }
 
@@ -225,18 +227,10 @@ public class GameScreen extends BaseScreen {
         mRightHands.updateMahjs(1, playerDatas.get(1));
         mTopHands.updateMahjs(2, playerDatas.get(2));
 
-        if (playerDatas.get(0) != null) {
-            if (playerDatas.get(0).getOperateType() != 0) {
-                mMatch.setPosition(550, 150);
-                mMatch.update(playerDatas.get(0).getOperateType());
-                playerDatas.get(0).setOperateType(0);
-            }
-            mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
-        }
         if (playerDatas.get(1) != null) {
             if (playerDatas.get(1).getOperateType() != 0) {
                 mMatch.setPosition(980, 340);
-                mMatch.update(playerDatas.get(1).getOperateType() );
+                mMatch.update(playerDatas.get(1).getOperateType());
                 playerDatas.get(1).setOperateType(0);
             }
             mRightOuts.setOutMahjongs(playerDatas.get(1).getOutDatas());
@@ -244,7 +238,7 @@ public class GameScreen extends BaseScreen {
         if (playerDatas.get(2) != null) {
             if (playerDatas.get(2).getOperateType() != 0) {
                 mMatch.setPosition(550, 450);
-                mMatch.update(playerDatas.get(2).getOperateType() );
+                mMatch.update(playerDatas.get(2).getOperateType());
                 playerDatas.get(2).setOperateType(0);
             }
             mTopOuts.setOutMahjongs(playerDatas.get(2).getOutDatas());
@@ -252,22 +246,35 @@ public class GameScreen extends BaseScreen {
         if (playerDatas.get(3) != null) {
             if (playerDatas.get(3).getOperateType() != 0) {
                 mMatch.setPosition(200, 340);
-                mMatch.update(playerDatas.get(3).getOperateType() );
+                mMatch.update(playerDatas.get(3).getOperateType());
                 playerDatas.get(3).setOperateType(0);
             }
             mLeftOuts.setOutMahjongs(playerDatas.get(3).getOutDatas());
         }
+        if (playerDatas.get(0) != null) {
+            if (playerDatas.get(0).getOperateType() != 0) {
+                mMatch.setPosition(550, 150);
+                mMatch.update(playerDatas.get(0).getOperateType());
+                playerDatas.get(0).setOperateType(0);
+            }
+            mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
 
-        ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
-        if (outDatas != null && outDatas.size() > 0) {
-            Gdx.app.log("liuhao", "outData = " + outDatas.get(outDatas.size() - 1).getIndex());
-            int matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
+            MahjData latestData = playerDatas.get(0).getLatestData();
+            if (latestData != null && latestData.getIndex() != 0) {
+                playerDatas.get(0).updateMatchTypeForLatestData();
+            }
+            if (playerDatas.get(mController.getCurrentPlayer()) != null) {
+                ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
+                if (outDatas != null && outDatas.size() > 0) {
+                    int matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
 
-            Gdx.app.log("liuhao", "matchType = " + matchType);
-            if (matchType > 0 && mCurrPlayer != mController.getCurrentPlayer()) {
-                mCurrPlayer = mController.getCurrentPlayer();
-                mTime.startThinkingTime();
-                mOperationButton.update(matchType);
+                    if (matchType > 0 && mCurrPlayer != mController.getCurrentPlayer()) {
+                        mCurrPlayer = mController.getCurrentPlayer();
+                        mTime.startThinkingTime();
+                        Gdx.app.log("liuhao", "matchType=" + matchType);
+                        mOperationButton.update(matchType);
+                    }
+                }
             }
         }
     }

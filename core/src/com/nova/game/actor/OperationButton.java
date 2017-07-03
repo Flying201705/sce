@@ -72,23 +72,23 @@ public class OperationButton extends HorizontalGroup {
     }
 
     public void update(int matchType) {
-        if (matchType >= MahjConstant.MAHJ_MATCH_PENG) {
+        if ((matchType & MahjConstant.MAHJ_MATCH_PENG) == MahjConstant.MAHJ_MATCH_PENG) {
             addActor(mPengButton);
         }
 
-        if (matchType >= MahjConstant.MAHJ_MATCH_GANG) {
+        if ((matchType & MahjConstant.MAHJ_MATCH_GANG) == MahjConstant.MAHJ_MATCH_GANG) {
             addActor(mGangButton);
         }
 
-        if (matchType >= MahjConstant.MAHJ_MATCH_HU) {
+        if ((matchType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU) {
             addActor(mHuButton);
         }
 
-        if (matchType >= MahjConstant.MAHJ_MATCH_TING) {
+        if ((matchType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
             addActor(mTingButton);
         }
 
-        if (matchType >= MahjConstant.MAHJ_MATCH_CHI) {
+        if ((matchType & MahjConstant.MAHJ_MATCH_CHI) == MahjConstant.MAHJ_MATCH_CHI) {
             addActor(mChiButton);
         }
 
