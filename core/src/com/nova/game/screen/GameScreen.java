@@ -261,7 +261,7 @@ public class GameScreen extends BaseScreen {
 
             MahjData latestData = playerDatas.get(0).getLatestData();
             if (latestData != null && latestData.getIndex() != 0) {
-                playerDatas.get(0).updateMatchTypeForLatestData();
+                playerDatas.get(0).updateMatchTypeForGetMahj();
             }
             if (playerDatas.get(mController.getCurrentPlayer()) != null) {
                 ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
