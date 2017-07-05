@@ -1,5 +1,6 @@
 package com.nova.game.actor;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
@@ -45,7 +46,7 @@ public class OperationButton extends HorizontalGroup {
                 mButtonClickListener.operate(type);
             }
 
-            clearAll();
+            clear();
         }
     };
 
@@ -101,12 +102,4 @@ public class OperationButton extends HorizontalGroup {
         mButtonClickListener = listener;
     }
 
-    public void clearAll() {
-        mPengButton.remove();
-        mGangButton.remove();
-        mChiButton.remove();
-        mTingButton.remove();
-        mGuoButton.remove();
-        mHuButton.remove();
-    }
 }

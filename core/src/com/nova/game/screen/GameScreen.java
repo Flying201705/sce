@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nova.game.actor.Head;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
 import com.nova.game.actor.MahjActor;
@@ -44,6 +45,7 @@ public class GameScreen extends BaseScreen {
     private TimeUnit mTime;
     private Assets mAssents;
     private SceButton mStartBt;
+    private Head mMyHead;
     private MyHandMahjongs mMyHands;
     private RightHandMahjongs mRightHands;
     private TopHandMahjongs mTopHands;
@@ -56,7 +58,7 @@ public class GameScreen extends BaseScreen {
     private OperationButton mOperationButton;
     private boolean mIsDealt = false;
 
-    private int mCurrPlayer = -1;
+    private int mMatchType;
 
     private MahjGameController mController = MahjGameController.create("local");
 
@@ -69,7 +71,7 @@ public class GameScreen extends BaseScreen {
 
         @Override
         public void onTimeOut() {
-            mOperationButton.clearAll();
+            mOperationButton.clear();
         }
     };
 
@@ -122,6 +124,10 @@ public class GameScreen extends BaseScreen {
             }
         });
         mStage.addActor(mStartBt);
+
+        mMyHead = new Head();
+        mMyHead.setPosition(15, 100);
+        mStage.addActor(mMyHead);
 
         mMyHands = new MyHandMahjongs();
         mMyHands.setPosition(120, 62);
@@ -259,22 +265,24 @@ public class GameScreen extends BaseScreen {
             }
             mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
 
+            int matchType = 0;
             MahjData latestData = playerDatas.get(0).getLatestData();
             if (latestData != null && latestData.getIndex() != 0) {
-                playerDatas.get(0).updateMatchTypeForGetMahj();
+                matchType = playerDatas.get(0).updateMatchTypeForGetMahj();
+                Gdx.app.log("liuhao", "--1-- matchType=" + matchType);
             }
-            if (playerDatas.get(mController.getCurrentPlayer()) != null) {
+            if (matchType == 0 && playerDatas.get(mController.getCurrentPlayer()) != null) {
                 ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
                 if (outDatas != null && outDatas.size() > 0) {
-                    int matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
-
-                    if (matchType > 0 && mCurrPlayer != mController.getCurrentPlayer()) {
-                        mCurrPlayer = mController.getCurrentPlayer();
-                        mTime.startThinkingTime();
-                        Gdx.app.log("liuhao", "matchType=" + matchType);
-                        mOperationButton.update(matchType);
-                    }
+                    matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
+                    Gdx.app.log("liuhao", "--2-- matchType=" + matchType);
                 }
+            }
+
+            if (matchType > 0 && mMatchType != matchType) {
+                mMatchType = matchType;
+                mTime.startThinkingTime();
+                mOperationButton.update(matchType);
             }
         }
     }
