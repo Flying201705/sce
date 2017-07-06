@@ -46,6 +46,9 @@ public class GameScreen extends BaseScreen {
     private Assets mAssents;
     private SceButton mStartBt;
     private Head mMyHead;
+    private Head mRightHead;
+    private Head mTopHead;
+    private Head mLeftHead;
     private MyHandMahjongs mMyHands;
     private RightHandMahjongs mRightHands;
     private TopHandMahjongs mTopHands;
@@ -129,17 +132,29 @@ public class GameScreen extends BaseScreen {
         mMyHead.setPosition(15, 100);
         mStage.addActor(mMyHead);
 
+        mRightHead = new Head(Head.VERTICAL);
+        mRightHead.setPosition(1170, 280);
+        mStage.addActor(mRightHead);
+
+        mTopHead = new Head();
+        mTopHead.setPosition(100, 620);
+        mStage.addActor(mTopHead);
+
+        mLeftHead = new Head(Head.VERTICAL);
+        mLeftHead.setPosition(15, 280);
+        mStage.addActor(mLeftHead);
+
         mMyHands = new MyHandMahjongs();
         mMyHands.setPosition(120, 62);
         mMyHands.sethandOutDataCallback(mCallBack);
         mStage.addActor(mMyHands);
 
         mLeftHands = new LeftHandMahjongs();
-        mLeftHands.setPosition(60, 600);
+        mLeftHands.setPosition(200, 600);
         mStage.addActor(mLeftHands);
 
         mRightHands = new RightHandMahjongs();
-        mRightHands.setPosition(1220, 100);
+        mRightHands.setPosition(1120, 100);
         mStage.addActor(mRightHands);
 
         mTopHands = new TopHandMahjongs();
