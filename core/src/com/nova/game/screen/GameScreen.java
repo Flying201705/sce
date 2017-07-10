@@ -43,7 +43,6 @@ public class GameScreen extends BaseScreen {
     private SpriteBatch mBatch;
     private Texture mBg;
     private TimeUnit mTime;
-    private Assets mAssents;
     private SceButton mStartBt;
     private Head mMyHead;
     private Head mRightHead;
@@ -107,18 +106,15 @@ public class GameScreen extends BaseScreen {
 
         mStage.setDebugAll(false);
 
-        mAssents = Assets.getInstance();
-        mAssents.loadMahjTexture();
-
         mBatch = new SpriteBatch();
-        mBg = new Texture("ScenceGame/background.jpg");
+        mBg = new Texture("SceneGame/background.jpg");
 
         mTime = new TimeUnit();
         mTime.setPosition(570, 295);
         mTime.setTimeUnitListener(mTimeListener);
         mStage.addActor(mTime);
 
-        mStartBt = new SceButton("ScenceGame/bt_start.png");
+        mStartBt = new SceButton("SceneGame/bt_start.png");
         mStartBt.setPosition(540, 100);
         mStartBt.addListener(new ClickListener() {
             @Override
@@ -203,7 +199,6 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void dispose() {
-        mAssents.clearMahjTexture();
         mBatch.dispose();
         mBg.dispose();
         mStage.dispose();

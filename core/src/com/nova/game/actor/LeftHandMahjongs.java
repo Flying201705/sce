@@ -24,7 +24,7 @@ public class LeftHandMahjongs extends VerticalGroup {
         mAssets = Assets.getInstance();
 
         mLastestMahj = new MahjActor();
-        mLastestMahj.setImage(new Texture("ScenceGame/hand_left.png"));
+        mLastestMahj.setImage(new Texture("SceneGame/hand_left.png"));
         mLastestMahj.setVisible(false);
 
         mMatchs = new VerticalGroup();
@@ -69,7 +69,7 @@ public class LeftHandMahjongs extends VerticalGroup {
         mHandMahjs = mahjs;
         mHands.clear();
 
-        Texture texture_3 = new Texture("ScenceGame/hand_left.png");
+        Texture texture_3 = new Texture("SceneGame/hand_left.png");
         for (int i = 0; i < mahjs.size(); i++) {
             MahjActor mahjActor = new MahjActor(texture_3);
             mHands.addActor(mahjActor);

@@ -5,16 +5,24 @@ import java.util.Stack;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.nova.game.assetmanager.Assets;
 
 public abstract class BaseGame extends Game {
     private Stack<Screen> mScreenStack = new Stack<Screen>();
 
     @Override
     public void setScreen(Screen screen) {
+        setScreen(screen, true);
+    }
+
+    public void setScreen(Screen screen, boolean toHistory) {
         super.setScreen(screen);
-        Screen topScreen = mScreenStack.isEmpty() ? null : mScreenStack.peek();
-        if (screen != null && screen != topScreen) {
-            mScreenStack.push(screen);
+
+        if (toHistory) {
+            Screen topScreen = mScreenStack.isEmpty() ? null : mScreenStack.peek();
+            if (screen != null && screen != topScreen) {
+                mScreenStack.push(screen);
+            }
         }
     }
 
@@ -29,6 +37,7 @@ public abstract class BaseGame extends Game {
             setScreen(topScreen);
             currScreen.dispose();
         } else {
+            Assets.getInstance().clear();
             Gdx.app.exit();
         }
     }

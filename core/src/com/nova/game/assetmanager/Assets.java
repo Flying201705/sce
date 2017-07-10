@@ -2,11 +2,15 @@ package com.nova.game.assetmanager;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.nova.game.Constants;
 
 public class Assets {
     private static Assets mInstance;
     private AssetManager mAssetManager;
+    private FreeTypeFontGenerator mGeneratror;
+    private BitmapFont mFont;
 
     public static Assets getInstance() {
         if (mInstance == null) {
@@ -15,33 +19,21 @@ public class Assets {
         return mInstance;
     }
 
-    public void loadMahjTexture() {
+    public void load() {
         if (mAssetManager == null) {
             mAssetManager = new AssetManager();
         }
 
-        addTexture("ScenceGame/1/mingmah_");
-        addTexture("ScenceGame/2/handmah_");
-        addTexture("ScenceGame/2/mingmah_");
-        addTexture("ScenceGame/3/mingmah_");
+        loadMahjTexture();
 
         mAssetManager.finishLoading();
     }
 
-    public Texture getMahjMatchLeftTexture(int index) {
-        return mAssetManager.get("ScenceGame/3/mingmah_" + index + ".png");
-    }
-
-    public Texture getMahjMatchMeTexture(int index) {
-        return mAssetManager.get("ScenceGame/2/mingmah_" + index + ".png");
-    }
-
-    public Texture getMahjHandMeTexture(int index) {
-        return mAssetManager.get("ScenceGame/2/handmah_" + index + ".png");
-    }
-
-    public Texture getMahjMatchRightTexture(int index) {
-        return mAssetManager.get("ScenceGame/1/mingmah_" + index + ".png");
+    private void loadMahjTexture() {
+        addTexture("SceneGame/1/mingmah_");
+        addTexture("SceneGame/2/handmah_");
+        addTexture("SceneGame/2/mingmah_");
+        addTexture("SceneGame/3/mingmah_");
     }
 
     private void addTexture(String path) {
@@ -58,11 +50,34 @@ public class Assets {
             }
             mAssetManager.load(path + (index * 10 + j) + ".png", Texture.class);
         }
-        mAssetManager.finishLoading();
     }
 
-    public void clearMahjTexture() {
+    public Texture getMahjMatchLeftTexture(int index) {
+        return mAssetManager.get("SceneGame/3/mingmah_" + index + ".png");
+    }
+
+    public Texture getMahjMatchMeTexture(int index) {
+        return mAssetManager.get("SceneGame/2/mingmah_" + index + ".png");
+    }
+
+    public Texture getMahjHandMeTexture(int index) {
+        return mAssetManager.get("SceneGame/2/handmah_" + index + ".png");
+    }
+
+    public Texture getMahjMatchRightTexture(int index) {
+        return mAssetManager.get("SceneGame/1/mingmah_" + index + ".png");
+    }
+
+    public void clear() {
         mAssetManager.dispose();
         mAssetManager = null;
+    }
+
+    public float getProgress() {
+        return mAssetManager.getProgress();
+    }
+
+    public boolean update() {
+        return mAssetManager.update();
     }
 }

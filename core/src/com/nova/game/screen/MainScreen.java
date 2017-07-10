@@ -32,9 +32,9 @@ public class MainScreen extends BaseScreen {
         Gdx.input.setCatchBackKey(true);
 
         mBatch = new SpriteBatch();
-        mBg = new Texture("ScenceMain/background.jpg");
+        mBg = new Texture("SceneMain/background.jpg");
 
-        Image image = new Image(new Texture("ScenceMain/meinv.png"));
+        Image image = new Image(new Texture("SceneMain/meinv.png"));
         image.setPosition(50, 0);
         image.setScale(1.2f);
         mStage.addActor(image);
@@ -63,11 +63,11 @@ public class MainScreen extends BaseScreen {
     }
 
     private void initTop() {
-        Image bg = new Image(new NinePatchDrawable(new NinePatch(new Texture("ScenceMain/top_bg.png"), 30, 30, 0, 30)));
+        Image bg = new Image(new NinePatchDrawable(new NinePatch(new Texture("SceneMain/top_bg.png"), 30, 30, 0, 30)));
         bg.setBounds(0, Constants.WORLD_HEIGHT - 100, Constants.WORLD_WIDTH, 100);
         mStage.addActor(bg);
 
-        Button quitButton = new SceButton("ScenceMain/bt_quit.png");
+        Button quitButton = new SceButton("SceneMain/bt_quit.png");
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -77,21 +77,21 @@ public class MainScreen extends BaseScreen {
         quitButton.setPosition(1200, 640);
         mStage.addActor(quitButton);
 
-        Button settingButton = new SceButton("ScenceMain/bt_setting.png");
+        Button settingButton = new SceButton("SceneMain/bt_setting.png");
         settingButton.setPosition(1100, 640);
         mStage.addActor(settingButton);
 
-        Button newsButton = new SceButton("ScenceMain/bt_news.png");
+        Button newsButton = new SceButton("SceneMain/bt_news.png");
         newsButton.setPosition(1000, 640);
         mStage.addActor(newsButton);
 
-        Button recordButton = new SceButton("ScenceMain/bt_record.png");
+        Button recordButton = new SceButton("SceneMain/bt_record.png");
         recordButton.setPosition(900, 640);
         mStage.addActor(recordButton);
     }
 
     private void initMiddle() {
-        Button startButton = new SceButton("ScenceMain/bt_start.png");
+        Button startButton = new SceButton("SceneMain/bt_start.png");
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -101,11 +101,11 @@ public class MainScreen extends BaseScreen {
         startButton.setPosition(900, 450);
         mStage.addActor(startButton);
 
-        Button createButton = new SceButton("ScenceMain/bt_create.png");
+        Button createButton = new SceButton("SceneMain/bt_create.png");
         createButton.setPosition(900, 300);
         mStage.addActor(createButton);
 
-        Button addButton = new SceButton("ScenceMain/bt_add.png");
+        Button addButton = new SceButton("SceneMain/bt_add.png");
         addButton.setPosition(900, 150);
         mStage.addActor(addButton);
     }

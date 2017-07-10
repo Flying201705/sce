@@ -24,7 +24,7 @@ public class TopHandMahjongs extends HorizontalGroup {
         mAssets = Assets.getInstance();
 
         mLastestMahj = new MahjActor();
-        mLastestMahj.setImage(new Texture("ScenceGame/hand_top.png"));
+        mLastestMahj.setImage(new Texture("SceneGame/hand_top.png"));
         mLastestMahj.setVisible(false);
 
         mMatchs = new HorizontalGroup();
@@ -71,7 +71,7 @@ public class TopHandMahjongs extends HorizontalGroup {
         mHandMahjs = mahjs;
         mHands.clear();
 
-        Texture texture_2 = new Texture("ScenceGame/hand_top.png");
+        Texture texture_2 = new Texture("SceneGame/hand_top.png");
         for (int i = 0; i < mahjs.size(); i++) {
             MahjActor mahjActor = new MahjActor(texture_2);
             mHands.addActor(mahjActor);

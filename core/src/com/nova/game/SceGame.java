@@ -1,11 +1,11 @@
 package com.nova.game;
 
-import com.nova.game.screen.MainScreen;
+import com.nova.game.screen.LoadScreen;
 
 public class SceGame extends BaseGame {
 
     @Override
     public void create() {
-        setScreen(new MainScreen(this));
+        setScreen(new LoadScreen(this), false);
     }
 }
