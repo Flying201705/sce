@@ -94,7 +94,6 @@ public class GameScreen extends BaseScreen {
 
     public GameScreen(BaseGame game) {
         super(game);
-        TestMahjConstant.setDebug(1);
         mController.startGame();
     }
 
