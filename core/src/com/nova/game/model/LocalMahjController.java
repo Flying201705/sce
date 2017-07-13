@@ -15,7 +15,7 @@ public class LocalMahjController extends MahjController {
 	public void startGame() {
 		super.startGame();
 		/**---测试程序开始---**/
-		TestMahjConstant.setDebug(4);
+		TestMahjConstant.setDebug(1);
 		/**---测试程序结束---**/
 		RoomManager room = RoomController.getInstance("mahj").getRoomManager(-1);
 		MahjGameManager gameManager = (MahjGameManager)room.getGameManager();
