@@ -62,7 +62,7 @@ public class GameScreen extends BaseScreen {
 
     private int mMatchType;
 
-    private MahjGameController mController = MahjGameController.create("local");
+    private MahjGameController mController = MahjGameController.create(getGameType());
 
     private TimeUnit.TimeUnitListener mTimeListener = new TimeUnit.TimeUnitListener() {
         @Override
@@ -91,6 +91,10 @@ public class GameScreen extends BaseScreen {
             mController.handleMatchData(type);
         }
     };
+
+    protected String getGameType() {
+        return "local";
+    }
 
     public GameScreen(BaseGame game) {
         super(game);

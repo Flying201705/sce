@@ -9,6 +9,7 @@ import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.game.mahjong.data.MahjResponeData;
+import nova.common.game.mahjong.data.MahjResponeResolver;
 import nova.common.game.mahjong.handler.MahjGameHandler;
 
 public class LocalMahjGameHandler implements MahjGameHandler {
@@ -16,7 +17,7 @@ public class LocalMahjGameHandler implements MahjGameHandler {
 	@Override
 	public void onGameInfoChange(int roomId, MahjResponeData responeData) {
 		updateGameData(responeData);
-		updateGroupDatas(responeData.getGroupDatas());
+		updateGroupDatas(MahjResponeResolver.getGroupDatasForResponeData(responeData));
 	}
 	
 	private void updateGameData(MahjResponeData responeData) {

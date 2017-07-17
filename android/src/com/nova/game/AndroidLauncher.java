@@ -19,6 +19,6 @@ public class AndroidLauncher extends AndroidApplication {
 		GameLogger.create(new Log());
 
 		// 测试与netty服务器通信
-		// ChannelManager.getInstance().connect();
+		ChannelManager.getInstance().connect();
 	}
 }
