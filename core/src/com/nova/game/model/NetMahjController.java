@@ -9,10 +9,13 @@ class NetMahjController extends MahjController {
 
     private GameRequestDispatcher mRequest = new GameRequestDispatcher();
 
+    public NetMahjController() {
+        ResponseDispatcherManager.getInstance().addGameResponseDispatcher(GameCommand.GAME_TYPE_MAHJ, new MahjGameResponeDispatcher());
+    }
+
     @Override
     public void startGame() {
         super.startGame();
-        ResponseDispatcherManager.getInstance().addGameResponseDispatcher(GameCommand.GAME_TYPE_MAHJ, new MahjGameResponeDispatcher());
-        mRequest.startGame(0);
+        mRequest.startGame();
     }
 }

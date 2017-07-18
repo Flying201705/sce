@@ -9,9 +9,10 @@ import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.game.mahjong.data.MahjResponeData;
 import nova.common.game.mahjong.data.MahjResponeResolver;
 import nova.common.game.mahjong.handler.GameLogger;
+import nova.common.game.mahjong.util.MahjGameCommand;
+
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -26,7 +27,7 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
     public void processor(int commandId, String message) {
         GameLogger.getInstance().e("MahjGameResponeDispatcher", "processor, commandId = " + commandId + ", message = " + message);
         switch (commandId) {
-            case 1250:
+            case MahjGameCommand.RESPONE_GAME_INFO_UPDATE:
                 processorGameInfoChange(message);
                 break;
             default:
