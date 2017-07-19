@@ -1,6 +1,8 @@
 package com.nova.game.model;
 
 import com.nova.game.handler.LocalMahjGameHandler;
+
+import nova.common.GameCommand;
 import nova.common.game.mahjong.MahjGameManager;
 import nova.common.game.mahjong.handler.MahjGameDispatcher;
 import nova.common.game.mahjong.util.TestMahjConstant;
@@ -17,7 +19,7 @@ public class LocalMahjController extends MahjController {
 		/**---测试程序开始---**/
 		TestMahjConstant.setDebug(1);
 		/**---测试程序结束---**/
-		RoomManager room = RoomController.getInstance("mahj").getRoomManager(-1);
+		RoomManager room = RoomController.getInstance(GameCommand.GAME_TYPE_MAHJ).getRoomManager(-1);
 		MahjGameManager gameManager = (MahjGameManager)room.getGameManager();
 		gameManager.setHandler(new LocalMahjGameHandler());
 		setDispatcher(gameManager);

@@ -1,9 +1,10 @@
 package com.nova.game.model;
 
-import com.nova.game.constant.GameCommand;
 import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.handler.MahjGameResponeDispatcher;
 import com.nova.net.netty.handler.ResponseDispatcherManager;
+
+import nova.common.GameCommand;
 
 class NetMahjController extends MahjController {
 

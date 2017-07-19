@@ -1,9 +1,9 @@
 package com.nova.game.handler;
 
 import com.google.gson.JsonObject;
-import com.nova.game.constant.GameCommand;
 import com.nova.net.netty.ChannelManager;
 
+import nova.common.GameCommand;
 import nova.common.game.mahjong.util.MahjGameCommand;
 
 /**
