@@ -43,15 +43,10 @@ public class Assets {
     }
 
     private void loadFont() {
-        // set the loaders for the generator and the fonts themselves
         FileHandleResolver resolver = new InternalFileHandleResolver();
         mAssetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         mAssetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
 
-        // load to fonts via the generator (implicitely done by the FreetypeFontLoader).
-        // Note: you MUST specify a FreetypeFontGenerator defining the ttf font file name and the size
-        // of the font to be generated. The names of the fonts are arbitrary and are not pointing
-        // to a file on disk!
         FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
         size1Params.fontFileName = "Font/font.ttf";
         size1Params.fontParameters.characters += "刘备";

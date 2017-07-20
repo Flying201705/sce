@@ -79,7 +79,7 @@ public class MyHandMahjongs extends HorizontalGroup {
 
         for (MahjData mahj : mahjs) {
             MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahj.getIndex()));
-            mahjActor.setScale(0.8f);
+            mahjActor.setScale(0.6f);
             mMatchs.addActor(mahjActor);
         }
     }

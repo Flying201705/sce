@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nova.game.actor.Head;
+import com.nova.game.actor.Player;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
 import com.nova.game.actor.MahjActor;
@@ -26,17 +24,12 @@ import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
-import com.nova.game.assetmanager.Assets;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.widget.SceButton;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGroupData;
-import nova.common.game.mahjong.util.MahjConstant;
-import nova.common.game.mahjong.util.TestMahjConstant;
 
 public class GameScreen extends BaseScreen {
     private BaseStage mStage;
@@ -44,10 +37,10 @@ public class GameScreen extends BaseScreen {
     private Texture mBg;
     private TimeUnit mTime;
     private SceButton mStartBt;
-    private Head mMyHead;
-    private Head mRightHead;
-    private Head mTopHead;
-    private Head mLeftHead;
+    private Player mMyPlayer;
+    private Player mRightPlayer;
+    private Player mTopPlayer;
+    private Player mLeftPlayer;
     private MyHandMahjongs mMyHands;
     private RightHandMahjongs mRightHands;
     private TopHandMahjongs mTopHands;
@@ -127,21 +120,7 @@ public class GameScreen extends BaseScreen {
         });
         mStage.addActor(mStartBt);
 
-        mMyHead = new Head();
-        mMyHead.setPosition(15, 100);
-        mStage.addActor(mMyHead);
-
-        mRightHead = new Head(Head.VERTICAL);
-        mRightHead.setPosition(1170, 280);
-        mStage.addActor(mRightHead);
-
-        mTopHead = new Head();
-        mTopHead.setPosition(100, 620);
-        mStage.addActor(mTopHead);
-
-        mLeftHead = new Head(Head.VERTICAL);
-        mLeftHead.setPosition(15, 280);
-        mStage.addActor(mLeftHead);
+        initPlayer();
 
         mMyHands = new MyHandMahjongs();
         mMyHands.setPosition(120, 62);
@@ -183,6 +162,24 @@ public class GameScreen extends BaseScreen {
         mOperationButton.setBounds(0, 100, 1280, 200);
         mOperationButton.setButtonClickListener(mButtonClick);
         mStage.addActor(mOperationButton);
+    }
+
+    private void initPlayer() {
+        mMyPlayer = new Player();
+        mMyPlayer.setPosition(15, 100);
+        mStage.addActor(mMyPlayer);
+
+        mRightPlayer = new Player(Player.VERTICAL);
+        mRightPlayer.setPosition(1170, 280);
+        mStage.addActor(mRightPlayer);
+
+        mTopPlayer = new Player();
+        mTopPlayer.setPosition(100, 620);
+        mStage.addActor(mTopPlayer);
+
+        mLeftPlayer = new Player(Player.VERTICAL);
+        mLeftPlayer.setPosition(15, 280);
+        mStage.addActor(mLeftPlayer);
     }
 
     @Override

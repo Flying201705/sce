@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.nova.game.BaseGame;
 import com.nova.game.BaseScreen;
@@ -18,6 +19,8 @@ public class LoadScreen extends BaseScreen {
 
     private Texture mBg, mProgressBg, mProgressBar;
     private Image mLogo;
+
+    private int mProgressX;
 
     public LoadScreen(BaseGame game) {
         super(game);
@@ -38,6 +41,7 @@ public class LoadScreen extends BaseScreen {
 
         mProgressBg = new Texture("SceneLoad/progress_bg.png");
         mProgressBar = new Texture("SceneLoad/progress_bar.png");
+        mProgressX = (Gdx.graphics.getWidth() - mProgressBg.getWidth()) / 2;
 
         mAssents = Assets.getInstance();
         mAssents.load();
@@ -50,9 +54,9 @@ public class LoadScreen extends BaseScreen {
 
         mBatch.begin();
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        mBatch.draw(mProgressBg, 0, 10);
+        mBatch.draw(mProgressBg, mProgressX, 10);
         Gdx.app.log("liuhao", "progress = " + mAssents.getProgress());
-        mBatch.draw(mProgressBar, 0, 10, mProgressBar.getWidth() * mAssents.getProgress(), mProgressBar.getHeight());
+        mBatch.draw(mProgressBar, mProgressX, 10, mProgressBar.getWidth() * mAssents.getProgress(), mProgressBar.getHeight());
         mBatch.end();
 
         mStage.act();

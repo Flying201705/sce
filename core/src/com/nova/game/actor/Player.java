@@ -1,40 +1,36 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nova.game.assetmanager.Assets;
 
-public class Head extends Actor {
+import nova.common.room.data.PlayerInfo;
+
+public class Player extends Actor {
     public static final int HORIZONTAL = 1;
     public static final int VERTICAL = 2;
     private int mDirection = 0;
 
+    private PlayerInfo mPlayerInfo;
+
     private Texture mImage;
-    private FreeTypeFontGenerator mGeneratror;
     private BitmapFont mFont;
 
     private String mName = "刘备";
     private int mGold = 10000;
 
-    public Head() {
+    public Player() {
         this(HORIZONTAL);
     }
 
-    public Head(int direction) {
+    public Player(int direction) {
         mDirection = direction;
 
         mImage = new Texture("Head/Head0.png");
-//        mGeneratror = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
-//        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-//        parameter.size = 30;
-//        parameter.characters = mName + "0123456789";
-//        mFont = mGeneratror.generateFont(parameter);
         mFont = Assets.getInstance().getFont();
         mFont.setColor(Color.GREEN);
 
@@ -42,6 +38,18 @@ public class Head extends Actor {
             setSize(200, 102);
         } else {
             setSize(102, 150);
+        }
+    }
+
+    public void setPlayerInfo(PlayerInfo playerInfo) {
+        if (playerInfo == null) {
+            return;
+        }
+
+        mPlayerInfo = playerInfo;
+
+        if (mPlayerInfo.getSex() == 1) {
+            mImage = new Texture("Head/Head1.png");
         }
     }
 
