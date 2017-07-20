@@ -241,42 +241,47 @@ public class GameScreen extends BaseScreen {
             return;
         }
 
-        mMyHands.updateMahjs(0, playerDatas.get(0));
-        mLeftHands.updateMahjs(3, playerDatas.get(3));
-        mRightHands.updateMahjs(1, playerDatas.get(1));
-        mTopHands.updateMahjs(2, playerDatas.get(2));
+        MahjGroupData myGroupData = playerDatas.get(getPlayerIdByPosition(0));
+        MahjGroupData rightGroupData = playerDatas.get(getPlayerIdByPosition(1));
+        MahjGroupData topGroupData = playerDatas.get(getPlayerIdByPosition(2));
+        MahjGroupData leftGroupData = playerDatas.get(getPlayerIdByPosition(3));
 
-        if (playerDatas.get(1) != null) {
-            if (playerDatas.get(1).getOperateType() != 0) {
+        mMyHands.updateMahjs(0, myGroupData);
+        mRightHands.updateMahjs(1, rightGroupData);
+        mTopHands.updateMahjs(2, topGroupData);
+        mLeftHands.updateMahjs(3, leftGroupData);
+
+        if (rightGroupData != null) {
+            if (rightGroupData.getOperateType() != 0) {
                 mMatch.setPosition(980, 340);
-                mMatch.update(playerDatas.get(1).getOperateType());
-                playerDatas.get(1).setOperateType(0);
+                mMatch.update(rightGroupData.getOperateType());
+                rightGroupData.setOperateType(0);
             }
-            mRightOuts.setOutMahjongs(playerDatas.get(1).getOutDatas());
+            mRightOuts.setOutMahjongs(rightGroupData.getOutDatas());
         }
-        if (playerDatas.get(2) != null) {
-            if (playerDatas.get(2).getOperateType() != 0) {
+        if (topGroupData != null) {
+            if (topGroupData.getOperateType() != 0) {
                 mMatch.setPosition(550, 450);
-                mMatch.update(playerDatas.get(2).getOperateType());
-                playerDatas.get(2).setOperateType(0);
+                mMatch.update(topGroupData.getOperateType());
+                topGroupData.setOperateType(0);
             }
-            mTopOuts.setOutMahjongs(playerDatas.get(2).getOutDatas());
+            mTopOuts.setOutMahjongs(topGroupData.getOutDatas());
         }
-        if (playerDatas.get(3) != null) {
-            if (playerDatas.get(3).getOperateType() != 0) {
+        if (leftGroupData != null) {
+            if (leftGroupData.getOperateType() != 0) {
                 mMatch.setPosition(200, 340);
-                mMatch.update(playerDatas.get(3).getOperateType());
-                playerDatas.get(3).setOperateType(0);
+                mMatch.update(leftGroupData.getOperateType());
+                leftGroupData.setOperateType(0);
             }
-            mLeftOuts.setOutMahjongs(playerDatas.get(3).getOutDatas());
+            mLeftOuts.setOutMahjongs(leftGroupData.getOutDatas());
         }
-        if (playerDatas.get(0) != null) {
-            if (playerDatas.get(0).getOperateType() != 0) {
+        if (myGroupData != null) {
+            if (myGroupData.getOperateType() != 0) {
                 mMatch.setPosition(550, 150);
-                mMatch.update(playerDatas.get(0).getOperateType());
-                playerDatas.get(0).setOperateType(0);
+                mMatch.update(myGroupData.getOperateType());
+                myGroupData.setOperateType(0);
             }
-            mMyOuts.setOutMahjongs(playerDatas.get(0).getOutDatas());
+            mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
 
             int matchType = 0;
             MahjData latestData = playerDatas.get(0).getLatestData();
@@ -308,5 +313,13 @@ public class GameScreen extends BaseScreen {
         if (!mTime.isAnimation()) {
             mTime.updateCurrPlayer(mController.getCurrentPlayer());
         }
+    }
+
+    private int getPlayerIdByPosition(int position) {
+        int playerId = position + mController.getOwnerPlayerIndex();
+        if (playerId >= 4) {
+            playerId = playerId - 4;
+        }
+        return playerId;
     }
 }

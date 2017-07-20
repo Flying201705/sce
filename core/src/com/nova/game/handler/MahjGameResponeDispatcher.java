@@ -1,18 +1,22 @@
 package com.nova.game.handler;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.nova.game.model.MahjGameController;
+import com.nova.game.model.MahjRoomController;
 import com.nova.net.netty.handler.ResponseDispatcherManager;
 
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
-import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.game.mahjong.data.MahjResponeData;
 import nova.common.game.mahjong.data.MahjResponeResolver;
 import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.game.mahjong.util.MahjGameCommand;
+import nova.common.room.data.PlayerInfo;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -29,6 +33,9 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         switch (commandId) {
             case MahjGameCommand.RESPONE_GAME_INFO_UPDATE:
                 processorGameInfoChange(message);
+                break;
+            case MahjGameCommand.RESPONE_ROOM_INFO_UPDATE:
+                processorRoomInfoChange(message);
                 break;
             default:
                 break;
@@ -58,5 +65,22 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
 
     private void updateGroupDatas(MahjResponeData responeData) {
         MahjGameController.getInstance().setGroupDatas(MahjResponeResolver.getGroupDatasForResponeData(responeData));
+    }
+
+    private void processorRoomInfoChange(String message) {
+        try {
+            JsonObject json = new JsonParser().parse(message).getAsJsonObject();
+            int roomId = json.get("room").getAsInt();
+            Type type = new TypeToken<ArrayList<PlayerInfo>>() {}.getType();
+            Gson gson = new Gson();
+            ArrayList<PlayerInfo> infos = gson.fromJson(json.get("players").toString(), type);
+            HashMap<Integer, PlayerInfo> playerInfos = new HashMap<Integer, PlayerInfo>();
+            for (int i = 0; i < infos.size(); i++) {
+                playerInfos.put(i, infos.get(i));
+            }
+            MahjRoomController.getInstance().setPlayerInfos(playerInfos);
+        } catch (Exception e) {
+            GameLogger.getInstance().e("MahjGameResponeDispatcher", "processorRoomInfoChange, e = " + e.toString());
+        }
     }
 }

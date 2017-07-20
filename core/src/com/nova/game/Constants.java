@@ -1,6 +1,8 @@
 package com.nova.game;
 
 public class Constants {
+    public static final int TEST_PLAYER_ID = 100;
+
     public static final int WORLD_WIDTH = 1280;
     public static final int WORLD_HEIGHT = 720;
 

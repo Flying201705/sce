@@ -58,6 +58,10 @@ public class MahjGameController {
 	public void setGameData(MahjGameData data) {
 		mGameData = data;
 	}
+
+	public int getOwnerPlayerIndex() {
+		return MahjRoomController.getInstance().getOwnerPlayerIndex();
+	}
 	
 	public int getBanker() {
 		return mGameData.getBanker();
