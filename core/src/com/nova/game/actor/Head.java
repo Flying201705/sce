@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nova.game.assetmanager.Assets;
 
 public class Head extends Actor {
     public static final int HORIZONTAL = 1;
@@ -29,11 +30,12 @@ public class Head extends Actor {
         mDirection = direction;
 
         mImage = new Texture("Head/Head0.png");
-        mGeneratror = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
-        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
-        parameter.size = 30;
-        parameter.characters = mName + "0123456789";
-        mFont = mGeneratror.generateFont(parameter);
+//        mGeneratror = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
+//        FreeTypeFontParameter parameter = new FreeTypeFontParameter();
+//        parameter.size = 30;
+//        parameter.characters = mName + "0123456789";
+//        mFont = mGeneratror.generateFont(parameter);
+        mFont = Assets.getInstance().getFont();
         mFont.setColor(Color.GREEN);
 
         if (mDirection == HORIZONTAL) {

@@ -1,9 +1,14 @@
 package com.nova.game.assetmanager;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
 import com.nova.game.Constants;
 
 public class Assets {
@@ -25,8 +30,9 @@ public class Assets {
         }
 
         loadMahjTexture();
+        loadFont();
 
-        mAssetManager.finishLoading();
+//        mAssetManager.finishLoading();
     }
 
     private void loadMahjTexture() {
@@ -34,6 +40,23 @@ public class Assets {
         addTexture("SceneGame/2/handmah_");
         addTexture("SceneGame/2/mingmah_");
         addTexture("SceneGame/3/mingmah_");
+    }
+
+    private void loadFont() {
+        // set the loaders for the generator and the fonts themselves
+        FileHandleResolver resolver = new InternalFileHandleResolver();
+        mAssetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
+        mAssetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+
+        // load to fonts via the generator (implicitely done by the FreetypeFontLoader).
+        // Note: you MUST specify a FreetypeFontGenerator defining the ttf font file name and the size
+        // of the font to be generated. The names of the fonts are arbitrary and are not pointing
+        // to a file on disk!
+        FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
+        size1Params.fontFileName = "Font/font.ttf";
+        size1Params.fontParameters.characters += "刘备";
+        size1Params.fontParameters.size = 30;
+        mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
     }
 
     private void addTexture(String path) {
@@ -66,6 +89,10 @@ public class Assets {
 
     public Texture getMahjMatchRightTexture(int index) {
         return mAssetManager.get("SceneGame/1/mingmah_" + index + ".png");
+    }
+
+    public BitmapFont getFont() {
+        return mAssetManager.get("size30.ttf");
     }
 
     public void clear() {
