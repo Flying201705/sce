@@ -1,5 +1,7 @@
 package com.nova.game.model;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,6 +15,7 @@ public class MahjGameController {
 	private MahjController mManager;
 	private MahjGameData mGameData;
 	private HashMap<Integer, MahjGroupData> mGroupDatas = new HashMap<Integer, MahjGroupData>();
+	private int mMatchType = 0;
 	
 	private MahjGameController(String type) {
 		createGameManagerByType(type);
@@ -86,17 +89,45 @@ public class MahjGameController {
 	public void setGroupDatas(HashMap<Integer, MahjGroupData> groupDatas) {
 		mGroupDatas.clear();
 		mGroupDatas.putAll(groupDatas);
+		updateMatchType();
 	}
 	
 	public HashMap<Integer, MahjGroupData> getGroupDatas() {
 		return mGroupDatas;
 	}
-	
+
+	public int getMatchType() {
+		return mMatchType;
+	}
+
 	public void handleOutData(int data) {
 		mManager.activeOutData(0, data);
 	}
 	
 	public void handleMatchData(int matchType) {
 		mManager.activeOperateData(0, matchType);
+	}
+
+	private void updateMatchType() {
+		mMatchType = 0;
+		int ownerPlayerId = getOwnerPlayerIndex();
+		if (mGroupDatas.get(ownerPlayerId) == null) {
+			return;
+		}
+
+        if (mGameData.getCurrent() == ownerPlayerId) {
+			mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
+			MahjData latestData = mGroupDatas.get(ownerPlayerId).getLatestData();
+			if (latestData != null && latestData.getIndex() != 0) {
+				mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
+			}
+		} else {
+			if (mGroupDatas.get(getCurrentPlayer()) != null) {
+				ArrayList<MahjData> outDatas = mGroupDatas.get(getCurrentPlayer()).getOutDatas();
+				if (outDatas != null && outDatas.size() > 0) {
+					mMatchType = mGroupDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
+				}
+			}
+		}
 	}
 }

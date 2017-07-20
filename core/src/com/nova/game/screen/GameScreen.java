@@ -282,26 +282,10 @@ public class GameScreen extends BaseScreen {
                 myGroupData.setOperateType(0);
             }
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
+        }
 
-            int matchType = 0;
-            MahjData latestData = playerDatas.get(0).getLatestData();
-            if (latestData != null && latestData.getIndex() != 0) {
-                matchType = playerDatas.get(0).updateMatchTypeForGetMahj();
-                Gdx.app.log("liuhao", "--1-- matchType=" + matchType);
-            }
-            if (matchType == 0 && playerDatas.get(mController.getCurrentPlayer()) != null) {
-                ArrayList<MahjData> outDatas = playerDatas.get(mController.getCurrentPlayer()).getOutDatas();
-                if (outDatas != null && outDatas.size() > 0) {
-                    matchType = playerDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
-                    Gdx.app.log("liuhao", "--2-- matchType=" + matchType);
-                }
-            }
-
-            if (matchType > 0 && mMatchType != matchType) {
-                mMatchType = matchType;
-                mTime.startThinkingTime();
-                mOperationButton.update(matchType);
-            }
+        if (mController.getMatchType() > 0) {
+            mOperationButton.update(mController.getMatchType());
         }
     }
 

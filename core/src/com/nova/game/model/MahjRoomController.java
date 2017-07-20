@@ -41,6 +41,7 @@ public class MahjRoomController {
     private static MahjRoomController mController;
 
     private int mRoomId = -1;
+    private int mOwnerPlayerIndex = 0;
     private HashMap<Integer, PlayerInfo> mPlayerInfos = new HashMap<Integer, PlayerInfo>();
     private HashMap<Integer, Sound> mPlayerSounds = new HashMap<Integer, Sound>();
     private HashMap<Integer, ChatMessage> mPlayerMessages = new HashMap<Integer, ChatMessage>();
@@ -89,6 +90,7 @@ public class MahjRoomController {
     public void setPlayerInfos(HashMap<Integer, PlayerInfo> players) {
         mPlayerInfos.clear();
         mPlayerInfos.putAll(players);
+        updateOwnerPlayerIndex();
     }
 
     public HashMap<Integer, PlayerInfo> getPlayerInfos() {
@@ -96,13 +98,7 @@ public class MahjRoomController {
     }
 
     public int getOwnerPlayerIndex() {
-        for (int i = 0; i < mPlayerInfos.size(); i++) {
-            if (mPlayerInfos.get(i).getId() == Constants.TEST_PLAYER_ID) {
-                return i;
-            }
-        }
-
-        return 0;
+        return mOwnerPlayerIndex;
     }
 
     public void addPlayerSound(int playerId, Sound sound) {
@@ -189,4 +185,12 @@ public class MahjRoomController {
         return 0;
     }
 
+    private void updateOwnerPlayerIndex() {
+        for (int i = 0; i < mPlayerInfos.size(); i++) {
+            if (mPlayerInfos.get(i).getId() == Constants.TEST_PLAYER_ID) {
+                mOwnerPlayerIndex = i;
+                break;
+            }
+        }
+    }
 }

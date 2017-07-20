@@ -10,6 +10,7 @@ import com.nova.game.widget.SceButton;
 import nova.common.game.mahjong.util.MahjConstant;
 
 public class OperationButton extends HorizontalGroup {
+    private int mMatchType = 0;
     private SceButton mPengButton;
     private SceButton mGangButton;
     private SceButton mChiButton;
@@ -73,33 +74,41 @@ public class OperationButton extends HorizontalGroup {
     }
 
     public void update(int matchType) {
-        if ((matchType & MahjConstant.MAHJ_MATCH_PENG) == MahjConstant.MAHJ_MATCH_PENG) {
-            addActor(mPengButton);
+        if (mMatchType == matchType) {
+            return;
         }
 
-        if ((matchType & MahjConstant.MAHJ_MATCH_GANG) == MahjConstant.MAHJ_MATCH_GANG) {
-            addActor(mGangButton);
-        }
-
-        if ((matchType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU) {
-            addActor(mHuButton);
-        }
-
-        if ((matchType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
-            addActor(mTingButton);
-        }
-
-        if ((matchType & MahjConstant.MAHJ_MATCH_CHI) == MahjConstant.MAHJ_MATCH_CHI) {
-            addActor(mChiButton);
-        }
-
-        if (matchType > 0) {
-            addActor(mGuoButton);
-        }
+        mMatchType = matchType;
+        updateMatchButton();
     }
 
     public void setButtonClickListener(ButtonClickListener listener) {
         mButtonClickListener = listener;
     }
 
+    private void updateMatchButton() {
+        if ((mMatchType & MahjConstant.MAHJ_MATCH_PENG) == MahjConstant.MAHJ_MATCH_PENG) {
+            addActor(mPengButton);
+        }
+
+        if ((mMatchType & MahjConstant.MAHJ_MATCH_GANG) == MahjConstant.MAHJ_MATCH_GANG) {
+            addActor(mGangButton);
+        }
+
+        if ((mMatchType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU) {
+            addActor(mHuButton);
+        }
+
+        if ((mMatchType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
+            addActor(mTingButton);
+        }
+
+        if ((mMatchType & MahjConstant.MAHJ_MATCH_CHI) == MahjConstant.MAHJ_MATCH_CHI) {
+            addActor(mChiButton);
+        }
+
+        if (mMatchType > 0) {
+            addActor(mGuoButton);
+        }
+    }
 }
