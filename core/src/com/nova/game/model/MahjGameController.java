@@ -8,6 +8,7 @@ import java.util.HashMap;
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.util.MahjConstant;
 
 public class MahjGameController {
 	private static final Object mLock = new Object();
@@ -87,9 +88,10 @@ public class MahjGameController {
 	}
 	
 	public void setGroupDatas(HashMap<Integer, MahjGroupData> groupDatas) {
+		boolean isOwnerOut = isOwnerOut(groupDatas);
 		mGroupDatas.clear();
 		mGroupDatas.putAll(groupDatas);
-		updateMatchType();
+		updateMatchType(isOwnerOut);
 	}
 	
 	public HashMap<Integer, MahjGroupData> getGroupDatas() {
@@ -108,26 +110,54 @@ public class MahjGameController {
 		mManager.activeOperateData(0, matchType);
 	}
 
-	private void updateMatchType() {
+	private void updateMatchType(boolean isOwnerOut) {
 		mMatchType = 0;
 		int ownerPlayerId = getOwnerPlayerIndex();
 		if (mGroupDatas.get(ownerPlayerId) == null) {
 			return;
 		}
 
-        if (mGameData.getCurrent() == ownerPlayerId) {
+        if (getCurrentPlayer() == ownerPlayerId) {
 			mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
 			MahjData latestData = mGroupDatas.get(ownerPlayerId).getLatestData();
 			if (latestData != null && latestData.getIndex() != 0) {
 				mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
 			}
 		} else {
-			if (mGroupDatas.get(getCurrentPlayer()) != null) {
+			if (isOwnerOut) {
+				mMatchType = mGroupDatas.get(ownerPlayerId).getTingDatas().size() > 0 ? MahjConstant.MAHJ_MATCH_TING : 0;
+			} else if (mGroupDatas.get(getCurrentPlayer()) != null) {
 				ArrayList<MahjData> outDatas = mGroupDatas.get(getCurrentPlayer()).getOutDatas();
 				if (outDatas != null && outDatas.size() > 0) {
-					mMatchType = mGroupDatas.get(0).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
+					mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
 				}
 			}
 		}
+	}
+
+	private boolean isOwnerOut(HashMap<Integer, MahjGroupData> groups) {
+		int ownerPlayerId = getOwnerPlayerIndex();
+		if (mGroupDatas.get(ownerPlayerId) == null) {
+			return false;
+		}
+
+		boolean isOwnerOutDataAdd = isOutDatasAdd(mGroupDatas.get(getOwnerPlayerIndex()).getOutDatas(), groups.get(getOwnerPlayerIndex()).getOutDatas());
+		boolean isOtherOutDataAdd = false;
+		for (int i = 0; i < groups.size(); i++) {
+			if (getOwnerPlayerIndex() == i) {
+				continue;
+			}
+			if (isOutDatasAdd(mGroupDatas.get(i).getOutDatas(), groups.get(i).getOutDatas())) {
+				isOtherOutDataAdd = true;
+				break;
+			}
+		}
+		return isOwnerOutDataAdd && !isOtherOutDataAdd;
+	}
+
+	private boolean isOutDatasAdd(ArrayList<MahjData> oldOutDatas, ArrayList<MahjData> newOutDatas) {
+		int oldOutDataSize = oldOutDatas != null ? oldOutDatas.size() : 0;
+		int newOutDataSize = newOutDatas != null ? newOutDatas.size() : 0;
+		return newOutDataSize > oldOutDataSize;
 	}
 }

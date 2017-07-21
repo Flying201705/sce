@@ -53,8 +53,6 @@ public class GameScreen extends BaseScreen {
     private OperationButton mOperationButton;
     private boolean mIsDealt = false;
 
-    private int mMatchType;
-
     private MahjGameController mController = MahjGameController.create(getGameType());
 
     private TimeUnit.TimeUnitListener mTimeListener = new TimeUnit.TimeUnitListener() {
