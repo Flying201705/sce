@@ -281,9 +281,7 @@ public class GameScreen extends BaseScreen {
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
         }
 
-        if (mController.getMatchType() > 0) {
-            mOperationButton.update(mController.getMatchType());
-        }
+        mOperationButton.update(mController.getMatchType());
     }
 
     private void updateTimeUint() {

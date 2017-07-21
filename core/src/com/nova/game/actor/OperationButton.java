@@ -87,6 +87,7 @@ public class OperationButton extends HorizontalGroup {
     }
 
     private void updateMatchButton() {
+        clear();
         if ((mMatchType & MahjConstant.MAHJ_MATCH_PENG) == MahjConstant.MAHJ_MATCH_PENG) {
             addActor(mPengButton);
         }
