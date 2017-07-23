@@ -1,6 +1,7 @@
 package com.nova.game.actor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,15 +13,17 @@ import java.util.ArrayList;
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGroupData;
 
-public class MyHandMahjongs extends HorizontalGroup {
+public class MyHandMahjongs extends Group {
     private Assets mAssets;
-    private HorizontalGroup mMatchs;
-    private HorizontalGroup mHands;
+    private Group mMatchs;
+    private Group mHands;
     private MahjActor mLastestMahj;
     private ArrayList<MahjData> mMactchMahjs;
     private ArrayList<MahjData> mHandMahjs;
 
     private handOutDataCallback mCallback;
+
+    private float mMatchX, mHandsX, mCurrY;
 
     public interface handOutDataCallback {
         void handleOutData(int index);
@@ -29,10 +32,8 @@ public class MyHandMahjongs extends HorizontalGroup {
     public MyHandMahjongs() {
         mAssets = Assets.getInstance();
 
-        mMatchs = new HorizontalGroup();
-
-        mHands = new HorizontalGroup();
-        mHands.space(-2);
+        mMatchs = new Group();
+        mHands = new Group();
 
         mLastestMahj = new MahjActor();
         mLastestMahj.setScale(0.8f);
@@ -64,6 +65,9 @@ public class MyHandMahjongs extends HorizontalGroup {
         if (mahjGroupData == null) {
             return;
         }
+
+        mCurrY = getY();
+
         setMatchMahjs(mahjGroupData.getMatchDatas());
         setHandMahjs(mahjGroupData.getDatas());
         setLastestMahjong(mahjGroupData.getLatestData());
@@ -77,11 +81,30 @@ public class MyHandMahjongs extends HorizontalGroup {
         mMactchMahjs = mahjs;
         mMatchs.clear();
 
+        mMatchX = getX();
+
+        int count = 0, index = 0;
         for (MahjData mahj : mahjs) {
             MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahj.getIndex()));
             mahjActor.setScale(0.6f);
             mMatchs.addActor(mahjActor);
+            if (count >= 3) {
+                if (index == mahj.getIndex()) {
+                    count = 0;
+                    mahjActor.setPosition(mMatchX - mahjActor.getWidth(), mCurrY + 10);
+                } else {
+                    count = 0;
+                    mMatchX += mahjActor.getWidth() + 5;
+                    mahjActor.setPosition(mMatchX, mCurrY);
+                }
+            } else {
+                mMatchX += mahjActor.getWidth();
+                mahjActor.setPosition(mMatchX, mCurrY);
+            }
+            count++;
+            index = mahj.getIndex();
         }
+
     }
 
     public void setHandMahjs(ArrayList<MahjData> mahjs) {
@@ -92,12 +115,17 @@ public class MyHandMahjongs extends HorizontalGroup {
         mHandMahjs = mahjs;
         mHands.clear();
 
+        mHandsX = mMatchX + 10;
+
         for (MahjData mahj : mahjs) {
             MahjActor mahjActor = new MahjActor(mAssets.getMahjHandMeTexture(mahj.getIndex()));
             mahjActor.setScale(0.8f);
             mahjActor.setMahjData(mahj);
             mahjActor.setCanStandUp(true);
             mHands.addActor(mahjActor);
+
+            mHandsX += mahjActor.getWidth() - 2;
+            mahjActor.setPosition(mHandsX, mCurrY);
         }
     }
 
@@ -110,6 +138,7 @@ public class MyHandMahjongs extends HorizontalGroup {
             mLastestMahj.standUp(false);
             mLastestMahj.setVisible(false);
         }
+        mLastestMahj.setPosition(mHandsX + mLastestMahj.getWidth() + 10, mCurrY);
     }
 
     public void clearStandUpMahjong() {

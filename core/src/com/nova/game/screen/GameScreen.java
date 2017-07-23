@@ -121,12 +121,12 @@ public class GameScreen extends BaseScreen {
         initPlayer();
 
         mMyHands = new MyHandMahjongs();
-        mMyHands.setPosition(120, 62);
+        mMyHands.setPosition(50, 6);
         mMyHands.sethandOutDataCallback(mCallBack);
         mStage.addActor(mMyHands);
 
         mLeftHands = new LeftHandMahjongs();
-        mLeftHands.setPosition(200, 600);
+        mLeftHands.setPosition(150, 600);
         mStage.addActor(mLeftHands);
 
         mRightHands = new RightHandMahjongs();
@@ -142,7 +142,7 @@ public class GameScreen extends BaseScreen {
         mStage.addActor(mMyOuts);
 
         mRightOuts = new RightOutMahjongs();
-        mRightOuts.setBounds(1000, 200, 205, 305);
+        mRightOuts.setBounds(900, 200, 205, 305);
         mStage.addActor(mRightOuts);
 
         mTopOuts = new TopOutMahjongs();
@@ -150,7 +150,7 @@ public class GameScreen extends BaseScreen {
         mStage.addActor(mTopOuts);
 
         mLeftOuts = new LeftOutMahjongs();
-        mLeftOuts.setBounds(100, 200, 205, 305);
+        mLeftOuts.setBounds(180, 200, 205, 305);
         mStage.addActor(mLeftOuts);
 
         mMatch = new Match();
