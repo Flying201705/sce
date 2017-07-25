@@ -49,7 +49,7 @@ public class Assets {
 
         FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
         size1Params.fontFileName = "Font/font.ttf";
-        size1Params.fontParameters.characters += "刘备";
+        size1Params.fontParameters.characters += "刘备房间号：";
         size1Params.fontParameters.size = 30;
         mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
     }
