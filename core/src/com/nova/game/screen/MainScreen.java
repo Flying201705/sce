@@ -103,6 +103,12 @@ public class MainScreen extends BaseScreen {
         mStage.addActor(startButton);
 
         Button createButton = new SceButton("SceneMain/bt_create.png");
+        createButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mGame.setScreen(new PrivateScreen(mGame));
+            }
+        });
         createButton.setPosition(900, 300);
         mStage.addActor(createButton);
 
