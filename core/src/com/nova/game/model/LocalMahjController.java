@@ -17,7 +17,7 @@ public class LocalMahjController extends MahjController {
 	public void startGame() {
 		super.startGame();
 		/**---测试程序开始---**/
-		TestMahjConstant.setDebug(1);
+		TestMahjConstant.setDebug(4);
 		/**---测试程序结束---**/
 		RoomManager room = RoomController.getInstance(GameCommand.GAME_TYPE_MAHJ).getRoomManager(-1);
 		MahjGameManager gameManager = (MahjGameManager)room.getGameManager();
@@ -28,9 +28,9 @@ public class LocalMahjController extends MahjController {
 	}
 	
 	@Override
-	public void activeOutData(int playerId, int index) {
-		super.activeOutData(playerId, index);
-		mDispatcher.activeOutData(playerId, index);
+	public void activeOutData(int playerId, int data) {
+		super.activeOutData(playerId, data);
+		mDispatcher.activeOutData(playerId, data);
 	}
 	
 	@Override

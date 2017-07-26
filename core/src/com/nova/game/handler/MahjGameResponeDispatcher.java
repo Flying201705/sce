@@ -71,6 +71,7 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         try {
             JsonObject json = new JsonParser().parse(message).getAsJsonObject();
             int roomId = json.get("room").getAsInt();
+            MahjRoomController.getInstance().setRoomId(roomId);
             Type type = new TypeToken<ArrayList<PlayerInfo>>() {}.getType();
             Gson gson = new Gson();
             ArrayList<PlayerInfo> infos = gson.fromJson(json.get("players").toString(), type);

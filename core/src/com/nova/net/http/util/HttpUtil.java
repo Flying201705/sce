@@ -1,6 +1,5 @@
 package com.nova.net.http.util;
 
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net.HttpRequest;
 import com.badlogic.gdx.Net.HttpMethods;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.Net.HttpResponseListener;
 import com.badlogic.gdx.Net.HttpResponse;
 import com.badlogic.gdx.net.HttpParametersUtils;
 import com.badlogic.gdx.net.HttpStatus;
-
 import java.util.HashMap;
 
 import nova.common.game.mahjong.handler.GameLogger;

@@ -29,7 +29,27 @@ public class GameRequestDispatcher {
         JsonObject json = new JsonObject();
         json.addProperty("player", Constants.TEST_PLAYER_ID);
         json.addProperty("com", MahjGameCommand.REQUEST_GAME_ROOM_START);
-        json.addProperty("room", String.valueOf(room));
+        json.addProperty("room", room);
+        mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
+    }
+
+    public void activeOutData(int room, int playerId, int data) {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("com", MahjGameCommand.REQUEST_OUT_DATA);
+        json.addProperty("room", room);
+        json.addProperty("index", playerId);
+        json.addProperty("data", data);
+        mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
+    }
+
+    public void activeOperateData(int room, int playerId, int operateType) {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("com", MahjGameCommand.REQUEST_OPERATE_DATA);
+        json.addProperty("room", room);
+        json.addProperty("index", playerId);
+        json.addProperty("operate", operateType);
         mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
     }
 }

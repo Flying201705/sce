@@ -17,7 +17,7 @@ class MahjController implements MahjGameDispatcher {
 	}
 
 	@Override
-	public void activeOutData(int playerId, int index) {
+	public void activeOutData(int playerId, int data) {
 		
 	}
 	

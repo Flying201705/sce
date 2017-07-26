@@ -103,11 +103,11 @@ public class MahjGameController {
 	}
 
 	public void handleOutData(int data) {
-		mManager.activeOutData(0, data);
+		mManager.activeOutData(getOwnerPlayerIndex(), data);
 	}
 	
 	public void handleMatchData(int matchType) {
-		mManager.activeOperateData(0, matchType);
+		mManager.activeOperateData(getOwnerPlayerIndex(), matchType);
 	}
 
 	private void updateMatchType(boolean isOwnerOut) {
