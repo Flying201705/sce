@@ -36,6 +36,7 @@ import com.nova.game.widget.SceButton;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.room.data.PlayerInfo;
 
 public class PrivateScreen extends BaseScreen {
     private BaseStage mStage;
@@ -58,6 +59,7 @@ public class PrivateScreen extends BaseScreen {
     private Match mMatch;
     private OperationButton mOperationButton;
     private boolean mIsDealt = false;
+    private boolean mWaitFriend = false;
 
     private BitmapFont mFont;
     private int mRoomId;
@@ -114,7 +116,7 @@ public class PrivateScreen extends BaseScreen {
         mBg = new Texture("SceneGame/background.jpg");
         mFont = Assets.getInstance().getFont();
 
-        mRoomId = (int)((Math.random()*9+1)*100000); // mRoomController.getRoomId();
+        mRoomId = (int) ((Math.random() * 9 + 1) * 100000); // mRoomController.getRoomId();
         Label roomSting = new Label("房间号：" + String.valueOf(mRoomId), new Label.LabelStyle(mFont, Color.DARK_GRAY));
         roomSting.setPosition((Constants.WORLD_WIDTH - roomSting.getWidth()) / 2, 200);
         mStage.addActor(roomSting);
@@ -124,7 +126,8 @@ public class PrivateScreen extends BaseScreen {
         wxInvite.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mTime.startTime();
+                event.getTarget().setVisible(false);
+                addPlayers();
             }
         });
         mStage.addActor(wxInvite);
@@ -140,9 +143,11 @@ public class PrivateScreen extends BaseScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 mTime.startTime();
+                mController.startGame();
             }
         });
-//        mStage.addActor(mStartBt);
+        mStartBt.setVisible(false);
+        mStage.addActor(mStartBt);
 
         initPlayer();
 
@@ -217,6 +222,8 @@ public class PrivateScreen extends BaseScreen {
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mBatch.end();
 
+        waitFriend();
+        addDebugPlayer();
         updateTimeUint();
         updateMahjong();
 
@@ -327,5 +334,62 @@ public class PrivateScreen extends BaseScreen {
             playerId = playerId - 4;
         }
         return playerId;
+    }
+
+    private void addPlayers() {
+        mWaitFriend = true;
+    }
+
+    private void waitFriend() {
+        if (!mWaitFriend) {
+            return;
+        }
+
+        HashMap<Integer, PlayerInfo> players = mRoomController.getPlayerInfos();
+        if (players.get(1) != null) {
+            mRightPlayer.setPlayerInfo(players.get(1));
+            mRightPlayer.setVisible(true);
+        }
+
+        if (players.get(2) != null) {
+            mTopPlayer.setPlayerInfo(players.get(2));
+            mTopPlayer.setVisible(true);
+        }
+
+        if (players.get(3) != null) {
+            mLeftPlayer.setPlayerInfo(players.get(2));
+            mLeftPlayer.setVisible(true);
+        }
+
+        if (mRightPlayer.getPlayerInfo() != null && mLeftPlayer.getPlayerInfo() != null && mTopPlayer.getPlayerInfo() != null) {
+            mWaitFriend = false;
+            mStartBt.setVisible(true);
+        }
+    }
+
+    private float time = 0;
+    private void addDebugPlayer() {
+        if (!mWaitFriend) {
+            return;
+        }
+
+        time += Gdx.graphics.getDeltaTime();
+
+        if (time >= 1f) {
+            time = 0;
+            if (mRightPlayer.getPlayerInfo() == null) {
+                PlayerInfo playerInfo = new PlayerInfo(1, "关羽", null, 0);
+                mRightPlayer.setPlayerInfo(playerInfo);
+                mRightPlayer.setVisible(true);
+            } else if (mTopPlayer.getPlayerInfo() == null) {
+                PlayerInfo playerInfo = new PlayerInfo(2, "张飞", null, 0);
+                mTopPlayer.setPlayerInfo(playerInfo);
+                mTopPlayer.setVisible(true);
+            } else if (mLeftPlayer.getPlayerInfo() == null) {
+                PlayerInfo playerInfo = new PlayerInfo(2, "小乔", null, 1);
+                mLeftPlayer.setPlayerInfo(playerInfo);
+                mLeftPlayer.setVisible(true);
+            }
+        }
     }
 }

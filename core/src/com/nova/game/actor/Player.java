@@ -48,9 +48,15 @@ public class Player extends Actor {
 
         mPlayerInfo = playerInfo;
 
+        mName = mPlayerInfo.getName();
         if (mPlayerInfo.getSex() == 1) {
             mImage = new Texture("Head/Head1.png");
         }
+
+    }
+
+    public PlayerInfo getPlayerInfo() {
+        return mPlayerInfo;
     }
 
     @Override
