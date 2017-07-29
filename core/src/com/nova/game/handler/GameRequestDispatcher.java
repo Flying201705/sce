@@ -18,6 +18,21 @@ public class GameRequestDispatcher {
         mChannel = ChannelManager.getInstance();
     }
 
+    public void createRoom() {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("com", MahjGameCommand.REQUEST_ROOM_CREATE);
+        mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
+    }
+
+    public void joinRoom(int room) {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("com", MahjGameCommand.REQUEST_ROOM_JOIN);
+        json.addProperty("room", room);
+        mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
+    }
+
     public void startGame() {
         JsonObject json = new JsonObject();
         json.addProperty("player", Constants.TEST_PLAYER_ID);
