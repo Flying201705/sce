@@ -6,6 +6,9 @@ public class Constants {
     public static final int WORLD_WIDTH = 1280;
     public static final int WORLD_HEIGHT = 720;
 
+    public static final int DEFAULT_DIALOG_WIDTH = 800;
+    public static final int DEFAULT_DIALOG_HEIGHT = 630;
+
     public static final int MAHJ_COUNT = 136;
     public static final int MAHJ_DOTS_INDEX = 1; // 筒
     public static final int MAHJ_BAMBOO_INDEX = 2; // 条

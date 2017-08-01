@@ -14,6 +14,7 @@ import com.nova.game.BaseGame;
 import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
+import com.nova.game.dialog.JoinRoomDialog;
 import com.nova.game.widget.SceButton;
 
 public class MainScreen extends BaseScreen {
@@ -113,6 +114,13 @@ public class MainScreen extends BaseScreen {
         mStage.addActor(createButton);
 
         Button addButton = new SceButton("SceneMain/bt_add.png");
+        addButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                JoinRoomDialog dialog = new JoinRoomDialog("");
+                mStage.addActor(dialog);
+            }
+        });
         addButton.setPosition(900, 150);
         mStage.addActor(addButton);
     }
