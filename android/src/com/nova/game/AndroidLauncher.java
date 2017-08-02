@@ -7,9 +7,12 @@ import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.nova.game.handler.MahjGameResponeDispatcher;
 import com.nova.net.http.util.UserUtil;
 import com.nova.net.netty.ChannelManager;
+import com.nova.net.netty.handler.ResponseDispatcherManager;
 
+import nova.common.GameCommand;
 import nova.common.game.mahjong.handler.GameLogger;
 
 public class AndroidLauncher extends AndroidApplication {
@@ -33,6 +36,8 @@ public class AndroidLauncher extends AndroidApplication {
 
 		//初始化Log模块
 		GameLogger.create(new Log());
+        // 初始化ResponeDispatcher
+        ResponseDispatcherManager.getInstance().addGameResponseDispatcher(GameCommand.GAME_TYPE_MAHJ, new MahjGameResponeDispatcher());
 
 		// 用户登录
 		new UserUtil().onLogin("76fdsa0dwfscf-fscvae", new UserUtil.onUserResultListener() {

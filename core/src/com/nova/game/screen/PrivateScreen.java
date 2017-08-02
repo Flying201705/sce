@@ -29,6 +29,7 @@ import com.nova.game.actor.TimeUnit;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.model.MahjRoomController;
 import com.nova.game.widget.SceButton;
@@ -36,6 +37,7 @@ import com.nova.game.widget.SceButton;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.room.data.PlayerInfo;
 
 public class PrivateScreen extends BaseScreen {
@@ -62,7 +64,6 @@ public class PrivateScreen extends BaseScreen {
     private boolean mWaitFriend = false;
 
     private BitmapFont mFont;
-    private int mRoomId;
 
     private MahjRoomController mRoomController = MahjRoomController.getInstance();
     private MahjGameController mController = MahjGameController.create(getGameType());
@@ -101,7 +102,7 @@ public class PrivateScreen extends BaseScreen {
 
     public PrivateScreen(BaseGame game) {
         super(game);
-//        mController.startGame();
+        new GameRequestDispatcher().createRoom();
     }
 
     @Override
@@ -116,8 +117,9 @@ public class PrivateScreen extends BaseScreen {
         mBg = new Texture("SceneGame/background.jpg");
         mFont = Assets.getInstance().getFont();
 
-        mRoomId = (int) ((Math.random() * 9 + 1) * 100000); // mRoomController.getRoomId();
-        Label roomSting = new Label("房间号：" + String.valueOf(mRoomId), new Label.LabelStyle(mFont, Color.DARK_GRAY));
+        // int roomId = (int) ((Math.random() * 9 + 1) * 100000);
+        int roomId = mRoomController.getRoomId();
+        Label roomSting = new Label("房间号：" + roomId, new Label.LabelStyle(mFont, Color.DARK_GRAY));
         roomSting.setPosition((Constants.WORLD_WIDTH - roomSting.getWidth()) / 2, 200);
         mStage.addActor(roomSting);
 
@@ -223,7 +225,7 @@ public class PrivateScreen extends BaseScreen {
         mBatch.end();
 
         waitFriend();
-        addDebugPlayer();
+        // addDebugPlayer();
         updateTimeUint();
         updateMahjong();
 

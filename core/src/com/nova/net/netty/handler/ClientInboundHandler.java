@@ -6,6 +6,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.HttpContent;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpResponse;
+import nova.common.game.mahjong.handler.GameLogger;
 
 public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
 
@@ -27,6 +28,7 @@ public class ClientInboundHandler extends ChannelInboundHandlerAdapter {
 			ByteBuf messageData = (ByteBuf) msg;
 			int gameType = messageData.readInt();
 			int commandId = messageData.readInt();
+			GameLogger.getInstance().e("ClientInboundHandler", "channelRead, commandId = " + commandId + ", gameType = " + gameType);
 			if (commandId >= 5000) {
 				if (ResponseDispatcherManager.getInstance().getMessageResponseDispatcher(gameType) != null) {
 					ResponseDispatcherManager.getInstance().getMessageResponseDispatcher(gameType).processor(commandId, messageData);
