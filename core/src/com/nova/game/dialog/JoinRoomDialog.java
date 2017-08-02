@@ -60,6 +60,7 @@ public class JoinRoomDialog extends BaseDialog {
     
     public JoinRoomDialog(String title) {
         super(title);
+        setClip(false);
         
         mTextField = new TextField("", UIUtil.getTextFieldStyle());
         mTextField.setTouchable(Touchable.disabled);
@@ -67,7 +68,7 @@ public class JoinRoomDialog extends BaseDialog {
         this.addActor(mTextField);
         
         mCancelBtn = new SceButton("Dialog/btn_close.png");
-        mCancelBtn.setPosition(700, 400);
+        mCancelBtn.setPosition(getWidth() - 45, getHeight() - 45);
 
         mDeleteBtn = new SceButton("JoinRoom/btn_del.png");
         mDeleteBtn.setPosition(50, 50);

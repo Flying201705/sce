@@ -60,9 +60,11 @@ public class PrivateScreen extends BaseScreen {
     private LeftOutMahjongs mLeftOuts;
     private Match mMatch;
     private OperationButton mOperationButton;
+    private Label mRoomSting;
     private boolean mIsDealt = false;
     private boolean mWaitFriend = false;
 
+    private int mRoomId;
     private BitmapFont mFont;
 
     private MahjRoomController mRoomController = MahjRoomController.getInstance();
@@ -118,10 +120,10 @@ public class PrivateScreen extends BaseScreen {
         mFont = Assets.getInstance().getFont();
 
         // int roomId = (int) ((Math.random() * 9 + 1) * 100000);
-        int roomId = mRoomController.getRoomId();
-        Label roomSting = new Label("房间号：" + roomId, new Label.LabelStyle(mFont, Color.DARK_GRAY));
-        roomSting.setPosition((Constants.WORLD_WIDTH - roomSting.getWidth()) / 2, 200);
-        mStage.addActor(roomSting);
+        mRoomId = mRoomController.getRoomId();
+        mRoomSting = new Label("房间号：" + mRoomId, new Label.LabelStyle(mFont, Color.DARK_GRAY));
+        mRoomSting.setPosition((Constants.WORLD_WIDTH - mRoomSting.getWidth()) / 2, 200);
+        mStage.addActor(mRoomSting);
 
         SceButton wxInvite = new SceButton("ScenePrivate/bt_weixin_invite.png");
         wxInvite.setPosition((Constants.WORLD_WIDTH - wxInvite.getWidth()) / 2, 100);
@@ -224,6 +226,7 @@ public class PrivateScreen extends BaseScreen {
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mBatch.end();
 
+        updateRoomId();
         waitFriend();
         // addDebugPlayer();
         updateTimeUint();
@@ -327,6 +330,15 @@ public class PrivateScreen extends BaseScreen {
 
         if (!mTime.isAnimation()) {
             mTime.updateCurrPlayer(mController.getCurrentPlayer());
+        }
+    }
+
+    public void updateRoomId() {
+        int roomId = mRoomController.getRoomId();
+        if (mRoomId != roomId) {
+            mRoomId = roomId;
+            mRoomSting.setText("房间号：" + roomId);
+            mRoomSting.setPosition((Constants.WORLD_WIDTH - mRoomSting.getWidth()) / 2, 200);
         }
     }
 
