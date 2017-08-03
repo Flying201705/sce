@@ -45,10 +45,9 @@ public class MahjRoomController {
     private HashMap<Integer, PlayerInfo> mPlayerInfos = new HashMap<Integer, PlayerInfo>();
     private HashMap<Integer, Sound> mPlayerSounds = new HashMap<Integer, Sound>();
     private HashMap<Integer, ChatMessage> mPlayerMessages = new HashMap<Integer, ChatMessage>();
-    private boolean mRoomCreateComplete = false;
-    private boolean mRoomJoinComplete = false;
     private boolean mRoomStartComplete = false;
-
+    private int mRoomResult = 0;
+    private String mRoomResultReson = "";
     private GameTimer mGameTimer;
 
     private TimerCallback mCallback = new TimerCallback() {
@@ -122,14 +121,6 @@ public class MahjRoomController {
         return null;
     }
 
-    public boolean isRoomCreated() {
-        return mRoomCreateComplete;
-    }
-
-    public boolean isRoomJoin() {
-        return mRoomJoinComplete;
-    }
-
     public boolean isRoomStart() {
         return mRoomStartComplete;
     }
@@ -141,18 +132,20 @@ public class MahjRoomController {
         }
     }
 
-    public void onRoomCreateComplete(int resultCode) {
-        mRoomCreateComplete = true;
-        if (resultCode >= 0) {
-            mRoomId = resultCode;
-        }
+    public void setRoomResult(int result) {
+        mRoomResult = result;
     }
 
-    public void onRoomJoinComplete(int resultCode) {
-        mRoomJoinComplete = true;
-        if (resultCode >= 0) {
-            mRoomId = resultCode;
-        }
+    public int getRoomResult() {
+        return mRoomResult;
+    }
+
+    public void setmRoomResultReson(String reson) {
+        mRoomResultReson = reson;
+    }
+
+    public String getmRoomResultReson() {
+        return mRoomResultReson;
     }
 
     public void replacePlayerPosition(int tarPosition) {

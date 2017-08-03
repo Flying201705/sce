@@ -16,6 +16,7 @@ import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.dialog.JoinRoomDialog;
 import com.nova.game.handler.GameRequestDispatcher;
+import com.nova.game.model.MahjRoomController;
 import com.nova.game.widget.SceButton;
 
 public class MainScreen extends BaseScreen {
@@ -55,6 +56,7 @@ public class MainScreen extends BaseScreen {
 
         mStage.act();
         mStage.draw();
+        updateScreen();
     }
 
     @Override
@@ -108,7 +110,7 @@ public class MainScreen extends BaseScreen {
         createButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mGame.setScreen(new PrivateScreen(mGame));
+                mGame.setScreen(new PrivateScreen(mGame, true));
             }
         });
         createButton.setPosition(900, 300);
@@ -132,5 +134,13 @@ public class MainScreen extends BaseScreen {
         });
         addButton.setPosition(900, 150);
         mStage.addActor(addButton);
+    }
+
+    private void updateScreen() {
+        int result = MahjRoomController.getInstance().getRoomResult();
+        int roomId = MahjRoomController.getInstance().getRoomId();
+        if (result > 0 && roomId >= 0) {
+            mGame.setScreen(new PrivateScreen(mGame));
+        }
     }
 }

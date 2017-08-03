@@ -102,8 +102,14 @@ public class PrivateScreen extends BaseScreen {
     }
 
     public PrivateScreen(BaseGame game) {
+        this(game, false);
+    }
+
+    public PrivateScreen(BaseGame game, boolean isCreateRoom) {
         super(game);
-        new GameRequestDispatcher().createRoom();
+        if (isCreateRoom) {
+            new GameRequestDispatcher().createRoom();
+        }
     }
 
     @Override

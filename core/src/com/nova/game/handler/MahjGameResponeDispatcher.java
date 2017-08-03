@@ -37,6 +37,9 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
             case MahjGameCommand.RESPONE_ROOM_INFO_UPDATE:
                 processorRoomInfoChange(message);
                 break;
+            case 1291:
+                processorRoomJoinResult(message);
+                break;
             default:
                 break;
         }
@@ -83,5 +86,13 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         } catch (Exception e) {
             GameLogger.getInstance().e("MahjGameResponeDispatcher", "processorRoomInfoChange, e = " + e.toString());
         }
+    }
+
+    private void processorRoomJoinResult(String message) {
+        JsonObject json = new JsonParser().parse(message).getAsJsonObject();
+        int result = json.get("result").getAsInt();
+        String reson = json.get("reson").getAsString();
+        MahjRoomController.getInstance().setRoomResult(result);
+        MahjRoomController.getInstance().setmRoomResultReson(reson);
     }
 }
