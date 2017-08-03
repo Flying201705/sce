@@ -64,7 +64,6 @@ public class PrivateScreen extends BaseScreen {
     private boolean mIsDealt = false;
     private boolean mWaitFriend = false;
 
-    private int mRoomId;
     private BitmapFont mFont;
 
     private MahjRoomController mRoomController = MahjRoomController.getInstance();
@@ -119,9 +118,7 @@ public class PrivateScreen extends BaseScreen {
         mBg = new Texture("SceneGame/background.jpg");
         mFont = Assets.getInstance().getFont();
 
-        // int roomId = (int) ((Math.random() * 9 + 1) * 100000);
-        mRoomId = mRoomController.getRoomId();
-        mRoomSting = new Label("房间号：" + mRoomId, new Label.LabelStyle(mFont, Color.DARK_GRAY));
+        mRoomSting = new Label("房间号：- ", new Label.LabelStyle(mFont, Color.DARK_GRAY));
         mRoomSting.setPosition((Constants.WORLD_WIDTH - mRoomSting.getWidth()) / 2, 200);
         mStage.addActor(mRoomSting);
 
@@ -335,11 +332,7 @@ public class PrivateScreen extends BaseScreen {
 
     public void updateRoomId() {
         int roomId = mRoomController.getRoomId();
-        if (mRoomId != roomId) {
-            mRoomId = roomId;
-            mRoomSting.setText("房间号：" + roomId);
-            mRoomSting.setPosition((Constants.WORLD_WIDTH - mRoomSting.getWidth()) / 2, 200);
-        }
+        mRoomSting.setText("房间号：" + roomId);
     }
 
     private int getPlayerIdByPosition(int position) {
