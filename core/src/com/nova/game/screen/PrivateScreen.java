@@ -37,7 +37,6 @@ import com.nova.game.widget.SceButton;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjGroupData;
-import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.room.data.PlayerInfo;
 
 public class PrivateScreen extends BaseScreen {
@@ -244,6 +243,9 @@ public class PrivateScreen extends BaseScreen {
         mBatch.dispose();
         mBg.dispose();
         mStage.dispose();
+        if (mRoomController.getRoomId() >= 0) {
+            new GameRequestDispatcher().leaveRoom(mRoomController.getRoomId());
+        }
     }
 
     @Override

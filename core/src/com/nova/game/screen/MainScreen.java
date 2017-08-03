@@ -141,6 +141,7 @@ public class MainScreen extends BaseScreen {
         int roomId = MahjRoomController.getInstance().getRoomId();
         if (result > 0 && roomId >= 0) {
             mGame.setScreen(new PrivateScreen(mGame));
+            MahjRoomController.getInstance().resetRoomResult();
         }
     }
 }

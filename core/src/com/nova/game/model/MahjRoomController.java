@@ -136,6 +136,10 @@ public class MahjRoomController {
         mRoomResult = result;
     }
 
+    public void resetRoomResult() {
+        mRoomResult = 0;
+    }
+
     public int getRoomResult() {
         return mRoomResult;
     }

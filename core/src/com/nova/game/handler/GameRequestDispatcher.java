@@ -5,6 +5,7 @@ import com.nova.game.Constants;
 import com.nova.net.netty.ChannelManager;
 
 import nova.common.GameCommand;
+import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.game.mahjong.util.MahjGameCommand;
 
 /**
@@ -30,6 +31,16 @@ public class GameRequestDispatcher {
         json.addProperty("player", Constants.TEST_PLAYER_ID);
         json.addProperty("com", MahjGameCommand.REQUEST_ROOM_JOIN);
         json.addProperty("room", room);
+        GameLogger.getInstance().e("GameRequestDispatcher", "joinRoom, json = " + json.toString());
+        mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
+    }
+
+    public void leaveRoom(int room) {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("com", MahjGameCommand.REQUEST_ROOM_LEAVE);
+        json.addProperty("room", room);
+        GameLogger.getInstance().e("GameRequestDispatcher", "leaveRoom, json = " + json.toString());
         mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
     }
 
