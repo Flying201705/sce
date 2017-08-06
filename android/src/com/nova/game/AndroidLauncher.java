@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
+import com.nova.game.SceGame;
 import com.nova.game.handler.MahjGameResponeDispatcher;
 import com.nova.net.http.util.UserUtil;
 import com.nova.net.netty.ChannelManager;
