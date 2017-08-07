@@ -2,13 +2,10 @@ package com.nova.game.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.nova.game.Constants;
-
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
-
 import nova.common.game.mahjong.util.GameTimer;
 import nova.common.game.mahjong.util.TimerCallback;
 import nova.common.room.data.PlayerInfo;
@@ -90,6 +87,7 @@ public class MahjRoomController {
         mPlayerInfos.clear();
         mPlayerInfos.putAll(players);
         updateOwnerPlayerIndex();
+        updatePlayerInfos();
     }
 
     public HashMap<Integer, PlayerInfo> getPlayerInfos() {
@@ -182,9 +180,18 @@ public class MahjRoomController {
         return 0;
     }
 
+    private void updatePlayerInfos() {
+        for (int i = 0; i < mPlayerInfos.size(); i++) {
+            if (mPlayerInfos.get(i) == null) {
+                continue;
+            }
+            PlayerInfoController.getInstance().updatePlayerInfo(mPlayerInfos.get(i));
+        }
+    }
+
     private void updateOwnerPlayerIndex() {
         for (int i = 0; i < mPlayerInfos.size(); i++) {
-            if (mPlayerInfos.get(i).getId() == Constants.TEST_PLAYER_ID) {
+            if (mPlayerInfos.get(i).getId() == PlayerInfoController.getInstance().getOwnerPlayerId()) {
                 mOwnerPlayerIndex = i;
                 break;
             }

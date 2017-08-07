@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
@@ -72,7 +73,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             @Override
             public void onClick(View arg0) {
-                entryGame();
+                EditText accountView = (EditText) WXEntryActivity.this.findViewById(R.id.account);
+                String openId = accountView.getText().toString();
+                if (!TextUtils.isEmpty(openId)) {
+                    entryGame(openId);
+                }
             }
         });
     }
@@ -114,8 +119,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         }
     }
 
-    private void entryGame() {
-        startActivity(new Intent(this, AndroidLauncher.class));
+    private void entryGame(String openId) {
+        Intent intent = new Intent(this, AndroidLauncher.class);
+        intent.putExtra("openid", openId);
+        startActivity(intent);
         finish();
     }
 
@@ -140,7 +147,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 object = new JSONObject(entityStr);
                                 String access_token = object.getString("access_token");
                                 String refresh_token = object.getString("refresh_token");
-                                String openid = object.getString("openid");
+                                final String openid = object.getString("openid");
                                 Log.i(TAG, "requestTokenWithHttpClient - mAccessToken:" + access_token + "; mRefreshToken:" + refresh_token + "; mOpenId:" + openid);
 
                                 if (!TextUtils.isEmpty(access_token) && !TextUtils.isEmpty(openid)) {
@@ -179,7 +186,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                                         mWxInfo.setHead(inputStream);
                                                     }
 
-                                                    entryGame();
+                                                    entryGame(openid);
                                                 } catch (Exception e) {
                                                     e.printStackTrace();
                                                 }

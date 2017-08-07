@@ -1,7 +1,7 @@
 package com.nova.game.handler;
 
 import com.google.gson.JsonObject;
-import com.nova.game.Constants;
+import com.nova.game.model.PlayerInfoController;
 import com.nova.net.netty.ChannelManager;
 
 import nova.common.GameCommand;
@@ -21,14 +21,14 @@ public class GameRequestDispatcher {
 
     public void createRoom() {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_ROOM_CREATE);
         mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
     }
 
     public void joinRoom(int room) {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_ROOM_JOIN);
         json.addProperty("room", room);
         GameLogger.getInstance().e("GameRequestDispatcher", "joinRoom, json = " + json.toString());
@@ -37,7 +37,7 @@ public class GameRequestDispatcher {
 
     public void leaveRoom(int room) {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_ROOM_LEAVE);
         json.addProperty("room", room);
         GameLogger.getInstance().e("GameRequestDispatcher", "leaveRoom, json = " + json.toString());
@@ -46,14 +46,14 @@ public class GameRequestDispatcher {
 
     public void startGame() {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_GAME_START);
         mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
     }
 
     public void startGame(int room) {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_GAME_ROOM_START);
         json.addProperty("room", room);
         mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
@@ -61,7 +61,7 @@ public class GameRequestDispatcher {
 
     public void activeOutData(int room, int playerId, int data) {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_OUT_DATA);
         json.addProperty("room", room);
         json.addProperty("index", playerId);
@@ -71,7 +71,7 @@ public class GameRequestDispatcher {
 
     public void activeOperateData(int room, int playerId, int operateType) {
         JsonObject json = new JsonObject();
-        json.addProperty("player", Constants.TEST_PLAYER_ID);
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_OPERATE_DATA);
         json.addProperty("room", room);
         json.addProperty("index", playerId);

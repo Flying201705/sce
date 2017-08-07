@@ -8,7 +8,6 @@ import com.google.gson.reflect.TypeToken;
 import com.nova.net.http.HttpConstants;
 import com.nova.net.http.bean.BaseBean;
 import com.nova.net.http.bean.UserBean;
-import com.nova.net.http.bean.UserInfoBean;
 
 public class UserUtil extends HttpUtil {
 	
@@ -19,8 +18,8 @@ public class UserUtil extends HttpUtil {
 	
 	public class UserResult {
 		private boolean mStatus;
-		private UserInfoBean mUserInfo;
-		private List<UserInfoBean> mUsers;
+		private UserBean mUserInfo;
+		private List<UserBean> mUsers;
 		
 		public boolean getStatus() {
 			return mStatus;
@@ -30,19 +29,19 @@ public class UserUtil extends HttpUtil {
 			mStatus = status;
 		}
 		
-		public UserInfoBean getUserInfo() {
+		public UserBean getUserInfo() {
 			return mUserInfo;
 		}
 		
-		public void setUserInfo(UserInfoBean userInfo) {
+		public void setUserInfo(UserBean userInfo) {
 			mUserInfo = userInfo;
 		}
 		
-		public List<UserInfoBean> getUsers() {
+		public List<UserBean> getUsers() {
 			return mUsers;
 		}
 		
-		public void setUsers(List<UserInfoBean> users) {
+		public void setUsers(List<UserBean> users) {
 			mUsers = users;
 		}
 	}
@@ -51,7 +50,7 @@ public class UserUtil extends HttpUtil {
 		public void onUserResult(int action, UserResult result);
 	}
 	
-	private onUserResultListener mLoginResultListener;
+	private onUserResultListener mUserResultListener;
 
 	public UserUtil() {
 
@@ -65,14 +64,13 @@ public class UserUtil extends HttpUtil {
 	}
 	
 	public void onLogin(String openid, onUserResultListener listener) {
-		mLoginResultListener = listener;
+		mUserResultListener = listener;
 		HashMap<String, String> allP = new HashMap<String, String>();
 		allP.put("openid", openid);
-		allP.put("name", "小黄人");
-		doPost(HttpConstants.HTTP_LOGIN, allP, mLoginResult);
+		doPost(HttpConstants.HTTP_LOGIN, allP, mUserResultCallback);
 	}
 	
-	private ResultCallback mLoginResult = new ResultCallback() {
+	private ResultCallback mUserResultCallback = new ResultCallback() {
 		
 		@Override
 		public void getResult(String result) {
@@ -82,12 +80,20 @@ public class UserUtil extends HttpUtil {
 			BaseBean base = new Gson().fromJson(result, new TypeToken<BaseBean>() {}.getType());
 			UserResult userResult = new UserResult();
 			if ("0".equals(base.getRespcode())) {
-				userResult.setStatus(true);
 				UserBean user = new Gson().fromJson(base.getData().toString(), UserBean.class);
+				userResult.setStatus(true);
+                userResult.setUserInfo(user);
 			} else {
 				userResult.setStatus(false);
 			}
-			mLoginResultListener.onUserResult(ACTION_LOGIN, userResult);
+			mUserResultListener.onUserResult(ACTION_LOGIN, userResult);
 		}
 	};
+
+	public void onQuery(String id, onUserResultListener listener) {
+		mUserResultListener = listener;
+		HashMap<String, String> allP = new HashMap<String, String>();
+		allP.put("id", id);
+		doPost(HttpConstants.HTTP_GET_USERINFO, allP, mUserResultCallback);
+	}
 }

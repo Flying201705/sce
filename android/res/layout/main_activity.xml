@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center">
 
     <Button 
         android:id="@+id/wx_sign_in"
@@ -11,7 +13,18 @@
         android:layout_centerHorizontal="true"
         android:text="@string/wx_sign_in_text"
         android:textAppearance="?android:attr/textAppearanceButton"/>
-    
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="2017-小黄人 2018-小黑人 2019-小红人 2020-小绿人"/>
+
+    <EditText
+        android:id="@+id/account"
+        android:layout_width="100dip"
+        android:layout_height="wrap_content"
+        android:text="2017"/>
+
     <Button 
         android:id="@+id/entry_game"
         android:layout_width="100dp"
@@ -21,4 +34,4 @@
         android:layout_below="@id/wx_sign_in"
         android:text="@string/entry_game_text"
         android:textAppearance="?android:attr/textAppearanceButton"/>
-</RelativeLayout>
+</LinearLayout>

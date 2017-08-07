@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class UserBean implements Serializable {
 
-	private String id;
+	private int id;
 
 	private String name;
 
@@ -14,11 +14,11 @@ public class UserBean implements Serializable {
 
 	private String userIcon;
 
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
