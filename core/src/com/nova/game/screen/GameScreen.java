@@ -30,6 +30,7 @@ import com.nova.game.widget.SceButton;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.room.data.PlayerInfo;
 
 public class GameScreen extends BaseScreen {
     private BaseStage mStage;
@@ -184,6 +185,33 @@ public class GameScreen extends BaseScreen {
         mStage.addActor(mLeftPlayer);
     }
 
+    private void updatePlayer() {
+        HashMap<Integer, PlayerInfo> players = mController.getPlayerInfos();
+        PlayerInfo myPlayerInfo = players.get(getPlayerIdByPosition(0));
+        PlayerInfo rightPlayerInfo = players.get(getPlayerIdByPosition(1));
+        PlayerInfo topPlayerInfo = players.get(getPlayerIdByPosition(2));
+        PlayerInfo leftPlayerInfo = players.get(getPlayerIdByPosition(3));
+        if (myPlayerInfo != null) {
+            mMyPlayer.setPlayerInfo(myPlayerInfo);
+            mMyPlayer.setVisible(true);
+        }
+
+        if (rightPlayerInfo != null) {
+            mRightPlayer.setPlayerInfo(rightPlayerInfo);
+            mRightPlayer.setVisible(true);
+        }
+
+        if (topPlayerInfo != null) {
+            mTopPlayer.setPlayerInfo(topPlayerInfo);
+            mTopPlayer.setVisible(true);
+        }
+
+        if (leftPlayerInfo != null) {
+            mLeftPlayer.setPlayerInfo(leftPlayerInfo);
+            mLeftPlayer.setVisible(true);
+        }
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -194,6 +222,7 @@ public class GameScreen extends BaseScreen {
 
         updateTimeUint();
         updateMahjong();
+        updatePlayer();
 
         mStage.act();
         mStage.draw();
