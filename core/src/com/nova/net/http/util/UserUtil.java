@@ -7,7 +7,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.nova.net.http.HttpConstants;
 import com.nova.net.http.bean.BaseBean;
-import com.nova.net.http.bean.UserBean;
+
+import nova.common.room.data.PlayerInfo;
 
 public class UserUtil extends HttpUtil {
 	
@@ -18,8 +19,8 @@ public class UserUtil extends HttpUtil {
 	
 	public class UserResult {
 		private boolean mStatus;
-		private UserBean mUserInfo;
-		private List<UserBean> mUsers;
+		private PlayerInfo mPlayerInfo;
+		private List<PlayerInfo> mPlayers;
 		
 		public boolean getStatus() {
 			return mStatus;
@@ -29,20 +30,20 @@ public class UserUtil extends HttpUtil {
 			mStatus = status;
 		}
 		
-		public UserBean getUserInfo() {
-			return mUserInfo;
+		public PlayerInfo getPlayerInfo() {
+			return mPlayerInfo;
 		}
 		
-		public void setUserInfo(UserBean userInfo) {
-			mUserInfo = userInfo;
+		public void setPlayerInfo(PlayerInfo userInfo) {
+			mPlayerInfo = userInfo;
 		}
 		
-		public List<UserBean> getUsers() {
-			return mUsers;
+		public List<PlayerInfo> getPlayers() {
+			return mPlayers;
 		}
 		
-		public void setUsers(List<UserBean> users) {
-			mUsers = users;
+		public void setPlayers(List<PlayerInfo> users) {
+			mPlayers = users;
 		}
 	}
 	
@@ -80,9 +81,9 @@ public class UserUtil extends HttpUtil {
 			BaseBean base = new Gson().fromJson(result, new TypeToken<BaseBean>() {}.getType());
 			UserResult userResult = new UserResult();
 			if ("0".equals(base.getRespcode())) {
-				UserBean user = new Gson().fromJson(base.getData().toString(), UserBean.class);
+				PlayerInfo player = new Gson().fromJson(base.getData().toString(), PlayerInfo.class);
 				userResult.setStatus(true);
-                userResult.setUserInfo(user);
+                userResult.setPlayerInfo(player);
 			} else {
 				userResult.setStatus(false);
 			}

@@ -9,7 +9,6 @@ import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
 import com.nova.game.handler.MahjGameResponeDispatcher;
 import com.nova.game.model.PlayerInfoController;
-import com.nova.net.http.bean.UserBean;
 import com.nova.net.http.util.UserUtil;
 import com.nova.net.netty.ChannelManager;
 import com.nova.net.netty.handler.ResponseDispatcherManager;
@@ -24,11 +23,8 @@ public class AndroidLauncher extends AndroidApplication {
         public void handleMessage(Message msg) {
             UserUtil.UserResult result = (UserUtil.UserResult)msg.obj;
             if (result.getStatus()) {
-                UserBean user = result.getUserInfo();
-                PlayerInfo info = new PlayerInfo();
-                info.setId(user.getId());
-                info.setName(user.getName());
-                PlayerInfoController.getInstance().saveOwnerInfo(info);
+                PlayerInfo player = result.getPlayerInfo();
+                PlayerInfoController.getInstance().saveOwnerInfo(player);
                 Toast.makeText(AndroidLauncher.this, "登录成功!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(AndroidLauncher.this, "登录失败!", Toast.LENGTH_SHORT).show();

@@ -1,6 +1,5 @@
 package com.nova.game.model;
 
-import com.nova.net.http.bean.UserBean;
 import com.nova.net.http.util.UserUtil;
 import java.util.HashMap;
 import nova.common.room.data.PlayerInfo;
@@ -11,18 +10,24 @@ import nova.common.room.data.PlayerInfo;
 
 public class PlayerInfoController {
 
+    public interface PlayerInfoChangeListener {
+        public void onPlayerInfoChange(int id);
+    }
+
     private static PlayerInfoController mInstance;
     private PlayerInfo mMyInfo;
+    private PlayerInfoChangeListener mPlayerInfoChangeListener;
     private HashMap<Integer, PlayerInfo> mPlayerCaches = new HashMap<Integer, PlayerInfo>();
-
     private UserUtil.onUserResultListener mUserListener = new UserUtil.onUserResultListener() {
 
         @Override
         public void onUserResult(int action, UserUtil.UserResult result) {
             if (result.getStatus()) {
-                UserBean user = result.getUserInfo();
-                PlayerInfo playerInfo = new PlayerInfo(user.getId(), user.getName(), user.getUserIcon(), 0);
-                mPlayerCaches.put(playerInfo.getId(), playerInfo);
+                PlayerInfo player = result.getPlayerInfo();
+                mPlayerCaches.put(player.getId(), player);
+                if (mPlayerInfoChangeListener != null) {
+                    mPlayerInfoChangeListener.onPlayerInfoChange(player.getId());
+                }
             }
         }
     };
@@ -37,6 +42,10 @@ public class PlayerInfoController {
         }
 
         return mInstance;
+    }
+
+    public void setPlayerInfoChangeListener(PlayerInfoChangeListener listener) {
+        mPlayerInfoChangeListener = listener;
     }
 
     public PlayerInfo getOwnerInfo() {
@@ -58,9 +67,17 @@ public class PlayerInfoController {
     public void updatePlayerInfo(PlayerInfo info) {
         if (mPlayerCaches.containsKey(info.getId())) {
             PlayerInfo cachePlayerInfo = mPlayerCaches.get(info.getId());
-            info.setName(cachePlayerInfo.getName());
+            updatePlayerInfo(info, cachePlayerInfo);
         } else {
             new UserUtil().onQuery(String.valueOf(info.getId()), mUserListener);
         }
+    }
+
+    private void updatePlayerInfo(PlayerInfo info, PlayerInfo cache) {
+        info.setName(cache.getName());
+        info.setGold(cache.getGold());
+        info.setHead(cache.getHead());
+        info.setSex(cache.getSex());
+        info.setVip(cache.getVip());
     }
 }

@@ -14,7 +14,7 @@ import nova.common.room.data.PlayerInfo;
  * Created by zhangxx on 17-7-20.
  */
 
-public class MahjRoomController {
+public class MahjRoomController implements PlayerInfoController.PlayerInfoChangeListener {
 
     private class ChatMessage {
         String message;
@@ -62,6 +62,7 @@ public class MahjRoomController {
     };
 
     private MahjRoomController() {
+        PlayerInfoController.getInstance().setPlayerInfoChangeListener(this);
         mGameTimer = new GameTimer(mCallback);
         mGameTimer.start();
     }
@@ -180,13 +181,30 @@ public class MahjRoomController {
         return 0;
     }
 
+    @Override
+    public void onPlayerInfoChange(int id) {
+        for (int i = 0; i < mPlayerInfos.size(); i++) {
+            if (mPlayerInfos.get(i) == null) {
+                continue;
+            }
+
+            if (mPlayerInfos.get(i).getId() == id) {
+                updatePlayerInfoFromCache(mPlayerInfos.get(i));
+            }
+        }
+    }
+
     private void updatePlayerInfos() {
         for (int i = 0; i < mPlayerInfos.size(); i++) {
             if (mPlayerInfos.get(i) == null) {
                 continue;
             }
-            PlayerInfoController.getInstance().updatePlayerInfo(mPlayerInfos.get(i));
+            updatePlayerInfoFromCache(mPlayerInfos.get(i));
         }
+    }
+
+    private void updatePlayerInfoFromCache(PlayerInfo info) {
+        PlayerInfoController.getInstance().updatePlayerInfo(info);
     }
 
     private void updateOwnerPlayerIndex() {

@@ -49,6 +49,7 @@ public class Player extends Actor {
         mPlayerInfo = playerInfo;
 
         mName = mPlayerInfo.getName();
+        mGold = mPlayerInfo.getGold();
         if (mPlayerInfo.getSex() == 1) {
             mImage = new Texture("Head/Head1.png");
         }

@@ -32,6 +32,7 @@ import com.nova.game.assetmanager.Assets;
 import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.model.MahjRoomController;
+import com.nova.game.model.PlayerInfoController;
 import com.nova.game.widget.SceButton;
 
 import java.util.HashMap;
@@ -202,6 +203,7 @@ public class PrivateScreen extends BaseScreen {
     private void initPlayer() {
         mMyPlayer = new Player();
         mMyPlayer.setPosition(15, 100);
+        mMyPlayer.setPlayerInfo(PlayerInfoController.getInstance().getOwnerInfo());
         mStage.addActor(mMyPlayer);
 
         mRightPlayer = new Player(Player.VERTICAL);
@@ -361,18 +363,21 @@ public class PrivateScreen extends BaseScreen {
         }
 
         HashMap<Integer, PlayerInfo> players = mRoomController.getPlayerInfos();
-        if (players.get(1) != null) {
-            mRightPlayer.setPlayerInfo(players.get(1));
+        PlayerInfo rightPlayerInfo = players.get(getPlayerIdByPosition(1));
+        PlayerInfo topPlayerInfo = players.get(getPlayerIdByPosition(2));
+        PlayerInfo leftPlayerInfo = players.get(getPlayerIdByPosition(3));
+        if (rightPlayerInfo != null) {
+            mRightPlayer.setPlayerInfo(rightPlayerInfo);
             mRightPlayer.setVisible(true);
         }
 
-        if (players.get(2) != null) {
-            mTopPlayer.setPlayerInfo(players.get(2));
+        if (topPlayerInfo != null) {
+            mTopPlayer.setPlayerInfo(topPlayerInfo);
             mTopPlayer.setVisible(true);
         }
 
-        if (players.get(3) != null) {
-            mLeftPlayer.setPlayerInfo(players.get(2));
+        if (leftPlayerInfo != null) {
+            mLeftPlayer.setPlayerInfo(leftPlayerInfo);
             mLeftPlayer.setVisible(true);
         }
 
