@@ -39,6 +39,8 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
                 break;
             case 1291:
                 processorRoomJoinResult(message);
+            case 1292:
+                processorRoomGameStartResult(message);
                 break;
             default:
                 break;
@@ -94,5 +96,10 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         String reson = json.get("reson").getAsString();
         MahjRoomController.getInstance().setRoomResult(result);
         MahjRoomController.getInstance().setmRoomResultReson(reson);
+    }
+
+    private void processorRoomGameStartResult(String message) {
+        MahjRoomController.getInstance().setRoomResult(2);
+        MahjRoomController.getInstance().setmRoomResultReson("game_start");
     }
 }

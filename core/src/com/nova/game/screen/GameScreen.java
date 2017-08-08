@@ -88,8 +88,12 @@ public class GameScreen extends BaseScreen {
     }
 
     public GameScreen(BaseGame game) {
+        this(game, -1);
+    }
+
+    public GameScreen(BaseGame game, int roomId) {
         super(game);
-        mController.startGame();
+        mController.startGame(roomId);
     }
 
     @Override

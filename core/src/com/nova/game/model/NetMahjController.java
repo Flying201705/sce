@@ -11,9 +11,13 @@ class NetMahjController extends MahjController {
     }
 
     @Override
-    public void startGame() {
-        super.startGame();
-        mRequest.startGame();
+    public void startGame(int roomId) {
+        super.startGame(roomId);
+        if (roomId >= 0) {
+            mRequest.startGame(roomId);
+        } else {
+            mRequest.startGame();
+        }
     }
 
     @Override

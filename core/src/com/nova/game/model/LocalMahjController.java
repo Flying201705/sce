@@ -14,8 +14,8 @@ public class LocalMahjController extends MahjController {
 	private MahjGameDispatcher mDispatcher;
 	
 	@Override
-	public void startGame() {
-		super.startGame();
+	public void startGame(int roomId) {
+		super.startGame(roomId);
 		/**---测试程序开始---**/
 		TestMahjConstant.setDebug(4);
 		/**---测试程序结束---**/

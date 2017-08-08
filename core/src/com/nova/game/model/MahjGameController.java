@@ -51,8 +51,8 @@ public class MahjGameController {
 		}
 	}
 	
-	public void startGame() {
-		mManager.startGame();
+	public void startGame(int roomId) {
+		mManager.startGame(roomId);
 	}
 	
 	public void stopGame() {

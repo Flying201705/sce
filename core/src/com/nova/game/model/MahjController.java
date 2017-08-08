@@ -8,7 +8,7 @@ class MahjController implements MahjGameDispatcher {
 		
 	}
 
-	public void startGame() {
+	public void startGame(int roomId) {
 
 	}
 	

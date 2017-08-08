@@ -11,6 +11,10 @@ public class NetMahjGameScreen extends GameScreen {
         super(game);
     }
 
+    public NetMahjGameScreen(BaseGame game, int roomId) {
+        super(game, roomId);
+    }
+
     @Override
     protected String getGameType() {
         return "net";
