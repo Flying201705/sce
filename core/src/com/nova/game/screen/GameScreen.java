@@ -174,14 +174,17 @@ public class GameScreen extends BaseScreen {
 
         mRightPlayer = new Player(Player.VERTICAL);
         mRightPlayer.setPosition(1170, 280);
+        mRightPlayer.setVisible(false);
         mStage.addActor(mRightPlayer);
 
         mTopPlayer = new Player();
         mTopPlayer.setPosition(100, 620);
+        mTopPlayer.setVisible(false);
         mStage.addActor(mTopPlayer);
 
         mLeftPlayer = new Player(Player.VERTICAL);
         mLeftPlayer.setPosition(15, 280);
+        mLeftPlayer.setVisible(false);
         mStage.addActor(mLeftPlayer);
     }
 
