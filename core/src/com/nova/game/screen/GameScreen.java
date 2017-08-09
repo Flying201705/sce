@@ -111,6 +111,7 @@ public class GameScreen extends BaseScreen {
         mTime = new TimeUnit();
         mTime.setPosition(570, 295);
         mTime.setTimeUnitListener(mTimeListener);
+        mTime.startTime();
         mStage.addActor(mTime);
 
         mStartBt = new SceButton("SceneGame/bt_start.png");
@@ -121,7 +122,7 @@ public class GameScreen extends BaseScreen {
                 mTime.startTime();
             }
         });
-        mStage.addActor(mStartBt);
+        // mStage.addActor(mStartBt);
 
         initPlayer();
 
