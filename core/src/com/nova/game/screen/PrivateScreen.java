@@ -20,6 +20,8 @@ import com.nova.game.model.MahjRoomController;
 import com.nova.game.model.PlayerInfoController;
 import com.nova.game.widget.SceButton;
 import java.util.HashMap;
+
+import nova.common.game.mahjong.util.MahjGameCommand;
 import nova.common.room.data.PlayerInfo;
 
 public class PrivateScreen extends BaseScreen {
@@ -50,6 +52,7 @@ public class PrivateScreen extends BaseScreen {
 
     @Override
     public void show() {
+        MahjRoomController.getInstance().resetRoomResult();
         mStage = new BaseStage(this);
         Gdx.input.setInputProcessor(mStage);
         Gdx.input.setCatchBackKey(true);
@@ -172,7 +175,6 @@ public class PrivateScreen extends BaseScreen {
 
         if (mRightPlayer.getPlayerInfo() != null && mLeftPlayer.getPlayerInfo() != null && mTopPlayer.getPlayerInfo() != null) {
             mWaitFriend = false;
-            mGame.setScreen(new NetMahjGameScreen(mGame, mRoomController.getRoomId()));
         }
     }
 
@@ -204,7 +206,7 @@ public class PrivateScreen extends BaseScreen {
 
     private void updateScreen() {
         int result = MahjRoomController.getInstance().getRoomResult();
-        if (result == 2) {
+        if (result == MahjGameCommand.RoomState.ROOM_STATE_GAME_START) {
             mGame.setScreen(new NetMahjGameScreen(mGame));
             MahjRoomController.getInstance().resetRoomResult();
         }

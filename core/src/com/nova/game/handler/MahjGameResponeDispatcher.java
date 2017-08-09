@@ -37,11 +37,8 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
             case MahjGameCommand.RESPONE_ROOM_INFO_UPDATE:
                 processorRoomInfoChange(message);
                 break;
-            case 1291:
-                processorRoomJoinResult(message);
-            case 1292:
-                processorRoomGameStartResult(message);
-                break;
+            case MahjGameCommand.RESPONE_ROOM_STATE_UPDATE:
+                processorRoomStateChange(message);
             default:
                 break;
         }
@@ -90,16 +87,11 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         }
     }
 
-    private void processorRoomJoinResult(String message) {
+    private void processorRoomStateChange(String message) {
         JsonObject json = new JsonParser().parse(message).getAsJsonObject();
         int result = json.get("result").getAsInt();
         String reson = json.get("reson").getAsString();
         MahjRoomController.getInstance().setRoomResult(result);
         MahjRoomController.getInstance().setmRoomResultReson(reson);
-    }
-
-    private void processorRoomGameStartResult(String message) {
-        MahjRoomController.getInstance().setRoomResult(2);
-        MahjRoomController.getInstance().setmRoomResultReson("game_start");
     }
 }

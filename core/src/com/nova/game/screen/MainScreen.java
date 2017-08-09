@@ -19,6 +19,8 @@ import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjRoomController;
 import com.nova.game.widget.SceButton;
 
+import nova.common.game.mahjong.util.MahjGameCommand;
+
 public class MainScreen extends BaseScreen {
     private BaseStage mStage;
     private SpriteBatch mBatch;
@@ -139,7 +141,7 @@ public class MainScreen extends BaseScreen {
     private void updateScreen() {
         int result = MahjRoomController.getInstance().getRoomResult();
         int roomId = MahjRoomController.getInstance().getRoomId();
-        if (result > 0 && roomId >= 0) {
+        if (result == MahjGameCommand.RoomState.ROOM_STATE_JOIN && roomId >= 0) {
             mGame.setScreen(new PrivateScreen(mGame));
             MahjRoomController.getInstance().resetRoomResult();
         }
