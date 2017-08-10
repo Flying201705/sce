@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
+import com.nova.game.assetmanager.Assets;
 
 public class TimeUnit extends Actor {
     private static final float FRAME_DURATION = 1.0f / 15.0f;
@@ -26,6 +27,9 @@ public class TimeUnit extends Actor {
     private BitmapFont mFont;
 
     private TimeUnitListener mListener;
+    // 临时调试
+    private int mRemainSize = 0;
+    private int mGodIndex = 0;
 
     public interface TimeUnitListener {
         void onAnimationFinished();
@@ -45,7 +49,7 @@ public class TimeUnit extends Actor {
 
         mFont = new BitmapFont();
         mFont.setColor(Color.RED);
-        mFont.getData().setScale(3f);
+        mFont.getData().setScale(2f);
     }
 
     @Override
@@ -81,6 +85,10 @@ public class TimeUnit extends Actor {
             }
             mFont.draw(batch, String.valueOf(mPlayerTimes), getX() + 54, getY() + 84);
         }
+
+        // 临时调试
+        drawRemainSize(batch);
+        drawGodData(batch);
     }
 
     @Override
@@ -134,5 +142,35 @@ public class TimeUnit extends Actor {
     private void resetTime() {
         mPlayerTimes = 4;
         mTimeCount = 0f;
+    }
+
+    // 临时调试
+    public void updateRemainSize(int size) {
+        mRemainSize = size;
+    }
+
+    public void updateGodIndex(int index) {
+        mGodIndex = index;
+    }
+
+    private void drawRemainSize(Batch batch) {
+        Texture remainTexture = new Texture("SceneGame/hand_top.png");
+        batch.draw(remainTexture, getX() + 35, getY() + 37, 20, 26);
+        BitmapFont font = new BitmapFont();
+        font.setColor(Color.GREEN);
+        font.getData().setScale(1f);
+        font.draw(batch, String.valueOf(mRemainSize), getX() + 37, getY() + 55);
+    }
+
+    private void drawGodData(Batch batch) {
+        if (mGodIndex <= 0) {
+            return;
+        }
+
+        MahjActor godActor = new MahjActor(Assets.getInstance().getMahjHandMeTexture(mGodIndex));
+        godActor.setScale(0.2f);
+        godActor.setCanStandUp(true);
+        godActor.setPosition(getX() + 75, getY() + 37);
+        godActor.draw(batch, 1.0f);
     }
 }

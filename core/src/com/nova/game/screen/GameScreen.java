@@ -327,6 +327,10 @@ public class GameScreen extends BaseScreen {
         if (!mTime.isAnimation()) {
             mTime.updateCurrPlayer(mController.getCurrentPlayer());
         }
+
+        // 临时调试
+        mTime.updateRemainSize(mController.getRemainingSize());
+        mTime.updateGodIndex(mController.getGodData());
     }
 
     private int getPlayerIdByPosition(int position) {

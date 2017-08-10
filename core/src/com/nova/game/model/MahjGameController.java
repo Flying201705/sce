@@ -1,7 +1,5 @@
 package com.nova.game.model;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -85,6 +83,10 @@ public class MahjGameController {
 	}
 	
 	public int getRemainingSize() {
+		if (mGameData.getDatas() == null) {
+			return 0;
+		}
+
 		return mGameData.getDatas().size();
 	}
 	
