@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
+import com.nova.game.model.MahjGameController;
 
 import nova.common.game.mahjong.util.MahjConstant;
 
@@ -17,6 +18,7 @@ public class Match extends Actor {
     private Texture mHuImage;
     private Texture mImage;
     private int mType;
+    private boolean mIsTypeDisplay = false;
 
     public Match() {
         mPengImage = new Texture("Animation/eff_peng.png");
@@ -30,7 +32,12 @@ public class Match extends Actor {
     }
 
     public void update(int type) {
-        if (mType == 0) {
+        if (mType == type) {
+            return;
+        }
+
+        if (!mIsTypeDisplay) {
+            mIsTypeDisplay = true;
             mType = type;
             switch (mType) {
                 case MahjConstant.MAHJ_MATCH_PENG:
@@ -57,7 +64,7 @@ public class Match extends Actor {
             SequenceAction action = new SequenceAction(Actions.repeat(3, sequenceAction), Actions.run(new Runnable() {
                 @Override
                 public void run() {
-                    mType = 0;
+                    mIsTypeDisplay = false;
                 }
             }));
             addAction(action);
@@ -66,11 +73,16 @@ public class Match extends Actor {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        if (mType != 0 && mImage != null) {
+        if (mIsTypeDisplay && mImage != null) {
             batch.draw(mImage, getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation(),
                     0, 0, mImage.getWidth(), mImage.getHeight(), false, false);
         }
 
+        if (!mIsTypeDisplay && mType == MahjConstant.MAHJ_MATCH_TING) {
+            batch.draw(mTingImage, getX(), getY(), getOriginX(), getOriginY(),
+                    getWidth(), getHeight(), 0.2f, 0.2f, getRotation(),
+                    0, 0, mTingImage.getWidth(), mTingImage.getHeight(), false, false);
+        }
     }
 }

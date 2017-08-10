@@ -1,11 +1,14 @@
 package com.nova.game.model;
 
+import com.badlogic.gdx.Gdx;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.game.mahjong.util.MahjConstant;
 import nova.common.room.data.PlayerInfo;
 
@@ -16,6 +19,7 @@ public class MahjGameController {
 	private MahjGameData mGameData;
 	private HashMap<Integer, MahjGroupData> mGroupDatas = new HashMap<Integer, MahjGroupData>();
 	private int mMatchType = 0;
+	private boolean mIsTingMatched = false;
 	
 	private MahjGameController(String type) {
 		createGameManagerByType(type);
@@ -115,28 +119,40 @@ public class MahjGameController {
 	
 	public void handleMatchData(int matchType) {
 		mManager.activeOperateData(getOwnerPlayerIndex(), matchType);
+		resetTingMatched();
+	}
+
+	private void resetTingMatched() {
+		mIsTingMatched = false;
 	}
 
 	private void updateMatchType(boolean isOwnerOut) {
 		mMatchType = 0;
+		if (mIsTingMatched) {
+			mMatchType |= MahjConstant.MAHJ_MATCH_TING;
+		}
+
 		int ownerPlayerId = getOwnerPlayerIndex();
 		if (mGroupDatas.get(ownerPlayerId) == null) {
 			return;
 		}
 
         if (getCurrentPlayer() == ownerPlayerId) {
-			mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
+			mMatchType |= mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
 			MahjData latestData = mGroupDatas.get(ownerPlayerId).getLatestData();
 			if (latestData != null && latestData.getIndex() != 0) {
-				mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
+				mMatchType |= mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
 			}
 		} else {
 			if (isOwnerOut) {
-				mMatchType = mGroupDatas.get(ownerPlayerId).getTingDatas().size() > 0 ? MahjConstant.MAHJ_MATCH_TING : 0;
+				if (mGroupDatas.get(ownerPlayerId).getTingDatas().size() > 0) {
+					mMatchType |= MahjConstant.MAHJ_MATCH_TING;
+					mIsTingMatched = true;
+				}
 			} else if (mGroupDatas.get(getCurrentPlayer()) != null) {
 				ArrayList<MahjData> outDatas = mGroupDatas.get(getCurrentPlayer()).getOutDatas();
 				if (outDatas != null && outDatas.size() > 0) {
-					mMatchType = mGroupDatas.get(ownerPlayerId).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
+					mMatchType |= mGroupDatas.get(ownerPlayerId).updateMatchType(new MahjData(outDatas.get(outDatas.size() - 1).getIndex()));
 				}
 			}
 		}
