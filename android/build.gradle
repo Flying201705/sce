@@ -5,10 +5,10 @@ android {
 //            keyAlias 'androiddebugkey'
 //            keyPassword 'android'
 //            storePassword 'android'
-//            storeFile file("key.jks")
-//            storePassword "funlisten"
-//            keyAlias "alias"
-//            keyPassword "funlisten"
+            storeFile file("key.jks")
+            storePassword "funlisten"
+            keyAlias "alias"
+            keyPassword "funlisten"
         }
     }
     buildToolsVersion "25.0.3"
@@ -30,15 +30,15 @@ android {
         exclude 'META-INF/robovm/ios/robovm.xml'
     }
     defaultConfig {
-        applicationId "com.nova.game"
+        applicationId "com.funlisten"
         minSdkVersion 9
         targetSdkVersion 25
     }
-//    buildTypes {
-//        debug {
-//            signingConfig signingConfigs.config
-//        }
-//    }
+    buildTypes {
+        debug {
+            signingConfig signingConfigs.config
+        }
+    }
 }
 // called every time gradle gets executed, takes the native dependencies of
 // the natives configuration, and extracts them to the proper libs/ folders

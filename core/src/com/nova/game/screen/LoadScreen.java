@@ -4,12 +4,15 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nova.game.BaseGame;
 import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.widget.SceButton;
 
 public class LoadScreen extends BaseScreen {
     private BaseStage mStage;
@@ -18,6 +21,7 @@ public class LoadScreen extends BaseScreen {
 
     private Texture mBg, mProgressBg, mProgressBar;
     private Image mLogo;
+    private SceButton mWXLogon;
 
     private int mProgressX;
 
@@ -37,6 +41,16 @@ public class LoadScreen extends BaseScreen {
         mLogo = new Image(new Texture("SceneLoad/logo.png"));
         mLogo.setPosition((Constants.WORLD_WIDTH - mLogo.getWidth()) / 2, (Constants.WORLD_HEIGHT - mLogo.getHeight()) / 2);
         mStage.addActor(mLogo);
+
+        mWXLogon = new SceButton("SceneLoad/btn_weixin_logon.png");
+        mWXLogon.setPosition((Constants.WORLD_WIDTH - mWXLogon.getWidth()) / 2, 60);
+        mWXLogon.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mGame.loginWeChat();
+            }
+        });
+        mStage.addActor(mWXLogon);
 
         mProgressBg = new Texture("SceneLoad/progress_bg.png");
         mProgressBar = new Texture("SceneLoad/progress_bar.png");

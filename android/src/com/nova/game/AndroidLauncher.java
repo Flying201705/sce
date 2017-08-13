@@ -35,15 +35,18 @@ public class AndroidLauncher extends AndroidApplication {
 	@Override
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new SceGame(), config);
+
+        WeChatManager manager = new WeChatManager(getContext());
+		initialize(new SceGame(manager), config);
 
 		//初始化Log模块
 		GameLogger.create(new Log());
         // 初始化ResponeDispatcher
         ResponseDispatcherManager.getInstance().addGameResponseDispatcher(GameCommand.GAME_TYPE_MAHJ, new MahjGameResponeDispatcher());
 
-        String openId = getIntent().getStringExtra("openid");
+        String openId = "2017"; //getIntent().getStringExtra("openid");
         GameLogger.getInstance().e("AndroidLauncher", "onCreate, openId = " + openId);
 		// 用户登录
 		new UserUtil().onLogin(openId, new UserUtil.onUserResultListener() {
