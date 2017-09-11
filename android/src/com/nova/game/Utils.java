@@ -15,7 +15,8 @@ import junit.framework.Assert;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Bitmap.CompressFormat;
-import android.util.Log;
+
+import com.nova.game.utils.Log;
 
 public class Utils {
 	

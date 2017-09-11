@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -15,6 +14,7 @@ import android.widget.EditText;
 import com.nova.game.AndroidLauncher;
 import com.nova.game.R;
 import com.nova.game.Utils;
+import com.nova.game.utils.Log;
 import com.nova.game.utils.WXInfo;
 import com.nova.game.utils.WXUtils;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
@@ -40,7 +40,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private static final String APP_SECRET = "3661eb56e04171cbfb74b698be6cc295";
 
     private IWXAPI mWXapi;
-    private WXInfo mWxInfo;
 
     private static final int SceneSession = 0;
     private static final int SceneTimeline = 1;
@@ -62,8 +61,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         mWXapi = WXAPIFactory.createWXAPI(this, APP_ID, true);
         mWXapi.handleIntent(intent, this);
         mWXapi.registerApp(APP_ID);
-
-        mWxInfo = WXInfo.getInstance();
 
         Button sign_in = (Button) findViewById(R.id.wx_sign_in);
         sign_in.setOnClickListener(new OnClickListener() {
@@ -127,10 +124,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onResp(BaseResp resp) {
 
-        Log.i(TAG, "onResp: =" + resp.getType());
+        Log.i(TAG, "onResp errCode:" + resp.errCode);
 
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
+                WXInfo.getInstance().loginOk();
                 requestTokenWithHttpClient(((SendAuth.Resp) resp).code);
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:
@@ -220,7 +218,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             req.scene = SendMessageToWX.Req.WXSceneSession;
         }
         mWXapi.sendReq(req);
-
 
         Log.d(TAG, "reqShareTxt Ok:" + text);
     }

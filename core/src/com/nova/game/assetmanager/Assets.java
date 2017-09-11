@@ -1,5 +1,6 @@
 package com.nova.game.assetmanager;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
@@ -14,7 +15,7 @@ import com.nova.game.Constants;
 public class Assets {
     private static Assets mInstance;
     private AssetManager mAssetManager;
-    private FreeTypeFontGenerator mGeneratror;
+    public FreeTypeFontGenerator mGeneratror;
     private BitmapFont mFont;
 
     public static Assets getInstance() {
@@ -46,6 +47,8 @@ public class Assets {
         FileHandleResolver resolver = new InternalFileHandleResolver();
         mAssetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
         mAssetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
+
+        mGeneratror = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
 
         FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
         size1Params.fontFileName = "Font/font.ttf";
@@ -91,8 +94,10 @@ public class Assets {
     }
 
     public void clear() {
-        mAssetManager.dispose();
-        mAssetManager = null;
+        if (mAssetManager != null) {
+            mAssetManager.dispose();
+            mAssetManager = null;
+        }
     }
 
     public float getProgress() {

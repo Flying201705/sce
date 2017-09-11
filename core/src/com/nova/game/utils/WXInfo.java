@@ -1,10 +1,16 @@
 package com.nova.game.utils;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
+
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
 public class WXInfo {
+    private static final String TAG = "WXInfo";
     private static WXInfo sWxInfo;
+    private boolean mIsLogin;
     private String mAccessToken;
     private String mRefreshToken;
     private String mOpenId;
@@ -16,7 +22,7 @@ public class WXInfo {
     private String mHeadimgurl;
     private String mPrivilege;
     private String mUnionid;
-    private byte[] mHead;
+    private Texture mHead;
     
     public static WXInfo getInstance() {
         if (sWxInfo == null) {
@@ -113,7 +119,7 @@ public class WXInfo {
         this.mUnionid = unionid;
     }
 
-    public byte[] getHead() {
+    public Texture getHead() {
         return mHead;
     }
 
@@ -127,9 +133,22 @@ public class WXInfo {
             }
             outStream.close();
             inStream.close();
-            this.mHead = outStream.toByteArray();
+
+            byte[] bytes = outStream.toByteArray();
+            Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
+            this.mHead = new Texture(pixmap);
+            pixmap.dispose();
+            Log.i(TAG, "set Head ok");
         } catch(Exception e) {
+            Log.e(TAG, "set Head exception:" + e.toString());
         }
     }
-    
+
+    public void loginOk() {
+        mIsLogin = true;
+    }
+
+    public boolean isLogined() {
+        return mIsLogin;
+    }
 }

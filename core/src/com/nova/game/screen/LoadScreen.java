@@ -12,9 +12,12 @@ import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.utils.Log;
+import com.nova.game.utils.WXInfo;
 import com.nova.game.widget.SceButton;
 
 public class LoadScreen extends BaseScreen {
+    private static final String TAG = "LoadScreen";
     private BaseStage mStage;
     private SpriteBatch mBatch;
     private Assets mAssents;
@@ -55,9 +58,17 @@ public class LoadScreen extends BaseScreen {
         mProgressBg = new Texture("SceneLoad/progress_bg.png");
         mProgressBar = new Texture("SceneLoad/progress_bar.png");
         mProgressX = (Gdx.graphics.getWidth() - mProgressBg.getWidth()) / 2;
+    }
 
-        mAssents = Assets.getInstance();
-        mAssents.load();
+    @Override
+    public void resume() {
+        Log.i(TAG, "show isLogined:" + WXInfo.getInstance().isLogined());
+        if (WXInfo.getInstance().isLogined()) {
+            mAssents = Assets.getInstance();
+            mAssents.load();
+
+            mWXLogon.setVisible(false);
+        }
     }
 
     @Override
@@ -67,16 +78,20 @@ public class LoadScreen extends BaseScreen {
 
         mBatch.begin();
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        mBatch.draw(mProgressBg, mProgressX, 10);
-        mBatch.draw(mProgressBar, mProgressX, 10, mProgressBar.getWidth() * mAssents.getProgress(), mProgressBar.getHeight());
+        if (WXInfo.getInstance().isLogined()) {
+            mBatch.draw(mProgressBg, mProgressX, 10);
+            mBatch.draw(mProgressBar, mProgressX, 10, mProgressBar.getWidth() * mAssents.getProgress(), mProgressBar.getHeight());
+        }
         mBatch.end();
 
         mStage.act();
         mStage.draw();
 
-        if (mAssents.update()) {
-            mGame.setScreen(new MainScreen(mGame));
-            dispose();
+        if (WXInfo.getInstance().isLogined()) {
+            if (mAssents.update()) {
+                mGame.setScreen(new MainScreen(mGame));
+                dispose();
+            }
         }
     }
 

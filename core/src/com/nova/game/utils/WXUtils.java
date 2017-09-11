@@ -26,25 +26,26 @@ public class WXUtils {
             public void handleHttpResponse(Net.HttpResponse httpResponse) {
                 if (httpResponse.getStatus().getStatusCode() == 200) {
                     String entityStr = httpResponse.getResultAsString();
-                    Gdx.app.log(TAG, "entityStr = " + entityStr);
+                    Log.d(TAG, "entityStr = " + entityStr);
 
                     JsonReader jsonReader = new JsonReader();
                     JsonValue jsonValue = jsonReader.parse(entityStr);
                     String access_token = jsonValue.getString("access_token");
                     String refresh_token = jsonValue.getString("refresh_token");
                     final String openid = jsonValue.getString("openid");
-                    Gdx.app.log(TAG, "mAccessToken:" + access_token + "; mRefreshToken:" + refresh_token + "; mOpenId:" + openid);
+                    Log.i(TAG, "mAccessToken:" + access_token + "; mRefreshToken:" + refresh_token + "; mOpenId:" + openid);
 
                     if (access_token != null && !access_token.isEmpty() && openid != null && !openid.isEmpty()) {
                         String url = String.format("https://api.weixin.qq.com/sns/userinfo?access_token=%s&openid=%s", access_token, openid);
                         HttpRequestBuilder requestBuilder = new HttpRequestBuilder();
                         Net.HttpRequest httpRequest = requestBuilder.newRequest().method(Net.HttpMethods.GET).url(url).build();
+                        httpRequest.setTimeOut(5000);
                         Gdx.net.sendHttpRequest(httpRequest, new Net.HttpResponseListener() {
                             @Override
                             public void handleHttpResponse(Net.HttpResponse httpResponse) {
                                 if (httpResponse.getStatus().getStatusCode() == 200) {
                                     String entityStr = httpResponse.getResultAsString();
-                                    Gdx.app.log(TAG, "requestTokenWithHttpClient - entityStr_2:" + entityStr);
+                                    Log.i(TAG, "requestTokenWithHttpClient - entityStr_2:" + entityStr);
 
                                     JsonReader jsonReader = new JsonReader();
                                     JsonValue jsonValue = jsonReader.parse(entityStr);
@@ -56,7 +57,7 @@ public class WXUtils {
                                     wxInfo.setProvince(jsonValue.getString("province"));
                                     wxInfo.setCity(jsonValue.getString("city"));
                                     wxInfo.setCountry(jsonValue.getString("country"));
-                                    wxInfo.setPrivilege(jsonValue.getString("privilege"));
+//                                    wxInfo.setPrivilege(jsonValue.getString("privilege"));
                                     wxInfo.setUnionid(jsonValue.getString("unionid"));
                                     String headimgurl = jsonValue.getString("headimgurl");
                                     wxInfo.setHeadimgurl(headimgurl);
@@ -64,6 +65,8 @@ public class WXUtils {
                                     if (headimgurl.contains("/0")) {
                                         headimgurl = headimgurl.replace("/0", "/132");
                                     }
+
+                                    Log.d(TAG, "headimgurl:" + headimgurl);
 
                                     try {
                                         URL head_url = new URL(headimgurl);
@@ -74,12 +77,8 @@ public class WXUtils {
                                             InputStream inputStream = conn.getInputStream();
                                             wxInfo.setHead(inputStream);
                                         }
-                                    } catch (ProtocolException e) {
-                                        e.printStackTrace();
-                                    } catch (MalformedURLException e) {
-                                        e.printStackTrace();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
+                                    } catch (Exception e) {
+                                       Log.e(TAG, e.toString());
                                     }
 
                                 }
@@ -88,12 +87,12 @@ public class WXUtils {
 
                             @Override
                             public void failed(Throwable t) {
-
+                                Log.e(TAG, "failed 2 : " + t.toString());
                             }
 
                             @Override
                             public void cancelled() {
-
+                                Log.e(TAG, "cancelled 2");
                             }
                         });
                     }
@@ -102,12 +101,12 @@ public class WXUtils {
 
             @Override
             public void failed(Throwable t) {
-
+                Log.e(TAG, "failed 1 : " + t.toString());
             }
 
             @Override
             public void cancelled() {
-
+                Log.e(TAG, "cancelled 1");
             }
         });
 

@@ -30,7 +30,7 @@ public abstract class BaseGame extends Game {
 
     public void goBack() {
         Screen currScreen = getScreen();
-        Screen topScreen = mScreenStack.peek();
+        Screen topScreen = mScreenStack.isEmpty() ? null : mScreenStack.peek();
         if (currScreen == topScreen) {
             mScreenStack.pop();
         }

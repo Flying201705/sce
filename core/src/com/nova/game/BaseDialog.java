@@ -107,8 +107,7 @@ public class BaseDialog extends Dialog {
 
 //    @Override
 //    public void draw(Batch batch, float parentAlpha) {
-//        // TODO Auto-generated method stub
-//        Color color = batch.getColor();  
+//        Color color = batch.getColor();
 //        batch.setColor(this.getColor());
 //        batch.getColor().a *= parentAlpha;
 //
