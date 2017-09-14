@@ -1,7 +1,9 @@
 package com.nova.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -88,6 +90,7 @@ public class LoadScreen extends BaseScreen {
         mStage.draw();
 
         if (WXInfo.getInstance().isLogined()) {
+            loadImageFromNet(WXInfo.getInstance().getHeadimgurl());
             if (mAssents.update()) {
                 mGame.setScreen(new MainScreen(mGame));
                 dispose();
@@ -103,5 +106,40 @@ public class LoadScreen extends BaseScreen {
 
         mBatch.dispose();
         mStage.dispose();
+    }
+
+    private Net.HttpResponseListener mResponseListener = new Net.HttpResponseListener() {
+
+        @Override
+        public void handleHttpResponse(Net.HttpResponse httpResponse) {
+            final byte[] result = httpResponse.getResult();
+            Gdx.app.postRunnable(new Runnable() {
+                @Override
+                public void run() {
+                    Pixmap pixmap = new Pixmap(result, 0, result.length);
+                    Assets.getInstance().mOwnerHeadTexture = new Texture(pixmap);
+                    pixmap.dispose();
+                }
+            });
+        }
+
+        @Override
+        public void failed(Throwable t) {
+
+        }
+
+        @Override
+        public void cancelled() {
+
+        }
+    };
+
+    private void loadImageFromNet(String imgUrl) {
+        if (imgUrl == null) {
+            return;
+        }
+        Net.HttpRequest httpRequest = new Net.HttpRequest(Net.HttpMethods.GET);
+        httpRequest.setUrl(imgUrl);
+        Gdx.net.sendHttpRequest(httpRequest, mResponseListener);
     }
 }

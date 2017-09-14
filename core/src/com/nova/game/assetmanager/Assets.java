@@ -17,6 +17,7 @@ public class Assets {
     private AssetManager mAssetManager;
     public FreeTypeFontGenerator mGeneratror;
     private BitmapFont mFont;
+    public static Texture mOwnerHeadTexture;
 
     public static Assets getInstance() {
         if (mInstance == null) {

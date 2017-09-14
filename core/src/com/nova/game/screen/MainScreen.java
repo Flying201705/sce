@@ -22,7 +22,6 @@ import com.nova.game.assetmanager.Assets;
 import com.nova.game.dialog.JoinRoomDialog;
 import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjRoomController;
-import com.nova.game.utils.Log;
 import com.nova.game.utils.WXInfo;
 import com.nova.game.widget.SceButton;
 
@@ -84,8 +83,8 @@ public class MainScreen extends BaseScreen {
         bg.setBounds(0, Constants.WORLD_HEIGHT - 100, Constants.WORLD_WIDTH, 100);
         mStage.addActor(bg);
 
-        if (mWXInfo.getHead() != null) {
-            Image head = new Image(mWXInfo.getHead());
+        if (Assets.getInstance().mOwnerHeadTexture != null) {
+            Image head = new Image(Assets.getInstance().mOwnerHeadTexture);
             head.addListener(new ClickListener() {
                 @Override
                 public void clicked(InputEvent event, float x, float y) {
@@ -93,6 +92,7 @@ public class MainScreen extends BaseScreen {
                 }
             });
             head.setPosition(10, 640);
+            head.setSize(80, 80);
             mStage.addActor(head);
         }
 

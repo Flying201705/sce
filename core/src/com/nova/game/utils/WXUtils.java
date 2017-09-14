@@ -6,13 +6,6 @@ import com.badlogic.gdx.net.HttpRequestBuilder;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.ProtocolException;
-import java.net.URL;
-
 public class WXUtils {
     private static final String TAG = "WXUtils";
 
@@ -67,20 +60,6 @@ public class WXUtils {
                                     }
 
                                     Log.d(TAG, "headimgurl:" + headimgurl);
-
-                                    try {
-                                        URL head_url = new URL(headimgurl);
-                                        HttpURLConnection conn = (HttpURLConnection) head_url.openConnection();
-                                        conn.setConnectTimeout(5000);
-                                        conn.setRequestMethod("GET");
-                                        if (conn.getResponseCode() == 200) {
-                                            InputStream inputStream = conn.getInputStream();
-                                            wxInfo.setHead(inputStream);
-                                        }
-                                    } catch (Exception e) {
-                                       Log.e(TAG, e.toString());
-                                    }
-
                                 }
 
                             }
