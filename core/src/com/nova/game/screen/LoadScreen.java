@@ -1,7 +1,6 @@
 package com.nova.game.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Net;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -18,8 +17,20 @@ import com.nova.game.utils.Log;
 import com.nova.game.utils.WXInfo;
 import com.nova.game.widget.SceButton;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class LoadScreen extends BaseScreen {
     private static final String TAG = "LoadScreen";
+
+    private static final int LOAD_HEAD_START = 0;
+    private static final int LOAD_HEAD_OK = 1;
+    private static final int LOAD_HEAD_FAILE = 2;
+
+    private int mLoadHeadStatus = -1;
+
     private BaseStage mStage;
     private SpriteBatch mBatch;
     private Assets mAssents;
@@ -91,7 +102,8 @@ public class LoadScreen extends BaseScreen {
 
         if (WXInfo.getInstance().isLogined()) {
             loadImageFromNet(WXInfo.getInstance().getHeadimgurl());
-            if (mAssents.update()) {
+
+            if (mAssents.update() && (mLoadHeadStatus == LOAD_HEAD_OK || mLoadHeadStatus == LOAD_HEAD_FAILE)) {
                 mGame.setScreen(new MainScreen(mGame));
                 dispose();
             }
@@ -108,38 +120,43 @@ public class LoadScreen extends BaseScreen {
         mStage.dispose();
     }
 
-    private Net.HttpResponseListener mResponseListener = new Net.HttpResponseListener() {
-
-        @Override
-        public void handleHttpResponse(Net.HttpResponse httpResponse) {
-            final byte[] result = httpResponse.getResult();
-            Gdx.app.postRunnable(new Runnable() {
-                @Override
-                public void run() {
-                    Pixmap pixmap = new Pixmap(result, 0, result.length);
-                    Assets.getInstance().mOwnerHeadTexture = new Texture(pixmap);
-                    pixmap.dispose();
-                }
-            });
-        }
-
-        @Override
-        public void failed(Throwable t) {
-
-        }
-
-        @Override
-        public void cancelled() {
-
-        }
-    };
-
     private void loadImageFromNet(String imgUrl) {
         if (imgUrl == null) {
             return;
         }
-        Net.HttpRequest httpRequest = new Net.HttpRequest(Net.HttpMethods.GET);
-        httpRequest.setUrl(imgUrl);
-        Gdx.net.sendHttpRequest(httpRequest, mResponseListener);
+
+        if (mLoadHeadStatus == LOAD_HEAD_START || mLoadHeadStatus == LOAD_HEAD_OK) {
+            return;
+        }
+
+        Log.i(TAG, "loadImageFromNet imgUrl = " + imgUrl);
+
+        mLoadHeadStatus = LOAD_HEAD_START;
+        try {
+            URL head_url = new URL(imgUrl);
+            HttpURLConnection conn = (HttpURLConnection) head_url.openConnection();
+            conn.setConnectTimeout(5000);
+            conn.setRequestMethod("GET");
+            if (conn.getResponseCode() == 200) {
+                InputStream inStream = conn.getInputStream();
+                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                byte[] buffer = new byte[1024];
+                int len = 0;
+                while ((len = inStream.read(buffer)) != -1) {
+                    outStream.write(buffer, 0, len);
+                }
+                outStream.close();
+                inStream.close();
+
+                byte[] bytes = outStream.toByteArray();
+                Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
+                mAssents.mOwnerHeadTexture = new Texture(pixmap);
+                pixmap.dispose();
+                mLoadHeadStatus = LOAD_HEAD_OK;
+            }
+        } catch (Exception e) {
+            mLoadHeadStatus = LOAD_HEAD_FAILE;
+            Log.e(TAG, e.toString());
+        }
     }
 }

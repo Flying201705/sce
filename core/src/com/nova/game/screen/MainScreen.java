@@ -96,13 +96,15 @@ public class MainScreen extends BaseScreen {
             mStage.addActor(head);
         }
 
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        parameter.size = 36;
-        parameter.characters = mWXInfo.getNickName();
-        BitmapFont font = Assets.getInstance().mGeneratror.generateFont(parameter);
-        Label name = new Label(mWXInfo.getNickName(), new Label.LabelStyle(font, Color.WHITE));
-        name.setPosition(180, 680);
-        mStage.addActor(name);
+        if (mWXInfo.getNickName() != null) {
+            FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+            parameter.size = 36;
+            parameter.characters = mWXInfo.getNickName();
+            BitmapFont font = Assets.getInstance().mGeneratror.generateFont(parameter);
+            Label name = new Label(mWXInfo.getNickName(), new Label.LabelStyle(font, Color.WHITE));
+            name.setPosition(180, 680);
+            mStage.addActor(name);
+        }
 
         Button quitButton = new SceButton("SceneMain/bt_quit.png");
         quitButton.addListener(new ClickListener() {
