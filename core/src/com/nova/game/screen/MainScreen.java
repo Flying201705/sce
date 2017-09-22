@@ -18,6 +18,7 @@ import com.nova.game.BaseGame;
 import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
+import com.nova.game.actor.MyInfo;
 import com.nova.game.assetmanager.Assets;
 import com.nova.game.dialog.JoinRoomDialog;
 import com.nova.game.handler.GameRequestDispatcher;
@@ -83,28 +84,12 @@ public class MainScreen extends BaseScreen {
         bg.setBounds(0, Constants.WORLD_HEIGHT - 100, Constants.WORLD_WIDTH, 100);
         mStage.addActor(bg);
 
-        if (Assets.getInstance().mOwnerHeadTexture != null) {
-            Image head = new Image(Assets.getInstance().mOwnerHeadTexture);
-            head.addListener(new ClickListener() {
-                @Override
-                public void clicked(InputEvent event, float x, float y) {
-                    // TODO: 17-9-11
-                }
-            });
-            head.setPosition(10, 640);
-            head.setSize(80, 80);
-            mStage.addActor(head);
-        }
-
-        if (mWXInfo.getNickName() != null) {
-            FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-            parameter.size = 36;
-            parameter.characters = mWXInfo.getNickName();
-            BitmapFont font = Assets.getInstance().mGeneratror.generateFont(parameter);
-            Label name = new Label(mWXInfo.getNickName(), new Label.LabelStyle(font, Color.WHITE));
-            name.setPosition(180, 680);
-            mStage.addActor(name);
-        }
+        MyInfo myInfo = new MyInfo();
+        myInfo.setBounds(10, 640, 180, 80);
+        myInfo.setHeadImage(Assets.getInstance().mOwnerHeadTexture);
+        myInfo.setName(mWXInfo.getNickName());
+        myInfo.setGold(100000);
+        mStage.addActor(myInfo);
 
         Button quitButton = new SceButton("SceneMain/bt_quit.png");
         quitButton.addListener(new ClickListener() {

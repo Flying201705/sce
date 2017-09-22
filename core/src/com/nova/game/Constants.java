@@ -16,6 +16,9 @@ public class Constants {
 
     public static final int MAHJ_IMAGE_EACH_COUNT = 34; //每一种牌图片总数
 
+    public static final int HEAD_WIDTH = 80;
+    public static final int HEAD_HEIGHT = 80;
+
     public static final String[] COMMON_CHAT_MESSAGE = {
             "快点吧,我等的花儿都谢了!",
             "大家好,很高兴见到大家",
