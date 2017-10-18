@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Array;
 import com.nova.game.assetmanager.Assets;
@@ -13,9 +14,11 @@ import com.nova.game.assetmanager.Assets;
 public class TimeUnit extends Actor {
     private static final float FRAME_DURATION = 1.0f / 15.0f;
 
-    private Texture mBg;
+    private Texture mTimeBg;
+    private Texture mDirectBg;
     private Array<Texture> mTimePoint = new Array<Texture>();
     private Animation<Texture> mTimeAnim;
+    private TextureRegion[][] mTimeNums;
     private float mAnimationTime;
     private float mTimeCount;
     private boolean mShowAnim;
@@ -24,12 +27,7 @@ public class TimeUnit extends Actor {
     private int mCurrPlayer = -1;
     private int mPlayerTimes;
 
-    private BitmapFont mFont;
-
     private TimeUnitListener mListener;
-    // 临时调试
-    private int mRemainSize = 0;
-    private int mGodIndex = 0;
 
     public interface TimeUnitListener {
         void onAnimationFinished();
@@ -37,8 +35,9 @@ public class TimeUnit extends Actor {
     }
 
     public TimeUnit() {
-        mBg = new Texture("Actors/TimeBack.png");
-        setSize(mBg.getWidth(), mBg.getHeight());
+        mTimeBg = new Texture("Actors/TimeBack.png");
+        mDirectBg = new Texture("Actors/TimeBack2.png");
+        setSize(mTimeBg.getWidth(), mTimeBg.getHeight());
 
         mTimePoint.add(new Texture("Actors/TimePoint0.png"));
         mTimePoint.add(new Texture("Actors/TimePoint1.png"));
@@ -47,14 +46,13 @@ public class TimeUnit extends Actor {
 
         mTimeAnim = new Animation<Texture>(FRAME_DURATION, mTimePoint, Animation.PlayMode.LOOP);
 
-        mFont = new BitmapFont();
-        mFont.setColor(Color.RED);
-        mFont.getData().setScale(2f);
+        mTimeNums = TextureRegion.split(new Texture("Actors/Timer_num.png"), 23, 38);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        batch.draw(mBg, getX(), getY());
+        batch.draw(mTimeBg, getX(), getY());
+        batch.draw(mDirectBg, getX(), getY());
 
         if (mShowAnim) {
             mAnimationTime += Gdx.graphics.getDeltaTime();
@@ -83,20 +81,18 @@ public class TimeUnit extends Actor {
                     }
                 }
             }
-            mFont.draw(batch, String.valueOf(mPlayerTimes), getX() + 54, getY() + 84);
+            TextureRegion timeNum = mTimeNums[0][0];
+            batch.draw(timeNum, getX() + getWidth() / 2 - timeNum.getRegionWidth(), getY() + (getHeight() - timeNum.getRegionHeight()) / 2);
+            timeNum = mTimeNums[0][mPlayerTimes];
+            batch.draw(timeNum, getX() + getWidth() / 2, getY() + (getHeight() - timeNum.getRegionHeight()) / 2);
         }
-
-        // 临时调试
-        drawRemainSize(batch);
-        drawGodData(batch);
     }
 
     @Override
     public void clear() {
         super.clear();
-        mBg.dispose();
+        mTimeBg.dispose();
         mTimePoint.clear();
-        mFont.dispose();
     }
 
     public void setTimeUnitListener(TimeUnitListener listener) {
@@ -142,35 +138,5 @@ public class TimeUnit extends Actor {
     private void resetTime() {
         mPlayerTimes = 4;
         mTimeCount = 0f;
-    }
-
-    // 临时调试
-    public void updateRemainSize(int size) {
-        mRemainSize = size;
-    }
-
-    public void updateGodIndex(int index) {
-        mGodIndex = index;
-    }
-
-    private void drawRemainSize(Batch batch) {
-        Texture remainTexture = new Texture("SceneGame/hand_top.png");
-        batch.draw(remainTexture, getX() + 35, getY() + 37, 20, 26);
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.GREEN);
-        font.getData().setScale(1f);
-        font.draw(batch, String.valueOf(mRemainSize), getX() + 37, getY() + 55);
-    }
-
-    private void drawGodData(Batch batch) {
-        if (mGodIndex <= 0) {
-            return;
-        }
-
-        MahjActor godActor = new MahjActor(Assets.getInstance().getMahjHandMeTexture(mGodIndex));
-        godActor.setScale(0.2f);
-        godActor.setCanStandUp(true);
-        godActor.setPosition(getX() + 75, getY() + 37);
-        godActor.draw(batch, 1.0f);
     }
 }

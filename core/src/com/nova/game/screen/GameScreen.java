@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nova.game.actor.GameInfo;
 import com.nova.game.actor.Player;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
@@ -36,6 +37,8 @@ public class GameScreen extends BaseScreen {
     private BaseStage mStage;
     private SpriteBatch mBatch;
     private Texture mBg;
+    // 游戏信息展示区域
+    private GameInfo mGameInfo;
     private TimeUnit mTime;
     private SceButton mStartBt;
     private Player mMyPlayer;
@@ -107,6 +110,11 @@ public class GameScreen extends BaseScreen {
 
         mBatch = new SpriteBatch();
         mBg = new Texture("SceneGame/background.jpg");
+
+        // 游戏信息展示区域
+        mGameInfo = new GameInfo();
+        mGameInfo.setPosition(0, 600);
+        mStage.addActor(mGameInfo);
 
         mTime = new TimeUnit();
         mTime.setPosition(570, 295);
@@ -224,6 +232,7 @@ public class GameScreen extends BaseScreen {
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         mBatch.end();
 
+        updateGameInfo();
         updateTimeUint();
         updateMahjong();
         updatePlayer();
@@ -327,10 +336,11 @@ public class GameScreen extends BaseScreen {
         if (!mTime.isAnimation()) {
             mTime.updateCurrPlayer(mController.getCurrentPlayer());
         }
+    }
 
-        // 临时调试
-        mTime.updateRemainSize(mController.getRemainingSize());
-        mTime.updateGodIndex(mController.getGodData());
+    private void updateGameInfo() {
+        mGameInfo.updateRemainSize(mController.getRemainingSize());
+        mGameInfo.updateGodIndex(mController.getGodData());
     }
 
     private int getPlayerIdByPosition(int position) {
