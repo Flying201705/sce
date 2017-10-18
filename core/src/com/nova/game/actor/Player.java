@@ -32,7 +32,6 @@ public class Player extends Actor {
 
         mImage = new Texture("Head/Head0.png");
         mFont = Assets.getInstance().getFont();
-        mFont.setColor(Color.GREEN);
 
         if (mDirection == HORIZONTAL) {
             setSize(200, 102);
@@ -64,12 +63,20 @@ public class Player extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         if (mDirection == HORIZONTAL) {
             batch.draw(mImage, getX(), getY(), 80, 80);
-            mFont.draw(batch, mName, getX() + 80, getY() + 80);
-            mFont.draw(batch, String.valueOf(mGold), getX() + 80, getY() + 30);
+            mFont.setColor(Color.CORAL);
+            mFont.getData().setScale(0.65f);
+            mFont.draw(batch, mName, getX() + 85, getY() + 65);
+            mFont.setColor(Color.GOLD);
+            mFont.getData().setScale(0.6f);
+            mFont.draw(batch, String.valueOf(mGold), getX() + 85, getY() + 35);
         } else {
             batch.draw(mImage, getX(), getY() + getHeight() - 80, 80, 80);
+            mFont.setColor(Color.CORAL);
+            mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX(), getY() + 60);
-            mFont.draw(batch, String.valueOf(mGold), getX(), getY() + 30);
+            mFont.setColor(Color.GOLD);
+            mFont.getData().setScale(0.6f);
+            mFont.draw(batch, String.valueOf(mGold), getX(), getY() + 40);
         }
     }
 }

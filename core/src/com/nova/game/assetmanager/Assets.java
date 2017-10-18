@@ -6,6 +6,7 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
@@ -18,6 +19,9 @@ public class Assets {
     public FreeTypeFontGenerator mGeneratror;
     private BitmapFont mFont;
     public Texture mOwnerHeadTexture;
+    private TextureRegion[][] mBigMahjTextureRegions;
+    private TextureRegion[][] mMiddleMahjTextureRegions;
+    private TextureRegion[][] mSmallMahjTextureRegions;
 
     public static Assets getInstance() {
         if (mInstance == null) {
@@ -33,6 +37,7 @@ public class Assets {
 
         loadMahjTexture();
         loadFont();
+        updateMahjTextureRegions();
 
 //        mAssetManager.finishLoading();
     }
@@ -58,6 +63,12 @@ public class Assets {
         mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
     }
 
+    private void updateMahjTextureRegions() {
+        mBigMahjTextureRegions = TextureRegion.split(new Texture("SceneGame/mj_big.png"), 75, 85);
+        mMiddleMahjTextureRegions = TextureRegion.split(new Texture("SceneGame/mj_middle.png"), 53, 60);
+        mSmallMahjTextureRegions = TextureRegion.split(new Texture("SceneGame/mj_small.png"), 37, 42);
+    }
+
     private void addTexture(String path) {
         int i, j, index;
         for (i = 0, j = 1, index = 0; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
@@ -71,6 +82,24 @@ public class Assets {
                 index++;
             }
             mAssetManager.load(path + (index * 10 + j) + ".png", Texture.class);
+        }
+    }
+
+    public TextureRegion getMahjTextureRegion(int index, int type) {
+        index -= 1;
+        int color = index / 10;
+        int face = index % 10;
+        if (color > 3) {
+            color = 3;
+            face = face + 4;
+        }
+
+        if (type == 0) {
+            return mSmallMahjTextureRegions[color][face];
+        } else if (type == 1) {
+            return mMiddleMahjTextureRegions[color][face];
+        } else {
+            return mBigMahjTextureRegions[color][face];
         }
     }
 
