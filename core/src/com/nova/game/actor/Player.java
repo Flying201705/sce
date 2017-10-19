@@ -63,7 +63,7 @@ public class Player extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         if (mDirection == HORIZONTAL) {
             batch.draw(mImage, getX(), getY(), 80, 80);
-            mFont.setColor(Color.CORAL);
+            mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX() + 85, getY() + 65);
             mFont.setColor(Color.GOLD);
@@ -71,7 +71,7 @@ public class Player extends Actor {
             mFont.draw(batch, String.valueOf(mGold), getX() + 85, getY() + 35);
         } else {
             batch.draw(mImage, getX(), getY() + getHeight() - 80, 80, 80);
-            mFont.setColor(Color.CORAL);
+            mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX(), getY() + 60);
             mFont.setColor(Color.GOLD);
