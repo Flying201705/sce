@@ -1,10 +1,11 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nova.game.actor.mahj.Mahjong;
+import com.nova.game.actor.mahj.OwnerMahjong;
 import com.nova.game.assetmanager.Assets;
 
 /**
@@ -13,8 +14,15 @@ import com.nova.game.assetmanager.Assets;
 
 public class GameInfo extends Actor {
 
+    private Texture mMahjBg;
+    private TextureRegion[][] mRemainNums;
     private int mRemainSize = 0;
     private int mGodIndex = 0;
+
+    public GameInfo() {
+        mMahjBg = new Texture("SceneGame/mahj_top.png");
+        mRemainNums = TextureRegion.split(new Texture("SceneGame/mahj_remain_num.png"), 15, 21);
+    }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
@@ -32,12 +40,11 @@ public class GameInfo extends Actor {
     }
 
     private void drawRemainSize(Batch batch) {
-        Texture remainTexture = new Texture("SceneGame/hand_top.png");
-        batch.draw(remainTexture, getX() + 35, getY() + 37, 20, 26);
-        BitmapFont font = new BitmapFont();
-        font.setColor(Color.GREEN);
-        font.getData().setScale(1f);
-        font.draw(batch, String.valueOf(mRemainSize), getX() + 37, getY() + 55);
+        int remain_ten = mRemainSize / 10;
+        int remain_one = mRemainSize % 10;
+        batch.draw(mMahjBg, getX() + 10, getY() + 10);
+        batch.draw(mRemainNums[0][remain_ten], getX() + 15, getY() + 25);
+        batch.draw(mRemainNums[0][remain_one], getX() + 30, getY() + 25);
     }
 
     private void drawGodData(Batch batch) {
@@ -46,9 +53,9 @@ public class GameInfo extends Actor {
         }
 
         MahjActor godActor = new MahjActor(Assets.getInstance().getMahjHandMeTexture(mGodIndex));
-        godActor.setScale(0.2f);
+        godActor.setScale(0.43f);
         godActor.setCanStandUp(true);
-        godActor.setPosition(getX() + 75, getY() + 37);
+        godActor.setPosition(getX() + 55, getY() + 10);
         godActor.draw(batch, 1.0f);
     }
 }
