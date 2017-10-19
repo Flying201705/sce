@@ -117,7 +117,7 @@ public class GameScreen extends BaseScreen {
         mStage.addActor(mGameInfo);
 
         mTime = new TimeUnit();
-        mTime.setPosition(570, 295);
+        mTime.setPosition(564, 330);
         mTime.setTimeUnitListener(mTimeListener);
         mTime.startTime();
         mStage.addActor(mTime);
