@@ -49,10 +49,11 @@ public class Player extends Actor {
 
         mName = mPlayerInfo.getName();
         mGold = mPlayerInfo.getGold();
-        if (mPlayerInfo.getSex() == 1) {
+        if (mPlayerInfo.getHead() != null && !mPlayerInfo.getHead().isEmpty()) {
+            mImage = Assets.getInstance().mOwnerHeadTexture;
+        } else if (mPlayerInfo.getSex() == 1) {
             mImage = new Texture("Head/Head1.png");
         }
-
     }
 
     public PlayerInfo getPlayerInfo() {
