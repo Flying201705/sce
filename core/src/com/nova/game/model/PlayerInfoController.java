@@ -23,6 +23,7 @@ public class PlayerInfoController {
     private static final String TAG = "PlayerInfoController";
     private static PlayerInfoController mInstance;
     private WeChatListener mWeChatListener;
+    private SharedPreferenceListener mSharedListener;
     private PlayerInfo mMyInfo;
     private PlayerInfoChangeListener mPlayerInfoChangeListener;
     private HashMap<Integer, PlayerInfo> mPlayerCaches = new HashMap<Integer, PlayerInfo>();
@@ -65,6 +66,30 @@ public class PlayerInfoController {
     		mWeChatListener.loginWeChat();
     	}
     }
+
+    public boolean isOwnerInfoSaved() {
+        if (mSharedListener != null) {
+            String openId = mSharedListener.getOwnerOpenId();
+            return openId != null && !openId.isEmpty();
+        }
+
+        return false;
+    }
+
+    public void loginAuto() {
+        if (mSharedListener != null) {
+            String openId = mSharedListener.getOwnerOpenId();
+            String name = mSharedListener.getOwnerName();
+            PlayerInfo info = new PlayerInfo();
+            info.setOpenId(openId);
+            info.setName(name);
+            saveOwnerInfo(info);
+        }
+    }
+
+    public void setSharedPreferenceListener(SharedPreferenceListener listener) {
+        mSharedListener = listener;
+    }
     
     public void setPlayerInfoChangeListener(PlayerInfoChangeListener listener) {
         mPlayerInfoChangeListener = listener;
@@ -76,8 +101,11 @@ public class PlayerInfoController {
 
     public void saveOwnerInfo(PlayerInfo info) {
         mMyInfo = info;
-        // mPlayerCaches.put(info.getId(), info);
         uploadPlayerInfo(mMyInfo);
+
+        if (mSharedListener != null) {
+            mSharedListener.saveOwnerInfo(info);
+        }
     }
 
     public int getOwnerPlayerId() {

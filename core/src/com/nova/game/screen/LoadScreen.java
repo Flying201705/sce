@@ -59,6 +59,11 @@ public class LoadScreen extends BaseScreen {
         mProgressX = (Gdx.graphics.getWidth() - mProgressBg.getWidth()) / 2;
 
         mAssents.load();
+
+        // 自动登陆
+        if (PlayerInfoController.getInstance().isOwnerInfoSaved()) {
+            PlayerInfoController.getInstance().loginAuto();
+        }
     }
 
     @Override

@@ -25,8 +25,8 @@ public class AndroidLauncher extends AndroidApplication {
         ChannelManager.getInstance().connect();
 
         // 初始化PlayerInfoController
-        WeChatManager manager = new WeChatManager(getContext());
-        PlayerInfoController.getInstance().setWeChatListener(manager);
+        PlayerInfoController.getInstance().setWeChatListener(new WeChatManager(getContext()));
+        PlayerInfoController.getInstance().setSharedPreferenceListener(new SharedPreferenceManager(getContext()));
 
         AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
         initialize(new SceGame(), config);

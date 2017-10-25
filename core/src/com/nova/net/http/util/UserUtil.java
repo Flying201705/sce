@@ -64,12 +64,20 @@ public class UserUtil extends HttpUtil {
 	}
 	
 	public void onLoginForOpenId(String openid, String name, int sex, String headimgurl, onUserResultListener listener) {
+		if (openid == null || openid.isEmpty()) {
+			return;
+		}
+
 		mUserResultListener = listener;
 		HashMap<String, String> allP = new HashMap<String, String>();
 		allP.put("openid", openid);
-		allP.put("name", name);
+		if (name != null) {
+			allP.put("name", name);
+		}
 		allP.put("sex", String.valueOf(sex));
-		allP.put("head", headimgurl);
+		if (headimgurl != null) {
+			allP.put("head", headimgurl);
+		}
 		doPost(HttpConstants.HTTP_LOGIN, allP, mUserResultCallback);
 	}
 
