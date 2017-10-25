@@ -2,12 +2,12 @@ package com.nova.net.http.util;
 
 import java.util.HashMap;
 import java.util.List;
-
+import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.nova.net.http.HttpConstants;
 import com.nova.net.http.bean.BaseBean;
-
 import nova.common.room.data.PlayerInfo;
 
 public class UserUtil extends HttpUtil {
@@ -64,13 +64,16 @@ public class UserUtil extends HttpUtil {
 		return true;
 	}
 	
-	public void onLogin(String openid, onUserResultListener listener) {
+	public void onLoginForOpenId(String openid, String name, int sex, String headimgurl, onUserResultListener listener) {
 		mUserResultListener = listener;
 		HashMap<String, String> allP = new HashMap<String, String>();
 		allP.put("openid", openid);
+		allP.put("name", name);
+		allP.put("sex", String.valueOf(sex));
+		allP.put("head", headimgurl);
 		doPost(HttpConstants.HTTP_LOGIN, allP, mUserResultCallback);
 	}
-	
+
 	private ResultCallback mUserResultCallback = new ResultCallback() {
 		
 		@Override
@@ -78,15 +81,22 @@ public class UserUtil extends HttpUtil {
 			if (!checkResultSuccess(result)) {
 				return;
 			}
-			BaseBean base = new Gson().fromJson(result, new TypeToken<BaseBean>() {}.getType());
+
+			BaseBean base = JSON.parseObject(result, BaseBean.class);
 			UserResult userResult = new UserResult();
 			if ("0".equals(base.getRespcode())) {
-				PlayerInfo player = new Gson().fromJson(base.getData().toString(), PlayerInfo.class);
+				PlayerInfo player = new PlayerInfo();
+				try {
+					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
+					player = gson.fromJson(base.getData().toString(), new TypeToken<PlayerInfo>() {}.getType());
+				} catch (Exception e) {
+				}
 				userResult.setStatus(true);
                 userResult.setPlayerInfo(player);
 			} else {
 				userResult.setStatus(false);
 			}
+
 			mUserResultListener.onUserResult(ACTION_LOGIN, userResult);
 		}
 	};

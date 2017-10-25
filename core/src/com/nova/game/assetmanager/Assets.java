@@ -18,10 +18,13 @@ public class Assets {
     private AssetManager mAssetManager;
     public FreeTypeFontGenerator mGeneratror;
     private BitmapFont mFont;
-    public Texture mOwnerHeadTexture;
     private TextureRegion[][] mBigMahjTextureRegions;
     private TextureRegion[][] mMiddleMahjTextureRegions;
     private TextureRegion[][] mSmallMahjTextureRegions;
+
+    private Assets() {
+        mAssetManager = new AssetManager();
+    }
 
     public static Assets getInstance() {
         if (mInstance == null) {
@@ -31,10 +34,6 @@ public class Assets {
     }
 
     public void load() {
-        if (mAssetManager == null) {
-            mAssetManager = new AssetManager();
-        }
-
         loadMahjTexture();
         loadFont();
         updateMahjTextureRegions();

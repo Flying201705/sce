@@ -26,7 +26,7 @@ import com.nova.game.BaseStage;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.model.MahjGameController;
-import com.nova.game.utils.WXInfo;
+import com.nova.game.model.PlayerInfoController;
 import com.nova.game.widget.SceButton;
 
 import java.util.HashMap;
@@ -180,8 +180,7 @@ public class GameScreen extends BaseScreen {
     private void initPlayer() {
         mMyPlayer = new Player();
         mMyPlayer.setPosition(20, 20);
-        // mMyPlayer.setVisible(false);
-        PlayerInfo myPlayerInfo = new PlayerInfo(0, WXInfo.getInstance().getNickName(), WXInfo.getInstance().getHeadimgurl(), WXInfo.getInstance().getSex());
+        PlayerInfo myPlayerInfo = PlayerInfoController.getInstance().getOwnerInfo();
         mMyPlayer.setPlayerInfo(myPlayerInfo);
         mStage.addActor(mMyPlayer);
 

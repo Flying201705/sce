@@ -10,8 +10,6 @@ import com.nova.game.assetmanager.Assets;
 public abstract class BaseGame extends Game {
     private Stack<Screen> mScreenStack = new Stack<Screen>();
 
-    protected SceApi mApi;
-
     @Override
     public void setScreen(Screen screen) {
         setScreen(screen, true);
@@ -41,12 +39,6 @@ public abstract class BaseGame extends Game {
         } else {
             Assets.getInstance().clear();
             Gdx.app.exit();
-        }
-    }
-
-    public void loginWeChat() {
-        if (mApi != null) {
-            mApi.loginWeChat();
         }
     }
 }

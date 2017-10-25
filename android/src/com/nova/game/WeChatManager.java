@@ -2,10 +2,10 @@ package com.nova.game;
 
 import android.content.Context;
 import android.content.Intent;
-
 import com.funlisten.wxapi.WXEntryActivity;
+import com.nova.game.model.WeChatListener;
 
-public class WeChatManager implements SceApi {
+public class WeChatManager implements WeChatListener {
     private Context mContext;
 
     public WeChatManager(Context context) {

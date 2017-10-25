@@ -2,9 +2,10 @@ package com.nova.game.utils;
 
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-
+import com.nova.game.model.PlayerInfoController;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import nova.common.room.data.PlayerInfo;
 
 public class WXUtils {
     private static final String TAG = "WXUtils";
@@ -37,7 +38,7 @@ public class WXUtils {
                                 JsonReader jr = new JsonReader();
                                 JsonValue jv = jr.parse(infoConn.getInputStream());
 
-                                WXInfo wxInfo = WXInfo.getInstance();
+                                /*WXInfo wxInfo = WXInfo.getInstance();
 
                                 wxInfo.setNickName(jv.getString("nickname"));
                                 wxInfo.setSex(jv.getInt("sex"));
@@ -49,9 +50,19 @@ public class WXUtils {
                                 if (headimgurl.contains("/0")) {
                                     headimgurl = headimgurl.replace("/0", "/132");
                                 }
-                                wxInfo.setHeadimgurl(headimgurl);
-
+                                wxInfo.setHeadimgurl(headimgurl);*/
+                                
+                                PlayerInfo myInfo = new PlayerInfo();
+                                myInfo.setOpenId(openid);
+                                myInfo.setName(jv.getString("nickname"));
+                                myInfo.setSex(jv.getInt("sex"));
+                                String headimgurl = jv.getString("headimgurl");
+                                if (headimgurl.contains("/0")) {
+                                    headimgurl = headimgurl.replace("/0", "/132");
+                                }
                                 Log.d(TAG, "headimgurl:" + headimgurl);
+                                myInfo.setHead(headimgurl);
+                                PlayerInfoController.getInstance().saveOwnerInfo(myInfo);
                             }
                         }
                     }

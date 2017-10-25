@@ -15,7 +15,6 @@ import com.nova.game.AndroidLauncher;
 import com.nova.game.R;
 import com.nova.game.Utils;
 import com.nova.game.utils.Log;
-import com.nova.game.utils.WXInfo;
 import com.nova.game.utils.WXUtils;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
@@ -134,7 +133,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
         switch (resp.errCode) {
             case BaseResp.ErrCode.ERR_OK:
-                WXInfo.getInstance().loginOk();
                 requestTokenWithHttpClient(((SendAuth.Resp) resp).code);
                 break;
             case BaseResp.ErrCode.ERR_USER_CANCEL:

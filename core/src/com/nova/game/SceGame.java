@@ -5,8 +5,8 @@ import com.nova.game.screen.TestScreen;
 
 public class SceGame extends BaseGame {
 
-    public SceGame(SceApi api) {
-        mApi = api;
+    public SceGame() {
+    	
     }
 
     @Override

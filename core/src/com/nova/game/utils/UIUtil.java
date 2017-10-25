@@ -19,6 +19,18 @@ import com.nova.game.Constants;
 import com.nova.game.assetmanager.Assets;
 
 public class UIUtil {
+    public static Texture bytes2Texture(byte[] bytes) {
+        if (bytes == null || bytes.length <= 0) {
+            return null;
+        }
+
+        Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
+        Texture image = new Texture(pixmap);
+        pixmap.dispose();
+
+        return image;
+    }
+
     public static Drawable file2Drawable(String filePatch) {
         return new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal(filePatch))));
     }

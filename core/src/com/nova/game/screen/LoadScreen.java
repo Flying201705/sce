@@ -2,7 +2,6 @@ package com.nova.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -13,33 +12,20 @@ import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.assetmanager.Assets;
-import com.nova.game.utils.Log;
-import com.nova.game.utils.WXInfo;
+import com.nova.game.model.PlayerInfoController;
 import com.nova.game.widget.SceButton;
-
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 public class LoadScreen extends BaseScreen {
     private static final String TAG = "LoadScreen";
 
-    private static final int LOAD_HEAD_START = 0;
-    private static final int LOAD_HEAD_OK = 1;
-    private static final int LOAD_HEAD_FAILE = 2;
-
-    private int mLoadHeadStatus = -1;
-
     private BaseStage mStage;
     private SpriteBatch mBatch;
-    private Assets mAssents;
-
+    private Assets mAssents = Assets.getInstance();
     private Texture mBg, mProgressBg, mProgressBar;
     private Image mLogo;
     private SceButton mWXLogon;
-
     private int mProgressX;
+    private PlayerInfoController mPlayerInfoController = PlayerInfoController.getInstance();
 
     public LoadScreen(BaseGame game) {
         super(game);
@@ -63,7 +49,7 @@ public class LoadScreen extends BaseScreen {
         mWXLogon.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mGame.loginWeChat();
+            	mPlayerInfoController.loginWeChat();
             }
         });
         mStage.addActor(mWXLogon);
@@ -71,17 +57,8 @@ public class LoadScreen extends BaseScreen {
         mProgressBg = new Texture("SceneLoad/progress_bg.png");
         mProgressBar = new Texture("SceneLoad/progress_bar.png");
         mProgressX = (Gdx.graphics.getWidth() - mProgressBg.getWidth()) / 2;
-    }
 
-    @Override
-    public void resume() {
-        Log.i(TAG, "show isLogined:" + WXInfo.getInstance().isLogined());
-        if (WXInfo.getInstance().isLogined()) {
-            mAssents = Assets.getInstance();
-            mAssents.load();
-
-            mWXLogon.setVisible(false);
-        }
+        mAssents.load();
     }
 
     @Override
@@ -91,7 +68,10 @@ public class LoadScreen extends BaseScreen {
 
         mBatch.begin();
         mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        if (WXInfo.getInstance().isLogined()) {
+        if (mPlayerInfoController.getOwnerInfo() != null) {
+            if (mWXLogon.isVisible()) {
+                mWXLogon.setVisible(false);
+            }
             mBatch.draw(mProgressBg, mProgressX, 10);
             mBatch.draw(mProgressBar, mProgressX, 10, mProgressBar.getWidth() * mAssents.getProgress(), mProgressBar.getHeight());
         }
@@ -100,13 +80,9 @@ public class LoadScreen extends BaseScreen {
         mStage.act();
         mStage.draw();
 
-        if (WXInfo.getInstance().isLogined()) {
-            loadImageFromNet(WXInfo.getInstance().getHeadimgurl());
-
-            if (mAssents.update() && (mLoadHeadStatus == LOAD_HEAD_OK || mLoadHeadStatus == LOAD_HEAD_FAILE)) {
-                mGame.setScreen(new MainScreen(mGame));
-                dispose();
-            }
+        if (mAssents.update() && mPlayerInfoController.getOwnerInfo() != null && mPlayerInfoController.getOwnerInfo().getHeaddatas() != null) {
+            mGame.setScreen(new MainScreen(mGame));
+            dispose();
         }
     }
 
@@ -118,45 +94,5 @@ public class LoadScreen extends BaseScreen {
 
         mBatch.dispose();
         mStage.dispose();
-    }
-
-    private void loadImageFromNet(String imgUrl) {
-        if (imgUrl == null) {
-            return;
-        }
-
-        if (mLoadHeadStatus == LOAD_HEAD_START || mLoadHeadStatus == LOAD_HEAD_OK) {
-            return;
-        }
-
-        Log.i(TAG, "loadImageFromNet imgUrl = " + imgUrl);
-
-        mLoadHeadStatus = LOAD_HEAD_START;
-        try {
-            URL head_url = new URL(imgUrl);
-            HttpURLConnection conn = (HttpURLConnection) head_url.openConnection();
-            conn.setConnectTimeout(5000);
-            conn.setRequestMethod("GET");
-            if (conn.getResponseCode() == 200) {
-                InputStream inStream = conn.getInputStream();
-                ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-                byte[] buffer = new byte[1024];
-                int len = 0;
-                while ((len = inStream.read(buffer)) != -1) {
-                    outStream.write(buffer, 0, len);
-                }
-                outStream.close();
-                inStream.close();
-
-                byte[] bytes = outStream.toByteArray();
-                Pixmap pixmap = new Pixmap(bytes, 0, bytes.length);
-                mAssents.mOwnerHeadTexture = new Texture(pixmap);
-                pixmap.dispose();
-                mLoadHeadStatus = LOAD_HEAD_OK;
-            }
-        } catch (Exception e) {
-            mLoadHeadStatus = LOAD_HEAD_FAILE;
-            Log.e(TAG, e.toString());
-        }
     }
 }

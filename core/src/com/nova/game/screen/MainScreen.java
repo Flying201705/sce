@@ -1,17 +1,14 @@
 package com.nova.game.screen;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.nova.game.BaseGame;
@@ -19,11 +16,11 @@ import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.actor.MyInfo;
-import com.nova.game.assetmanager.Assets;
 import com.nova.game.dialog.JoinRoomDialog;
 import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjRoomController;
-import com.nova.game.utils.WXInfo;
+import com.nova.game.model.PlayerInfoController;
+import com.nova.game.utils.UIUtil;
 import com.nova.game.widget.SceButton;
 
 import nova.common.game.mahjong.util.MahjGameCommand;
@@ -33,7 +30,6 @@ public class MainScreen extends BaseScreen {
     private BaseStage mStage;
     private SpriteBatch mBatch;
     private Texture mBg;
-    private WXInfo mWXInfo;
 
     public MainScreen(BaseGame game) {
         super(game);
@@ -44,8 +40,6 @@ public class MainScreen extends BaseScreen {
         mStage = new BaseStage(this);
         Gdx.input.setInputProcessor(mStage);
         Gdx.input.setCatchBackKey(true);
-
-        mWXInfo = WXInfo.getInstance();
 
         mBatch = new SpriteBatch();
         mBg = new Texture("SceneMain/background.jpg");
@@ -86,8 +80,9 @@ public class MainScreen extends BaseScreen {
 
         MyInfo myInfo = new MyInfo();
         myInfo.setBounds(10, 640, 180, 80);
-        myInfo.setHeadImage(Assets.getInstance().mOwnerHeadTexture);
-        myInfo.setName(mWXInfo.getNickName());
+        Texture head = UIUtil.bytes2Texture(PlayerInfoController.getInstance().getOwnerInfo().getHeaddatas());
+        myInfo.setHeadImage(head);
+        myInfo.setName(PlayerInfoController.getInstance().getOwnerInfo().getName());
         myInfo.setGold(100000);
         mStage.addActor(myInfo);
 

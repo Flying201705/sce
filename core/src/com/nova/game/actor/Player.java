@@ -1,12 +1,13 @@
 package com.nova.game.actor;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.utils.UIUtil;
 
 import nova.common.room.data.PlayerInfo;
 
@@ -49,10 +50,12 @@ public class Player extends Actor {
 
         mName = mPlayerInfo.getName();
         mGold = mPlayerInfo.getGold();
-        if (mPlayerInfo.getHead() != null && !mPlayerInfo.getHead().isEmpty()) {
-            mImage = Assets.getInstance().mOwnerHeadTexture;
-        } else if (mPlayerInfo.getSex() == 1) {
+        if (mPlayerInfo.getHeaddatas() != null && mPlayerInfo.getHeaddatas().length > 0) {
+            mImage = UIUtil.bytes2Texture(mPlayerInfo.getHeaddatas());
+        }else if (mPlayerInfo.getSex() == 1) {
             mImage = new Texture("Head/Head1.png");
+        } else {
+            mImage = new Texture("Head/Head0.png");
         }
     }
 
