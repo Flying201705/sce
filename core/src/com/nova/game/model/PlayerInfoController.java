@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+
 import nova.common.room.data.PlayerInfo;
 
 /**
@@ -32,7 +33,7 @@ public class PlayerInfoController {
             if (result.getStatus()) {
                 PlayerInfo player = result.getPlayerInfo();
                 mPlayerCaches.put(player.getId(), player);
-                if (player.getOpenId().equals(mMyInfo.getOpenId())) {
+                if (mMyInfo != null && mMyInfo.getOpenId().equals(player.getOpenId())) {
                     updatePlayerInfo(mMyInfo, player);
                 }
                 loadImageFromNet(player.getId(), player.getHead());
@@ -105,6 +106,7 @@ public class PlayerInfoController {
         info.setName(cache.getName());
         info.setGold(cache.getGold());
         info.setHead(cache.getHead());
+        info.setHeaddatas(cache.getHeaddatas());
         info.setSex(cache.getSex());
         info.setVip(cache.getVip());
     }

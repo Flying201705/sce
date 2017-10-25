@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 public class Log {
 
 	private static final boolean DEBUG = true;
-	private static final String TAG = "nova";
+	private static final String TAG = "nova_mahj";
 
     public static void i(String tag, String msg) {
         if (DEBUG) {
