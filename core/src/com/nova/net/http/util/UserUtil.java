@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.nova.net.http.HttpConstants;
 import com.nova.net.http.bean.BaseBean;
@@ -85,12 +84,7 @@ public class UserUtil extends HttpUtil {
 			BaseBean base = JSON.parseObject(result, BaseBean.class);
 			UserResult userResult = new UserResult();
 			if ("0".equals(base.getRespcode())) {
-				PlayerInfo player = new PlayerInfo();
-				try {
-					Gson gson = new GsonBuilder().disableHtmlEscaping().create();
-					player = gson.fromJson(base.getData().toString(), new TypeToken<PlayerInfo>() {}.getType());
-				} catch (Exception e) {
-				}
+				PlayerInfo player = new Gson().fromJson(base.getData().toString(), new TypeToken<PlayerInfo>() {}.getType());
 				userResult.setStatus(true);
                 userResult.setPlayerInfo(player);
 			} else {
