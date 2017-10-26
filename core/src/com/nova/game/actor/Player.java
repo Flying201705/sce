@@ -21,8 +21,8 @@ public class Player extends Actor {
     private Texture mImage;
     private BitmapFont mFont;
 
-    private String mName = "刘备";
-    private int mGold = 10000;
+    private String mName = "游客";
+    private int mGold = 0;
 
     public Player() {
         this(HORIZONTAL);

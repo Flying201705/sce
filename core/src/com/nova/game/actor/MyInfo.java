@@ -1,5 +1,6 @@
 package com.nova.game.actor;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -21,7 +22,7 @@ public class MyInfo extends Group {
     public MyInfo() {
         mHeadBg = new Texture("Head/head_bg.png");
         mName = "游客";
-        mGold = "10000";
+        mGold = "0";
 
         mParameter = new FreeTypeFontParameter();
         mParameter.size = 36;
@@ -55,11 +56,14 @@ public class MyInfo extends Group {
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
 
         batch.draw(mHeadBg, getX(), getY(), Constants.HEAD_WIDTH + 10, Constants.HEAD_HEIGHT + 10);
+        mFont.setColor(Color.GREEN);
+        mFont.getData().setScale(1.0f);
         mFont.draw(batch, mName, getX() + Constants.HEAD_WIDTH + 15, getY() + Constants.HEAD_HEIGHT);
+        mFont.setColor(Color.GOLD);
+        mFont.getData().setScale(0.8f);
         mFont.draw(batch, mGold, getX() + Constants.HEAD_WIDTH + 15, getY() + (Constants.HEAD_HEIGHT / 2));
-
-        super.draw(batch, parentAlpha);
     }
 }

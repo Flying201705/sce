@@ -79,11 +79,11 @@ public class MainScreen extends BaseScreen {
         mStage.addActor(bg);
 
         MyInfo myInfo = new MyInfo();
-        myInfo.setBounds(10, 640, 180, 80);
+        myInfo.setBounds(20, 630, 180, 80);
         Texture head = UIUtil.bytes2Texture(PlayerInfoController.getInstance().getOwnerInfo().getHeaddatas());
         myInfo.setHeadImage(head);
         myInfo.setName(PlayerInfoController.getInstance().getOwnerInfo().getName());
-        myInfo.setGold(100000);
+        myInfo.setGold(PlayerInfoController.getInstance().getOwnerInfo().getGold());
         mStage.addActor(myInfo);
 
         Button quitButton = new SceButton("SceneMain/bt_quit.png");
