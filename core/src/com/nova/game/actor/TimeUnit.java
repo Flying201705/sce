@@ -81,9 +81,9 @@ public class TimeUnit extends Actor {
                     }
                 }
             }
-            TextureRegion timeNum = mTimeNums[0][0];
+            TextureRegion timeNum = mTimeNums[0][mPlayerTimes / 10 % 10];
             batch.draw(timeNum, getX() + getWidth() / 2 - timeNum.getRegionWidth(), getY() + (getHeight() - timeNum.getRegionHeight()) / 2);
-            timeNum = mTimeNums[0][mPlayerTimes];
+            timeNum = mTimeNums[0][mPlayerTimes % 10];
             batch.draw(timeNum, getX() + getWidth() / 2, getY() + (getHeight() - timeNum.getRegionHeight()) / 2);
         }
     }
@@ -136,7 +136,7 @@ public class TimeUnit extends Actor {
     }
 
     private void resetTime() {
-        mPlayerTimes = 4;
+        mPlayerTimes = 20;
         mTimeCount = 0f;
     }
 }

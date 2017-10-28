@@ -1,9 +1,5 @@
 package com.nova.game.screen;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -21,8 +17,6 @@ import com.nova.game.actor.RightHandMahjongs;
 import com.nova.game.actor.RightOutMahjongs;
 import com.nova.game.actor.TimeUnit;
 import com.nova.game.BaseGame;
-import com.nova.game.BaseScreen;
-import com.nova.game.BaseStage;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.model.MahjGameController;
@@ -34,13 +28,9 @@ import java.util.HashMap;
 import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.room.data.PlayerInfo;
 
-public class GameScreen extends BaseScreen {
-    private BaseStage mStage;
-    private SpriteBatch mBatch;
-    private Texture mBg;
+public class GameScreen extends BaseGameScreen {
     // 游戏信息展示区域
     private GameInfo mGameInfo;
-    private TimeUnit mTime;
     private SceButton mStartBt;
     private Player mMyPlayer;
     private Player mRightPlayer;
@@ -103,25 +93,15 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void show() {
-        mStage = new BaseStage(this);
-        Gdx.input.setInputProcessor(mStage);
-        Gdx.input.setCatchBackKey(true);
-
-        mStage.setDebugAll(false);
-
-        mBatch = new SpriteBatch();
-        mBg = new Texture("SceneGame/background.jpg");
+        super.show();
 
         // 游戏信息展示区域
         mGameInfo = new GameInfo();
         mGameInfo.setPosition(0, 600);
         mStage.addActor(mGameInfo);
 
-        mTime = new TimeUnit();
-        mTime.setPosition(564, 330);
         mTime.setTimeUnitListener(mTimeListener);
         mTime.startTime();
-        mStage.addActor(mTime);
 
         mStartBt = new SceButton("SceneGame/bt_start.png");
         mStartBt.setPosition(540, 100);
@@ -229,26 +209,17 @@ public class GameScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mBatch.begin();
-        mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        mBatch.end();
-
         updateGameInfo();
         updateTimeUint();
         updateMahjong();
         updatePlayer();
 
-        mStage.act();
-        mStage.draw();
+        super.render(delta);
     }
 
     @Override
     public void dispose() {
-        mBatch.dispose();
-        mBg.dispose();
-        mStage.dispose();
+        super.dispose();
     }
 
     @Override

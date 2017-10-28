@@ -2,16 +2,11 @@ package com.nova.game.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.nova.game.BaseGame;
-import com.nova.game.BaseScreen;
-import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.actor.Player;
 import com.nova.game.assetmanager.Assets;
@@ -24,15 +19,12 @@ import java.util.HashMap;
 import nova.common.game.mahjong.util.MahjGameCommand;
 import nova.common.room.data.PlayerInfo;
 
-public class PrivateScreen extends BaseScreen {
-    private BaseStage mStage;
-    private SpriteBatch mBatch;
-    private Texture mBg;
+public class PrivateScreen extends BaseGameScreen {
     private Player mMyPlayer;
     private Player mRightPlayer;
     private Player mTopPlayer;
     private Player mLeftPlayer;
-    private Label mRoomSting;
+    private Label mRoomString;
     private boolean mWaitFriend = false;
 
     private BitmapFont mFont;
@@ -52,23 +44,17 @@ public class PrivateScreen extends BaseScreen {
 
     @Override
     public void show() {
+        super.show();
         MahjRoomController.getInstance().resetRoomResult();
-        mStage = new BaseStage(this);
-        Gdx.input.setInputProcessor(mStage);
-        Gdx.input.setCatchBackKey(true);
-
-        mStage.setDebugAll(false);
-
-        mBatch = new SpriteBatch();
-        mBg = new Texture("SceneGame/background.jpg");
         mFont = Assets.getInstance().getFont();
 
-        mRoomSting = new Label("房间号：- ", new Label.LabelStyle(mFont, Color.DARK_GRAY));
-        mRoomSting.setPosition((Constants.WORLD_WIDTH - mRoomSting.getWidth()) / 2, 200);
-        mStage.addActor(mRoomSting);
+        mRoomString = new Label("房间号：- ", new Label.LabelStyle(mFont, Color.WHITE));
+        mRoomString.setFontScale(1.2f);
+        mRoomString.setPosition((Constants.WORLD_WIDTH - mRoomString.getWidth()) / 2, 250);
+        mStage.addActor(mRoomString);
 
         SceButton wxInvite = new SceButton("ScenePrivate/bt_weixin_invite.png");
-        wxInvite.setPosition((Constants.WORLD_WIDTH - wxInvite.getWidth()) / 2, 100);
+        wxInvite.setPosition(Constants.WORLD_WIDTH / 2 - wxInvite.getWidth() - 50, 100);
         wxInvite.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -79,6 +65,19 @@ public class PrivateScreen extends BaseScreen {
             }
         });
         mStage.addActor(wxInvite);
+
+        SceButton startGame = new SceButton("ScenePrivate/bt_start_game.png");
+        startGame.setPosition(Constants.WORLD_WIDTH / 2 + 50, 100);
+        startGame.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                event.getTarget().setVisible(false);
+                addPlayers();
+                // 临时调试，进入游戏
+                mGame.setScreen(new NetMahjGameScreen(mGame, mRoomController.getRoomId()));
+            }
+        });
+        mStage.addActor(startGame);
 
         initPlayer();
     }
@@ -107,26 +106,15 @@ public class PrivateScreen extends BaseScreen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 0, 0, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        mBatch.begin();
-        mBatch.draw(mBg, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        mBatch.end();
-
         updateRoomId();
         waitFriend();
         // addDebugPlayer();
-
-        mStage.act();
-        mStage.draw();
         updateScreen();
+        super.render(delta);
     }
 
     @Override
     public void dispose() {
-        mBatch.dispose();
-        mBg.dispose();
-        mStage.dispose();
         if (mRoomController.getRoomId() >= 0) {
             new GameRequestDispatcher().leaveRoom(mRoomController.getRoomId());
         }
@@ -134,7 +122,7 @@ public class PrivateScreen extends BaseScreen {
 
     public void updateRoomId() {
         int roomId = mRoomController.getRoomId();
-        mRoomSting.setText("房间号：" + roomId);
+        mRoomString.setText("房间号：" + roomId);
     }
 
     private int getPlayerIdByPosition(int position) {
