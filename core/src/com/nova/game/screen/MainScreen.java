@@ -79,7 +79,8 @@ public class MainScreen extends BaseScreen {
         mStage.addActor(bg);
 
         MyInfo myInfo = new MyInfo();
-        myInfo.setBounds(20, 630, 180, 80);
+        // myInfo.setBounds(20, 630, 180, 80);
+        myInfo.setPosition(20, 630);
         Texture head = UIUtil.bytes2Texture(PlayerInfoController.getInstance().getOwnerInfo().getHeaddatas());
         myInfo.setHeadImage(head);
         myInfo.setName(PlayerInfoController.getInstance().getOwnerInfo().getName());
