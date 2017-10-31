@@ -12,7 +12,7 @@ class MahjController implements MahjGameDispatcher {
 
 	}
 	
-	public void stopGame() {
+	public void stopGame(int roomId) {
 		
 	}
 

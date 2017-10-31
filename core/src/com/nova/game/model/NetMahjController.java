@@ -21,6 +21,12 @@ class NetMahjController extends MahjController {
     }
 
     @Override
+    public void stopGame(int roomId) {
+        super.stopGame(roomId);
+        mRequest.stopGame(roomId);
+    }
+
+    @Override
     public void activeOutData(int playerId, int data) {
         super.activeOutData(playerId, data);
         mRequest.activeOutData(MahjRoomController.getInstance().getRoomId(), playerId, data);

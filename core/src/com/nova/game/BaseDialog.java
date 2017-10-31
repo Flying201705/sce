@@ -87,21 +87,21 @@ public class BaseDialog extends Dialog {
     public void setPrimaryButton(String button, ClickListener listener) {
         mPrimaryButton = new TextButton(button, UIUtil.getTextButtonStyle());
         mPrimaryButton.addListener(listener);
-        mPrimaryButton.setBounds(80, 25, 350, 100);
+        mPrimaryButton.setBounds(80, 50, 300, 100);
         addActor(mPrimaryButton);
     }
 
     public void setSecondaryButton(String button, ClickListener listener) {
         mSecondaryButton = new TextButton(button, UIUtil.getTextButtonStyle());
         mSecondaryButton.addListener(listener);
-        mSecondaryButton.setBounds(550, 25, 350, 100);
+        mSecondaryButton.setBounds(430, 50, 300, 100);
         addActor(mSecondaryButton);
     }
 
     public void setButton(String button, ClickListener listener) {
         mButton = new TextButton(button, UIUtil.getTextButtonStyle());
         mButton.addListener(listener);
-        mButton.setBounds((getWidth() - 350) / 2, 25, 350, 100);
+        mButton.setBounds((getWidth() - 300) / 2, 50, 300, 100);
         addActor(mButton);
     }
 

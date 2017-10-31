@@ -59,6 +59,14 @@ public class GameRequestDispatcher {
         mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
     }
 
+    public void stopGame(int room) {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
+        json.addProperty("com", MahjGameCommand.REQUEST_GAME_STOP);
+        json.addProperty("room", room);
+        mChannel.sendMessage(GameCommand.GAME_TYPE_MAHJ, json.toString());
+    }
+
     public void activeOutData(int room, int playerId, int data) {
         JsonObject json = new JsonObject();
         json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());

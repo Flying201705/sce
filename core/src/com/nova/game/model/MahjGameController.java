@@ -59,7 +59,7 @@ public class MahjGameController {
 	}
 	
 	public void stopGame() {
-		mManager.stopGame();
+		mManager.stopGame(MahjRoomController.getInstance().getRoomId());
 	}
 	
 	public void setGameData(MahjGameData data) {

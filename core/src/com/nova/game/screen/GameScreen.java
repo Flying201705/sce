@@ -4,6 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nova.game.BaseDialog;
 import com.nova.game.actor.GameInfo;
 import com.nova.game.actor.Player;
 import com.nova.game.actor.LeftHandMahjongs;
@@ -46,7 +47,9 @@ public class GameScreen extends BaseGameScreen {
     private LeftOutMahjongs mLeftOuts;
     private Match mMatch;
     private OperationButton mOperationButton;
+    private BaseDialog mQuitDialog;
     private boolean mIsDealt = false;
+    private boolean mIsGameQuit = false;
 
     private MahjGameController mController = MahjGameController.create(getGameType());
 
@@ -155,6 +158,22 @@ public class GameScreen extends BaseGameScreen {
         mOperationButton.setBounds(0, 100, 1280, 200);
         mOperationButton.setButtonClickListener(mButtonClick);
         mStage.addActor(mOperationButton);
+
+        mQuitDialog = new BaseDialog("退出游戏");
+        mQuitDialog.setPrimaryButton("退出", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mIsGameQuit = true;
+                mController.stopGame();
+                doBackKeyAction();
+            }
+        });
+        mQuitDialog.setSecondaryButton("取消", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mQuitDialog.remove();
+            }
+        });
     }
 
     private void initPlayer() {
@@ -243,6 +262,20 @@ public class GameScreen extends BaseGameScreen {
             mMyHands.clearStandUpMahjong();
         }
         return true;
+    }
+
+    @Override
+    public void doBackKeyAction() {
+        if (mIsGameQuit) {
+            super.doBackKeyAction();
+            return;
+        }
+
+        if (!mStage.getActors().contains(mQuitDialog, false)) {
+            mStage.addActor(mQuitDialog);
+        } else {
+            mQuitDialog.remove();
+        }
     }
 
     private void updateMahjong() {

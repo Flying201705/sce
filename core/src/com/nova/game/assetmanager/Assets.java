@@ -57,7 +57,7 @@ public class Assets {
 
         FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
         size1Params.fontFileName = "Font/font.ttf";
-        size1Params.fontParameters.characters += "刘备关羽张飞赵云小乔房间号黄黑红绿人倔强的电脑彼岸石浩在路上：";
+        size1Params.fontParameters.characters += "退出游戏取消刘备关羽张飞赵云小乔房间号黄黑红绿人倔强的电脑彼岸石浩在路上：";
         size1Params.fontParameters.size = 30;
         mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
     }

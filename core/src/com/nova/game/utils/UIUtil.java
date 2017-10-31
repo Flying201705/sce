@@ -48,8 +48,8 @@ public class UIUtil {
         TextButtonStyle textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = Assets.getInstance().getFont();
         textButtonStyle.fontColor = Color.YELLOW;
-        textButtonStyle.up = UIUtil.file2Drawable("Dialog/btn_up.png", 18, 18, 40, 40);
-        textButtonStyle.down = UIUtil.file2Drawable("Dialog/btn_down.png", 18, 18, 40, 40);
+        textButtonStyle.up = UIUtil.file2Drawable("Dialog/btn_up.png", 18, 18, 18, 18);
+        textButtonStyle.down = UIUtil.file2Drawable("Dialog/btn_down.png", 18, 18, 18, 18);
         return textButtonStyle;
     }
     
@@ -68,7 +68,7 @@ public class UIUtil {
     
     public static WindowStyle getDefaultWindowStyle(boolean isTranslucent) {
         Drawable bg = file2Drawable("Dialog/dialog_bg.png", 50, 50, 50, 50);
-        WindowStyle windowStyle = new WindowStyle(Assets.getInstance().getFont(), Color.BLACK, bg);
+        WindowStyle windowStyle = new WindowStyle(Assets.getInstance().getFont(), Color.GOLD, bg);
         if (isTranslucent) {
         	windowStyle.stageBackground = getTranslucentDrawable();
         }
