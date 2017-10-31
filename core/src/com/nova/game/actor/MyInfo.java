@@ -20,6 +20,7 @@ public class MyInfo extends Group {
     private Image mHead;
     private String mName;
     private String mGold;
+    private String mCrystal;
 
     private FreeTypeFontParameter mParameter;
     private BitmapFont mFont;
@@ -64,6 +65,10 @@ public class MyInfo extends Group {
         mGold = String.valueOf(gold);
     }
 
+    public void setCrystal(int crystal) {
+        mCrystal = String.valueOf(crystal);
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         batch.draw(mHeadBg, getX() - 1, getY() - 1, Constants.HEAD_WIDTH + 2, Constants.HEAD_HEIGHT + 2);
@@ -82,7 +87,7 @@ public class MyInfo extends Group {
         batch.draw(mCrystalTexture, getX() + Constants.HEAD_WIDTH + mNameBackground.getWidth() + 265, getY() + 12);
         mFont.setColor(Color.WHITE);
         mFont.getData().setScale(0.8f);
-        mFont.draw(batch, "4396", getX() + Constants.HEAD_WIDTH + mNameBackground.getWidth() + + mCrystalTexture.getWidth() + 270, getY() + 45);
+        mFont.draw(batch, mCrystal, getX() + Constants.HEAD_WIDTH + mNameBackground.getWidth() + + mCrystalTexture.getWidth() + 270, getY() + 45);
         batch.draw(mAddTexture, getX() + Constants.HEAD_WIDTH + mNameBackground.getWidth() + mGodBackground.getWidth() - 55, getY() + 12);
 
         super.draw(batch, parentAlpha);

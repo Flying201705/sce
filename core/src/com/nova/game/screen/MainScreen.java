@@ -85,6 +85,7 @@ public class MainScreen extends BaseScreen {
         myInfo.setHeadImage(head);
         myInfo.setName(PlayerInfoController.getInstance().getOwnerInfo().getName());
         myInfo.setGold(PlayerInfoController.getInstance().getOwnerInfo().getGold());
+        myInfo.setCrystal(PlayerInfoController.getInstance().getOwnerInfo().getCrys());
         mStage.addActor(myInfo);
 
         Button quitButton = new SceButton("SceneMain/bt_quit.png");

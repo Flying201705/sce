@@ -132,11 +132,13 @@ public class PlayerInfoController {
         info.setId(cache.getId());
         info.setOpenId(cache.getOpenId());
         info.setName(cache.getName());
-        info.setGold(cache.getGold());
         info.setHead(cache.getHead());
         info.setHeaddatas(cache.getHeaddatas());
         info.setSex(cache.getSex());
         info.setVip(cache.getVip());
+        info.setLv(cache.getLv());
+        info.setGold(cache.getGold());
+        info.setCrys(cache.getCrys());
     }
     
     private void loadImageFromNet(int id, String imgUrl) {

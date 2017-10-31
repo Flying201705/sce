@@ -5,6 +5,7 @@ import java.util.List;
 import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.nova.game.utils.Log;
 import com.nova.net.http.HttpConstants;
 import com.nova.net.http.bean.BaseBean;
 import nova.common.room.data.PlayerInfo;
@@ -67,7 +68,7 @@ public class UserUtil extends HttpUtil {
 		if (openid == null || openid.isEmpty()) {
 			return;
 		}
-
+		Log.e("UserUtil", "onLoginForOpenId, openid " + openid + " name " + name + " headimgurl " + headimgurl);
 		mUserResultListener = listener;
 		HashMap<String, String> allP = new HashMap<String, String>();
 		allP.put("openid", openid);
