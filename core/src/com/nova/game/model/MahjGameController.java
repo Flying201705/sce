@@ -53,13 +53,21 @@ public class MahjGameController {
 			return mController;
 		}
 	}
-	
+
+	public void resetDatas() {
+		mGameData.initDatas();
+		mGroupDatas.clear();
+		mMatchType = 0;
+		MahjRoomController.getInstance().resetDatas();
+	}
+
 	public void startGame(int roomId) {
 		mManager.startGame(roomId);
 	}
 	
 	public void stopGame() {
 		mManager.stopGame(MahjRoomController.getInstance().getRoomId());
+		resetDatas();
 	}
 	
 	public void setGameData(MahjGameData data) {

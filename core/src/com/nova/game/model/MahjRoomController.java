@@ -76,6 +76,14 @@ public class MahjRoomController implements PlayerInfoController.PlayerInfoChange
         }
     }
 
+    public void resetDatas() {
+        mRoomId = -1;
+        mOwnerPlayerIndex = 0;
+        mPlayerInfos.clear();
+        mPlayerSounds.clear();
+        mPlayerMessages.clear();
+    }
+
     public void setRoomId(int roomId) {
         mRoomId = roomId;
     }
