@@ -190,13 +190,13 @@ public class MahjRoomController implements PlayerInfoController.PlayerInfoChange
     }
 
     @Override
-    public void onPlayerInfoChange(int id) {
+    public void onPlayerInfoChange(int playerId) {
         for (int i = 0; i < mPlayerInfos.size(); i++) {
             if (mPlayerInfos.get(i) == null) {
                 continue;
             }
 
-            if (mPlayerInfos.get(i).getId() == id) {
+            if (mPlayerInfos.get(i).getId() == playerId) {
                 updatePlayerInfoFromCache(mPlayerInfos.get(i));
             }
         }
@@ -217,6 +217,9 @@ public class MahjRoomController implements PlayerInfoController.PlayerInfoChange
 
     private void updateOwnerPlayerIndex() {
         for (int i = 0; i < mPlayerInfos.size(); i++) {
+            if (mPlayerInfos.get(i) == null) {
+                continue;
+            }
             if (mPlayerInfos.get(i).getId() == PlayerInfoController.getInstance().getOwnerPlayerId()) {
                 mOwnerPlayerIndex = i;
                 break;

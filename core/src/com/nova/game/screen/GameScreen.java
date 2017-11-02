@@ -213,16 +213,22 @@ public class GameScreen extends BaseGameScreen {
         if (rightPlayerInfo != null) {
             mRightPlayer.setPlayerInfo(rightPlayerInfo);
             mRightPlayer.setVisible(true);
+        } else {
+            mRightPlayer.setVisible(false);
         }
 
         if (topPlayerInfo != null) {
             mTopPlayer.setPlayerInfo(topPlayerInfo);
             mTopPlayer.setVisible(true);
+        } else {
+            mTopPlayer.setVisible(false);
         }
 
         if (leftPlayerInfo != null) {
             mLeftPlayer.setPlayerInfo(leftPlayerInfo);
             mLeftPlayer.setVisible(true);
+        } else {
+            mLeftPlayer.setVisible(false);
         }
     }
 

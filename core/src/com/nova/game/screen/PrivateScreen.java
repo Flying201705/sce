@@ -103,7 +103,7 @@ public class PrivateScreen extends BaseGameScreen {
     @Override
     public void render(float delta) {
         updateRoomId();
-        waitFriend();
+        updatePlayer();
         // addDebugPlayer();
         updateScreen();
         super.render(delta);
@@ -169,7 +169,7 @@ public class PrivateScreen extends BaseGameScreen {
         mWaitFriend = true;
     }
 
-    private void waitFriend() {
+    private void updatePlayer() {
         // if (!mWaitFriend) {
         //     return;
         // }
@@ -181,16 +181,22 @@ public class PrivateScreen extends BaseGameScreen {
         if (rightPlayerInfo != null) {
             mRightPlayer.setPlayerInfo(rightPlayerInfo);
             mRightPlayer.setVisible(true);
+        } else {
+            mRightPlayer.setVisible(false);
         }
 
         if (topPlayerInfo != null) {
             mTopPlayer.setPlayerInfo(topPlayerInfo);
             mTopPlayer.setVisible(true);
+        } else {
+            mTopPlayer.setVisible(false);
         }
 
         if (leftPlayerInfo != null) {
             mLeftPlayer.setPlayerInfo(leftPlayerInfo);
             mLeftPlayer.setVisible(true);
+        } else {
+            mLeftPlayer.setVisible(false);
         }
 
         if (mRightPlayer.getPlayerInfo() != null && mLeftPlayer.getPlayerInfo() != null && mTopPlayer.getPlayerInfo() != null) {

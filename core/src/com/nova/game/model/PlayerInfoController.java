@@ -17,7 +17,7 @@ import nova.common.room.data.PlayerInfo;
 public class PlayerInfoController {
 
     public interface PlayerInfoChangeListener {
-        public void onPlayerInfoChange(int id);
+        public void onPlayerInfoChange(int playerId);
     }
 
     private static final String TAG = "PlayerInfoController";
