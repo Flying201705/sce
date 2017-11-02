@@ -47,7 +47,7 @@ public class UIUtil {
     public static TextButtonStyle getTextButtonStyle() {
         TextButtonStyle textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = Assets.getInstance().getFont();
-        textButtonStyle.fontColor = Color.YELLOW;
+        textButtonStyle.fontColor = Color.WHITE;
         textButtonStyle.up = UIUtil.file2Drawable("Dialog/btn_up.png", 18, 18, 18, 18);
         textButtonStyle.down = UIUtil.file2Drawable("Dialog/btn_down.png", 18, 18, 18, 18);
         return textButtonStyle;

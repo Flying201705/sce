@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.nova.game.BaseDialog;
 import com.nova.game.BaseGame;
 import com.nova.game.Constants;
 import com.nova.game.actor.Player;
@@ -25,7 +26,9 @@ public class PrivateScreen extends BaseGameScreen {
     private Player mTopPlayer;
     private Player mLeftPlayer;
     private Label mRoomString;
+    private BaseDialog mQuitDialog;
     private boolean mWaitFriend = false;
+    private boolean mIsRoomQuit = false;
 
     private BitmapFont mFont;
 
@@ -80,6 +83,51 @@ public class PrivateScreen extends BaseGameScreen {
         mStage.addActor(startGame);
 
         initPlayer();
+
+        mQuitDialog = new BaseDialog("离开房间");
+        mQuitDialog.setPrimaryButton("狠心离开", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mIsRoomQuit = true;
+                doBackKeyAction();
+            }
+        });
+        mQuitDialog.setSecondaryButton("再等一会", new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mQuitDialog.remove();
+            }
+        });
+    }
+
+    @Override
+    public void render(float delta) {
+        updateRoomId();
+        waitFriend();
+        // addDebugPlayer();
+        updateScreen();
+        super.render(delta);
+    }
+
+    @Override
+    public void dispose() {
+        if (mRoomController.getRoomId() >= 0) {
+            new GameRequestDispatcher().leaveRoom(mRoomController.getRoomId());
+        }
+    }
+
+    @Override
+    public void doBackKeyAction() {
+        if (mIsRoomQuit) {
+            super.doBackKeyAction();
+            return;
+        }
+
+        if (!mStage.getActors().contains(mQuitDialog, false)) {
+            mStage.addActor(mQuitDialog);
+        } else {
+            mQuitDialog.remove();
+        }
     }
 
     private void initPlayer() {
@@ -104,23 +152,7 @@ public class PrivateScreen extends BaseGameScreen {
         mStage.addActor(mLeftPlayer);
     }
 
-    @Override
-    public void render(float delta) {
-        updateRoomId();
-        waitFriend();
-        // addDebugPlayer();
-        updateScreen();
-        super.render(delta);
-    }
-
-    @Override
-    public void dispose() {
-        if (mRoomController.getRoomId() >= 0) {
-            new GameRequestDispatcher().leaveRoom(mRoomController.getRoomId());
-        }
-    }
-
-    public void updateRoomId() {
+    private void updateRoomId() {
         int roomId = mRoomController.getRoomId();
         mRoomString.setText("房间号：" + roomId);
     }

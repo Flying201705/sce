@@ -2,6 +2,7 @@ package com.nova.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
@@ -46,6 +47,7 @@ public class BaseDialog extends Dialog {
         } else {
             padTop(0);
         }
+        getTitleLabel().setFontScale(1.2f);
         this.setBounds((Constants.WORLD_WIDTH - Constants.DEFAULT_DIALOG_WIDTH) / 2, (Constants.WORLD_HEIGHT - Constants.DEFAULT_DIALOG_HEIGHT) / 2,
                 Constants.DEFAULT_DIALOG_WIDTH, Constants.DEFAULT_DIALOG_HEIGHT);
         addListener(mDialogClickListener);
@@ -87,32 +89,24 @@ public class BaseDialog extends Dialog {
     public void setPrimaryButton(String button, ClickListener listener) {
         mPrimaryButton = new TextButton(button, UIUtil.getTextButtonStyle());
         mPrimaryButton.addListener(listener);
-        mPrimaryButton.setBounds(80, 50, 300, 100);
+        mPrimaryButton.setBounds(80, 50, getWidth() / 2 - 100, 100);
+        mPrimaryButton.getLabel().setFontScale(1.1f);
         addActor(mPrimaryButton);
     }
 
     public void setSecondaryButton(String button, ClickListener listener) {
         mSecondaryButton = new TextButton(button, UIUtil.getTextButtonStyle());
         mSecondaryButton.addListener(listener);
-        mSecondaryButton.setBounds(430, 50, 300, 100);
+        mSecondaryButton.setBounds(getWidth() / 2 + 50, 50, getWidth() / 2 - 100, 100);
+        mSecondaryButton.getLabel().setFontScale(1.1f);
         addActor(mSecondaryButton);
     }
 
     public void setButton(String button, ClickListener listener) {
         mButton = new TextButton(button, UIUtil.getTextButtonStyle());
         mButton.addListener(listener);
-        mButton.setBounds((getWidth() - 300) / 2, 50, 300, 100);
+        mButton.setBounds(getWidth() / 4 + 50, 50, getWidth() / 2 - 100, 100);
+        mButton.getLabel().setFontScale(1.1f);
         addActor(mButton);
     }
-
-//    @Override
-//    public void draw(Batch batch, float parentAlpha) {
-//        Color color = batch.getColor();
-//        batch.setColor(this.getColor());
-//        batch.getColor().a *= parentAlpha;
-//
-//        super.draw(batch, parentAlpha);
-//        
-//        batch.setColor(color);    
-//    }
 }

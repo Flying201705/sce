@@ -61,6 +61,7 @@ public class JoinRoomDialog extends BaseDialog {
     public JoinRoomDialog(String title) {
         super(title);
         setClip(false);
+        this.setBounds((Constants.WORLD_WIDTH - 800) / 2, (Constants.WORLD_HEIGHT - 630) / 2, 800, 630);
         
         mTextField = new TextField("", UIUtil.getTextFieldStyle());
         mTextField.setTouchable(Touchable.disabled);
