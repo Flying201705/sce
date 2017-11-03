@@ -1,10 +1,10 @@
 package com.nova.game.actor;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nova.game.assetmanager.Assets;
 import com.nova.game.utils.UIUtil;
@@ -20,6 +20,7 @@ public class Player extends Actor {
 
     private Texture mImage;
     private BitmapFont mFont;
+    private TextureRegion[][] mGoldNums;
 
     private String mName = "游客";
     private int mGold = 0;
@@ -33,6 +34,8 @@ public class Player extends Actor {
 
         mImage = new Texture("Head/Head0.png");
         mFont = Assets.getInstance().getFont();
+
+        mGoldNums = TextureRegion.split(new Texture("Head/gold_img.png"), 15, 21);
 
         if (mDirection == HORIZONTAL) {
             setSize(200, 102);
@@ -70,17 +73,29 @@ public class Player extends Actor {
             mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX() + 85, getY() + 65);
-            mFont.setColor(Color.GOLD);
-            mFont.getData().setScale(0.6f);
-            mFont.draw(batch, String.valueOf(mGold), getX() + 85, getY() + 35);
+            drawGold(batch, getX() + 85, getY() + 15);
         } else {
             batch.draw(mImage, getX(), getY() + getHeight() - 80, 80, 80);
             mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX(), getY() + 60);
-            mFont.setColor(Color.GOLD);
-            mFont.getData().setScale(0.6f);
-            mFont.draw(batch, String.valueOf(mGold), getX(), getY() + 40);
+            drawGold(batch, getX(), getY() + 20);
+        }
+    }
+
+    private void drawGold(Batch batch, float x, float y) {
+        int bitCount = 0;
+        String goldStr = String.valueOf(mGold);
+        while (goldStr.length() > 0) {
+            if (goldStr.length() == 1) {
+                int goldNum = Integer.valueOf(goldStr);
+                batch.draw(mGoldNums[0][goldNum % 10], x + bitCount * 15, y);
+                break;
+            }
+            int bit = Integer.valueOf(goldStr.substring(0, 1));
+            batch.draw(mGoldNums[0][bit % 10], x + bitCount * 15, y);
+            goldStr = goldStr.substring(1, goldStr.length());
+            bitCount++;
         }
     }
 }
