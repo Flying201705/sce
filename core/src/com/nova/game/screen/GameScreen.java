@@ -20,6 +20,7 @@ import com.nova.game.actor.TimeUnit;
 import com.nova.game.BaseGame;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
+import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.model.PlayerInfoController;
 import com.nova.game.widget.SceButton;
@@ -124,31 +125,31 @@ public class GameScreen extends BaseGameScreen {
         mStage.addActor(mMyHands);
 
         mLeftHands = new LeftHandMahjongs();
-        mLeftHands.setPosition(150, 600);
+        mLeftHands.setPosition(200, 600);
         mStage.addActor(mLeftHands);
 
         mRightHands = new RightHandMahjongs();
-        mRightHands.setPosition(1120, 100);
+        mRightHands.setPosition(1060, 182);
         mStage.addActor(mRightHands);
 
         mTopHands = new TopHandMahjongs();
-        mTopHands.setPosition(300, 660);
+        mTopHands.setPosition(400, 680);
         mStage.addActor(mTopHands);
 
         mMyOuts = new MyOutMahjongs();
-        mMyOuts.setBounds(390, 100, 500, 205);
+        mMyOuts.setBounds(466, 128, 340, 171);
         mStage.addActor(mMyOuts);
 
         mRightOuts = new RightOutMahjongs();
-        mRightOuts.setBounds(900, 200, 205, 305);
+        mRightOuts.setBounds(771, 210, 150, 305);
         mStage.addActor(mRightOuts);
 
         mTopOuts = new TopOutMahjongs();
-        mTopOuts.setBounds(390, 420, 500, 200);
+        mTopOuts.setBounds(466, 500, 340, 171);
         mStage.addActor(mTopOuts);
 
         mLeftOuts = new LeftOutMahjongs();
-        mLeftOuts.setBounds(180, 200, 205, 305);
+        mLeftOuts.setBounds(343, 210, 150, 320);
         mStage.addActor(mLeftOuts);
 
         mMatch = new Match();
@@ -252,8 +253,8 @@ public class GameScreen extends BaseGameScreen {
         Vector2 tmp = new Vector2(screenX, screenY);
         mStage.screenToStageCoordinates(tmp);
         Actor actor = mStage.hit(tmp.x, tmp.y, true);
-        if (actor instanceof MahjActor) {
-            MahjActor mahjActor = (MahjActor) actor;
+        if (actor instanceof Mahjong) {
+            Mahjong mahjActor = (Mahjong) actor;
             if (mahjActor.isCanStandUp()) {
                 if (mahjActor.isStandUp()) {
                     mController.handleOutData((mahjActor.getMahjData().getIndex()));

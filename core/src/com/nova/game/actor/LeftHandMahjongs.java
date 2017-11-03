@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.nova.game.actor.mahj.HorizontalFlatMahjong;
+import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
@@ -16,22 +18,21 @@ public class LeftHandMahjongs extends VerticalGroup {
     private Assets mAssets;
     private VerticalGroup mMatchs;
     private VerticalGroup mHands;
-    private MahjActor mLastestMahj;
+    private Mahjong mLastestMahj;
     private ArrayList<MahjData> mMactchMahjs;
     private ArrayList<MahjData> mHandMahjs;
 
     public LeftHandMahjongs() {
         mAssets = Assets.getInstance();
 
-        mLastestMahj = new MahjActor();
-        mLastestMahj.setImage(new Texture("SceneGame/hand_left.png"));
+        mLastestMahj = new Mahjong(new Texture("SceneGame/mahj_left.png"));
         mLastestMahj.setVisible(false);
 
         mMatchs = new VerticalGroup();
-        mMatchs.space(-15);
+        mMatchs.space(-5);
 
         mHands = new VerticalGroup();
-        mHands.space(-52);
+        mHands.space(-29);
 
         addActor(mMatchs);
         addActor(mHands);
@@ -56,7 +57,7 @@ public class LeftHandMahjongs extends VerticalGroup {
         mMatchs.clear();
 
         for (MahjData mahj : mahjs) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchLeftTexture(mahj.getIndex()));
+            HorizontalFlatMahjong mahjActor = new HorizontalFlatMahjong(mahj.getIndex());
             mMatchs.addActor(mahjActor);
         }
     }
@@ -69,9 +70,9 @@ public class LeftHandMahjongs extends VerticalGroup {
         mHandMahjs = mahjs;
         mHands.clear();
 
-        Texture texture_3 = new Texture("SceneGame/hand_left.png");
+        Texture texture_3 = new Texture("SceneGame/mahj_left.png");
         for (int i = 0; i < mahjs.size(); i++) {
-            MahjActor mahjActor = new MahjActor(texture_3);
+            Mahjong mahjActor = new Mahjong(texture_3);
             mHands.addActor(mahjActor);
         }
 

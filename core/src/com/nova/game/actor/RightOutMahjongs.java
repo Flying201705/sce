@@ -3,6 +3,8 @@ package com.nova.game.actor;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.nova.game.actor.mahj.HorizontalFlatMahjong;
+import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
@@ -25,24 +27,22 @@ public class RightOutMahjongs extends Group {
         mOutMahjs = mahjs;
         clear();
 
+        float currX = 0, currY = 0, offset = 15f;
         for (int i = mahjs.size() - 1; i >= 0; i--) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchRightTexture(mahjs.get(i).getIndex()));
+            HorizontalFlatMahjong mahjActor = new HorizontalFlatMahjong(mahjs.get(i).getIndex(), Mahjong.MAHJ_DIRECTION_RIGHT);
             addActor(mahjActor);
-        }
-
-        float currX = 0, currY = 0;
-        SnapshotArray<Actor> children = getChildren();
-        for (int j = children.size - 1; j >= 0; j--) {
-            Actor actor = children.get(j);
-
-            if (currY + actor.getHeight() > getHeight()) {
-                currX += actor.getWidth();
-                currY = 0;
+            if (i >= 14) {
+                currX = 2 * mahjActor.getWidth();
+                currY = (i - 14) * (mahjActor.getHeight() - offset);
+            } else if (i >= 6 && i < 14) {
+                currX = mahjActor.getWidth();
+                currY = (i - 5) * (mahjActor.getHeight() - offset);
+            } else {
+                currX = 0;
+                currY = (i + 2) * (mahjActor.getHeight() - offset);
             }
 
-            actor.setPosition(currX, currY);
-
-            currY += actor.getHeight() - 15;
+            mahjActor.setPosition(currX, currY);
         }
     }
 }

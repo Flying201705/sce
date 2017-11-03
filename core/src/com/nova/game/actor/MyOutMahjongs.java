@@ -1,22 +1,23 @@
 package com.nova.game.actor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
 
 import nova.common.game.mahjong.data.MahjData;
 
-public class MyOutMahjongs extends Table {
+public class MyOutMahjongs extends Group {
     private Assets mAssets;
     private ArrayList<MahjData> mOutMahjs;
 
     public MyOutMahjongs() {
         mAssets = Assets.getInstance();
-        align(Align.topLeft);
     }
 
     public void setOutMahjongs(ArrayList<MahjData> mahjs) {
@@ -28,14 +29,34 @@ public class MyOutMahjongs extends Table {
         clear();
 
         int count = 0;
+        float x = 0, y = getHeight();
         for (MahjData mahj : mahjs) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahj.getIndex()));
-            mahjActor.setScale(0.5f);
-            if (count > 10) {
-                row();
-                count = 0;
+            VerticalFlatMahjong mahjActor = new VerticalFlatMahjong(mahj.getIndex());
+            if (count < 6) {
+                if (count == 0) {
+                    x += 2 * mahjActor.getWidth();
+                    y -= mahjActor.getHeight();
+                } else {
+                    x += mahjActor.getWidth() - 2;
+                }
+            } else if (count >= 6 && count < 14) {
+                if (count == 6) {
+                    x = mahjActor.getWidth();
+                    y -= mahjActor.getHeight();
+                } else {
+                    x += (count - 6) * mahjActor.getWidth() - 2;
+                }
+            } else if (count >= 14) {
+                if (count == 14) {
+                    x = 0;
+                    y -= mahjActor.getHeight();
+                } else {
+                    x += (count - 14) * mahjActor.getWidth() - 2;
+                }
+
             }
-            add(mahjActor);
+            mahjActor.setPosition(x, y);
+            addActor(mahjActor);
             count++;
         }
     }

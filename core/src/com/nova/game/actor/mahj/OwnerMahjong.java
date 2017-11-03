@@ -8,6 +8,10 @@ import com.nova.game.actor.mahj.Mahjong;
 
 public class OwnerMahjong extends Mahjong {
 
+    public OwnerMahjong() {
+        this(0);
+    }
+
     public OwnerMahjong(int index) {
         super(index);
     }

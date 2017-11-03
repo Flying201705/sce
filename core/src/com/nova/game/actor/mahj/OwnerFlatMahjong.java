@@ -8,6 +8,10 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class OwnerFlatMahjong extends Mahjong {
 
+    public OwnerFlatMahjong() {
+        this(0);
+    }
+
     public OwnerFlatMahjong(int index) {
         super(index);
     }

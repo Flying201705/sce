@@ -4,6 +4,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.nova.game.actor.mahj.HorizontalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
@@ -27,19 +28,22 @@ public class LeftOutMahjongs extends Group {
         mOutMahjs = mahjs;
         clear();
 
-        float currX = getWidth(), currY = getHeight();
+        float currX = getWidth(), currY = getHeight(), offset = 15f;
         for (int i = 0; i < mahjs.size(); i++) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchLeftTexture(mahjs.get(i).getIndex()));
+            HorizontalFlatMahjong mahjActor = new HorizontalFlatMahjong(mahjs.get(i).getIndex());
             addActor(mahjActor);
 
-            if (currY - mahjActor.getHeight() < 0) {
-                currX -= mahjActor.getWidth();
-                currY = getHeight();
+            if (i < 6) {
+                currX = getWidth() - mahjActor.getWidth();
+                currY = getHeight() - (i + 2) * (mahjActor.getHeight() - offset);
+            } else if (i >= 6 && i < 14) {
+                currX = getWidth() - 2 * mahjActor.getWidth();
+                currY = getHeight() - (i + 1) * (mahjActor.getHeight() - offset);
+            } else if (i >= 14) {
+                currX = getWidth() - 3 * mahjActor.getWidth();
+                currY = getHeight() - i* (mahjActor.getHeight() - offset);
             }
-
-            mahjActor.setPosition(currX - mahjActor.getWidth(), currY - mahjActor.getHeight());
-
-            currY -= mahjActor.getHeight() - 15;
+            mahjActor.setPosition(currX, currY);
         }
     }
 }

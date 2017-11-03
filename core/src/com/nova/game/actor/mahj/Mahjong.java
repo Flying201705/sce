@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nova.game.assetmanager.Assets;
 
+import nova.common.game.mahjong.data.MahjData;
+
 /**
  * Created by zhangxx on 17-10-17.
  */
@@ -22,6 +24,14 @@ public class Mahjong extends Actor {
 
     public static final int MAHJ_DIRECTION_LEFT = 0;
     public static final int MAHJ_DIRECTION_RIGHT = 1;
+
+    private MahjData mMahjData;
+    private boolean mIsCanStandUp = false;
+    private boolean mIsStandUp = false;
+
+    public Mahjong() {
+        this(0, null);
+    }
 
     public Mahjong(Texture bg) {
         this(0, bg);
@@ -44,6 +54,8 @@ public class Mahjong extends Actor {
         if (index > 0) {
             mMahjSprite = new Sprite(getMahj(index));
         }
+
+        setSize(mBackground.getWidth(), mBackground.getHeight());
     }
 
     public int getOffsetX() {
@@ -75,9 +87,17 @@ public class Mahjong extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        batch.draw(mBackground, getX(), getY());
+        if (mIsCanStandUp && mIsStandUp) {
+            batch.draw(mBackground, getX(), getY() + 10);
+        } else {
+            batch.draw(mBackground, getX(), getY());
+        }
         if (mMahjSprite != null) {
-            mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY());
+            if (mIsCanStandUp && mIsStandUp) {
+                mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY() + 10);
+            } else {
+                mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY());
+            }
             mMahjSprite.draw(batch);
         }
     }
@@ -102,5 +122,32 @@ public class Mahjong extends Actor {
         }
 
         return 0;
+    }
+
+    public void setCanStandUp(boolean canStandUp) {
+        mIsCanStandUp = canStandUp;
+    }
+
+    public boolean isCanStandUp() {
+        return mIsCanStandUp;
+    }
+
+    public void standUp(boolean standUp) {
+        mIsStandUp = standUp;
+    }
+
+    public boolean isStandUp() {
+        return mIsStandUp;
+    }
+
+    public void setMahjData(MahjData mahjData) {
+        if (mMahjData != mahjData) {
+            mMahjData = mahjData;
+            mMahjSprite = new Sprite(getMahj(mMahjData.getIndex()));
+        }
+    }
+
+    public MahjData getMahjData() {
+        return mMahjData;
     }
 }

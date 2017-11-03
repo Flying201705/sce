@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
+import com.nova.game.actor.mahj.Mahjong;
+import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
@@ -16,15 +18,14 @@ public class TopHandMahjongs extends HorizontalGroup {
     private Assets mAssets;
     private HorizontalGroup mMatchs;
     private HorizontalGroup mHands;
-    private MahjActor mLastestMahj;
+    private Mahjong mLastestMahj;
     private ArrayList<MahjData> mMactchMahjs;
     private ArrayList<MahjData> mHandMahjs;
 
     public TopHandMahjongs() {
         mAssets = Assets.getInstance();
 
-        mLastestMahj = new MahjActor();
-        mLastestMahj.setImage(new Texture("SceneGame/hand_top.png"));
+        mLastestMahj = new Mahjong(new Texture("SceneGame/mahj_top.png"));
         mLastestMahj.setVisible(false);
 
         mMatchs = new HorizontalGroup();
@@ -57,8 +58,7 @@ public class TopHandMahjongs extends HorizontalGroup {
         mMatchs.clear();
 
         for (MahjData mahj : mahjs) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahj.getIndex()));
-            mahjActor.setScale(0.5f);
+            VerticalFlatMahjong mahjActor = new VerticalFlatMahjong(mahj.getIndex());
             mMatchs.addActor(mahjActor);
         }
     }
@@ -71,9 +71,9 @@ public class TopHandMahjongs extends HorizontalGroup {
         mHandMahjs = mahjs;
         mHands.clear();
 
-        Texture texture_2 = new Texture("SceneGame/hand_top.png");
+        Texture texture_2 = new Texture("SceneGame/mahj_top.png");
         for (int i = 0; i < mahjs.size(); i++) {
-            MahjActor mahjActor = new MahjActor(texture_2);
+            Mahjong mahjActor = new Mahjong(texture_2);
             mHands.addActor(mahjActor);
         }
     }

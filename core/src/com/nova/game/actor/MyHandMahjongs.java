@@ -6,6 +6,9 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.SnapshotArray;
+import com.nova.game.actor.mahj.Mahjong;
+import com.nova.game.actor.mahj.OwnerFlatMahjong;
+import com.nova.game.actor.mahj.OwnerMahjong;
 import com.nova.game.assetmanager.Assets;
 
 import java.util.ArrayList;
@@ -17,7 +20,7 @@ public class MyHandMahjongs extends Group {
     private Assets mAssets;
     private Group mMatchs;
     private Group mHands;
-    private MahjActor mLastestMahj;
+    private OwnerMahjong mLastestMahj;
     private ArrayList<MahjData> mMactchMahjs;
     private ArrayList<MahjData> mHandMahjs;
 
@@ -35,30 +38,13 @@ public class MyHandMahjongs extends Group {
         mMatchs = new Group();
         mHands = new Group();
 
-        mLastestMahj = new MahjActor();
-        mLastestMahj.setScale(0.8f);
+        mLastestMahj = new OwnerMahjong();
         mLastestMahj.setCanStandUp(true);
+        mLastestMahj.setVisible(false);
 
         addActor(mMatchs);
         addActor(mHands);
         addActor(mLastestMahj);
-
-//        addListener(new ClickListener() {
-//            @Override
-//            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-//                Actor hitA = hit(x, y, true);
-//                if (hitA instanceof MahjActor) {
-//                    if (((MahjActor) hitA).isStandUp()) {
-//                        handleOutData(((MahjActor) hitA).getMahjData().getIndex());
-//                    } else {
-//                        clearStandUpMahjong();
-//                        ((MahjActor) hitA).standUp(true);
-//                    }
-//                }
-//
-//                return super.touchDown(event, x, y, pointer, button);
-//            }
-//        });
     }
 
     public void updateMahjs(int where, MahjGroupData mahjGroupData) {
@@ -85,8 +71,7 @@ public class MyHandMahjongs extends Group {
 
         int count = 0, index = 0;
         for (MahjData mahj : mahjs) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjMatchMeTexture(mahj.getIndex()));
-            mahjActor.setScale(0.6f);
+            OwnerFlatMahjong mahjActor = new OwnerFlatMahjong(mahj.getIndex());
             mMatchs.addActor(mahjActor);
             if (count >= 3) {
                 if (index == mahj.getIndex()) {
@@ -94,7 +79,7 @@ public class MyHandMahjongs extends Group {
                     mahjActor.setPosition(mMatchX - mahjActor.getWidth(), mCurrY + 10);
                 } else {
                     count = 0;
-                    mMatchX += mahjActor.getWidth() + 5;
+                    mMatchX += mahjActor.getWidth();
                     mahjActor.setPosition(mMatchX, mCurrY);
                 }
             } else {
@@ -118,8 +103,7 @@ public class MyHandMahjongs extends Group {
         mHandsX = mMatchX + 10;
 
         for (MahjData mahj : mahjs) {
-            MahjActor mahjActor = new MahjActor(mAssets.getMahjHandMeTexture(mahj.getIndex()));
-            mahjActor.setScale(0.8f);
+            OwnerMahjong mahjActor = new OwnerMahjong(mahj.getIndex());
             mahjActor.setMahjData(mahj);
             mahjActor.setCanStandUp(true);
             mHands.addActor(mahjActor);
@@ -133,7 +117,6 @@ public class MyHandMahjongs extends Group {
         if (mahjong != null && mahjong.getIndex() != 0) {
             mLastestMahj.setVisible(true);
             mLastestMahj.setMahjData(mahjong);
-            mLastestMahj.setImage(mAssets.getMahjHandMeTexture(mahjong.getIndex()));
         } else {
             mLastestMahj.standUp(false);
             mLastestMahj.setVisible(false);
@@ -144,8 +127,8 @@ public class MyHandMahjongs extends Group {
     public void clearStandUpMahjong() {
         SnapshotArray<Actor> children = mHands.getChildren();
         for (Actor actor : children) {
-            if (actor instanceof MahjActor) {
-                ((MahjActor) actor).standUp(false);
+            if (actor instanceof Mahjong) {
+                ((Mahjong) actor).standUp(false);
             }
         }
         if (mLastestMahj.isVisible() && mLastestMahj.isStandUp()) {
