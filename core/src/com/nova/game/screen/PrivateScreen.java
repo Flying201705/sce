@@ -51,7 +51,7 @@ public class PrivateScreen extends BaseGameScreen {
         MahjRoomController.getInstance().resetRoomResult();
         mFont = Assets.getInstance().getFont();
 
-        mRoomString = new Label("房间号：- ", new Label.LabelStyle(mFont, Color.WHITE));
+        mRoomString = new Label("房间号：- ", new Label.LabelStyle(mFont, Color.LIGHT_GRAY));
         mRoomString.setFontScale(1.2f);
         mRoomString.setPosition((Constants.WORLD_WIDTH - mRoomString.getWidth()) / 2, 250);
         mStage.addActor(mRoomString);

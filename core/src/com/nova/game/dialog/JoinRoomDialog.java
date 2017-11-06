@@ -14,7 +14,6 @@ public class JoinRoomDialog extends BaseDialog {
     
     private String mInput = "";
     private TextField mTextField;
-    private SceButton mCancelBtn;
     private SceButton mOkBtn;
     private SceButton mDeleteBtn;
     private SceButton mOneBtn;
@@ -28,7 +27,7 @@ public class JoinRoomDialog extends BaseDialog {
     private SceButton mNineBtn;
     private SceButton mZeroBtn;
     
-    private ClickListener mCancelClickListener = new ClickListener() {
+    private ClickListener mCloseClickListener = new ClickListener() {
     	public void clicked(InputEvent event, float x, float y) {
     		mInput = "";
             mTextField.setText(mInput);
@@ -58,8 +57,8 @@ public class JoinRoomDialog extends BaseDialog {
         };
     };
     
-    public JoinRoomDialog(String title) {
-        super(title);
+    public JoinRoomDialog() {
+        super();
         setClip(false);
         this.setBounds((Constants.WORLD_WIDTH - 800) / 2, (Constants.WORLD_HEIGHT - 630) / 2, 800, 630);
         
@@ -67,10 +66,8 @@ public class JoinRoomDialog extends BaseDialog {
         mTextField.setTouchable(Touchable.disabled);
         mTextField.setBounds(50, getHeight() - 150, getWidth() - 100, 100);
         this.addActor(mTextField);
+        setCloseButton(mCloseClickListener);
         
-        mCancelBtn = new SceButton("Dialog/btn_close.png");
-        mCancelBtn.setPosition(getWidth() - 45, getHeight() - 45);
-
         mDeleteBtn = new SceButton("JoinRoom/btn_del.png");
         mDeleteBtn.setPosition(50, 50);
         mZeroBtn = new SceButton("JoinRoom/btn_num_0.png");
@@ -110,7 +107,6 @@ public class JoinRoomDialog extends BaseDialog {
         mNineBtn.setPosition(450, 140);
         mNineBtn.setName("9");
         
-        mCancelBtn.addListener(mCancelClickListener);
         mDeleteBtn.addListener(mDeleteClickListener);
         mOneBtn.addListener(mNumberClickListener);
         mTwoBtn.addListener(mNumberClickListener);
@@ -123,7 +119,6 @@ public class JoinRoomDialog extends BaseDialog {
         mNineBtn.addListener(mNumberClickListener);
         mZeroBtn.addListener(mNumberClickListener);
 
-        this.addActor(mCancelBtn);
         this.addActor(mOkBtn);
         this.addActor(mDeleteBtn);
         this.addActor(mOneBtn);

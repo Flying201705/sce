@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.nova.game.utils.UIUtil;
+import com.nova.game.widget.SceButton;
 
 public class BaseDialog extends Dialog {
     final static int TITLE_HEIGHT = 80;
@@ -19,6 +20,7 @@ public class BaseDialog extends Dialog {
     private TextButton mButton;
     private TextButton mPrimaryButton;
     private TextButton mSecondaryButton;
+    private SceButton mCloseButton;
     private boolean mCanceledOnTouchOutside;
 
     private ClickListener mDialogClickListener = new ClickListener() {
@@ -32,8 +34,6 @@ public class BaseDialog extends Dialog {
                 setVisible(false);
             }
         }
-
-        ;
     };
 
     public BaseDialog() {
@@ -41,7 +41,23 @@ public class BaseDialog extends Dialog {
     }
 
     public BaseDialog(String title) {
-        super(title, UIUtil.getDefaultWindowStyle());
+        this(title, false);
+    }
+
+    public BaseDialog(String title, boolean isTranslucent) {
+        this(title, UIUtil.getDefaultWindowStyle(isTranslucent));
+    }
+
+    public BaseDialog(Drawable background) {
+        this("", background);
+    }
+
+    public BaseDialog(String title, Drawable background) {
+        this(title, UIUtil.getDefaultWindowStyle(background));
+    }
+
+    public BaseDialog(String title, WindowStyle windowStyle) {
+        super(title, windowStyle);
         if (title != null && !title.isEmpty()) {
             padTop(TITLE_HEIGHT);
         } else {
@@ -53,37 +69,15 @@ public class BaseDialog extends Dialog {
         addListener(mDialogClickListener);
     }
 
-    public BaseDialog(Drawable background) {
-        super("", UIUtil.getDefaultWindowStyle(background));
-        this.setBounds((Constants.WORLD_WIDTH - Constants.DEFAULT_DIALOG_WIDTH) / 2, (Constants.WORLD_HEIGHT - Constants.DEFAULT_DIALOG_HEIGHT) / 2,
-                Constants.DEFAULT_DIALOG_WIDTH, Constants.DEFAULT_DIALOG_HEIGHT);
-        addListener(mDialogClickListener);
-    }
-
-    public BaseDialog(String title, boolean isTranslucent) {
-        super(title, UIUtil.getDefaultWindowStyle(isTranslucent));
-        if (title != null && !title.isEmpty()) {
-            padTop(TITLE_HEIGHT);
-        } else {
-            padTop(0);
-        }
-        this.setBounds((Constants.WORLD_WIDTH - Constants.DEFAULT_DIALOG_WIDTH) / 2, (Constants.WORLD_HEIGHT - Constants.DEFAULT_DIALOG_HEIGHT) / 2,
-                Constants.DEFAULT_DIALOG_WIDTH, Constants.DEFAULT_DIALOG_HEIGHT);
-        ImageButton closeButton = new ImageButton(new SpriteDrawable(new Sprite(new Texture(Gdx.files.internal("drawable/icon_close.png")))));
-        closeButton.setPosition(getWidth() - closeButton.getWidth() - 25, getHeight() - closeButton.getHeight() - 25);
-        closeButton.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                super.clicked(event, x, y);
-                setVisible(false);
-            }
-        });
-        addActor(closeButton);
-        addListener(mDialogClickListener);
-    }
-
     public void setCanceledOnTouchOutside(boolean cancel) {
-        mCanceledOnTouchOutside = true;
+        mCanceledOnTouchOutside = cancel;
+    }
+
+    public void setCloseButton(ClickListener listener) {
+        mCloseButton = new SceButton("Dialog/btn_close.png");
+        mCloseButton.setPosition(getWidth() - 45, getHeight() - 45);
+        mCloseButton.addListener(listener);
+        addActor(mCloseButton);
     }
 
     public void setPrimaryButton(String button, ClickListener listener) {

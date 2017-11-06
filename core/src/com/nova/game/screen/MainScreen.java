@@ -137,7 +137,7 @@ public class MainScreen extends BaseScreen {
         addButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                final JoinRoomDialog dialog = new JoinRoomDialog("");
+                final JoinRoomDialog dialog = new JoinRoomDialog();
                 dialog.setJoinClickListener(new ClickListener() {
                     @Override
                     public void clicked(InputEvent event, float x, float y) {
