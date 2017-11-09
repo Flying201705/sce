@@ -1,14 +1,11 @@
 package com.nova.game.model;
 
-import com.badlogic.gdx.Gdx;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjGroupData;
-import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.game.mahjong.util.MahjConstant;
 import nova.common.room.data.PlayerInfo;
 
@@ -88,6 +85,10 @@ public class MahjGameController {
 	
 	public int getCurrentPlayer() {
 		return mGameData.getCurrent();
+	}
+
+	public int getLastOutPlayer() {
+		return mGameData.getLastout();
 	}
 	
 	public int getGodData() {

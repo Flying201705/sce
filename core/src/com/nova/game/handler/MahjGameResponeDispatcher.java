@@ -56,6 +56,7 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         MahjGameData gameData = new MahjGameData();
         gameData.setBanker(responeData.getBanker());
         gameData.setCurrent(responeData.getCurrent());
+        gameData.setLastout(responeData.getLastout());
         gameData.setGod(responeData.getGod());
         ArrayList<MahjData> remainingdatas = new ArrayList<MahjData>();
         for (int index : responeData.getRemainingDatas()) {
