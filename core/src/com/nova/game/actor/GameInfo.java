@@ -4,11 +4,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.nova.game.actor.mahj.Mahjong;
-import com.nova.game.actor.mahj.OwnerMahjong;
 import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
-import com.nova.game.utils.Log;
 
 /**
  * Created by zhangxx on 17-10-18.
@@ -22,8 +19,8 @@ public class GameInfo extends Actor {
     private int mGodIndex = 0;
 
     public GameInfo() {
-        mMahjBg = new Texture("SceneGame/mahj_top.png");
-        mRemainNums = TextureRegion.split(new Texture("SceneGame/mahj_remain_num.png"), 15, 21);
+        mMahjBg = Assets.getInstance().mTopDefaultMahjBackground;
+        mRemainNums = Assets.getInstance().mMahjRemainNum;
     }
 
     @Override

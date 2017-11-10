@@ -14,6 +14,7 @@ import com.nova.game.BaseGame;
 import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.actor.TimeUnit;
+import com.nova.game.assetmanager.Assets;
 import com.nova.game.dialog.ChatDialog;
 
 /**
@@ -48,7 +49,7 @@ public class BaseGameScreen extends BaseScreen {
         mStage.setDebugAll(false);
 
         mBatch = new SpriteBatch();
-        mBg = new Texture("SceneGame/background.jpg");
+        mBg = Assets.getInstance().mBaseGameScreenBackground;
 
         mTime = new TimeUnit();
         mTime.setPosition(564, 330);

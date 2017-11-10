@@ -1,7 +1,8 @@
 package com.nova.game.actor.mahj;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.nova.game.actor.mahj.Mahjong;
+import com.nova.game.assetmanager.Assets;
+
 /**
  * Created by zhangxx on 17-10-17.
  */
@@ -23,6 +24,6 @@ public class OwnerMahjong extends Mahjong {
 
     @Override
     protected Texture getMahjBackground() {
-        return new Texture("SceneGame/mahj_me.png");
+        return Assets.getInstance().mOwnerDefaultMahjBackground;
     }
 }

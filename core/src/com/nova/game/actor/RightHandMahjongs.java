@@ -1,11 +1,7 @@
 package com.nova.game.actor;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.VerticalGroup;
-import com.badlogic.gdx.utils.Align;
 import com.nova.game.actor.mahj.HorizontalFlatMahjong;
 import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.assetmanager.Assets;
@@ -28,7 +24,7 @@ public class RightHandMahjongs extends Group {
     public RightHandMahjongs() {
         mAssets = Assets.getInstance();
 
-        mLastestMahj = new Mahjong(new Texture("SceneGame/mahj_right.png"));
+        mLastestMahj = new Mahjong(mAssets.mRightDefaultMahjBackground);
         mLastestMahj.setVisible(false);
 
         mMatchs = new Group();
@@ -96,7 +92,7 @@ public class RightHandMahjongs extends Group {
 
         mHandsY = mMatchY + 10;
 
-        Texture texture = new Texture("SceneGame/mahj_right.png");
+        Texture texture = mAssets.mRightDefaultMahjBackground;
         for (int i = 0; i < mahjs.size(); i++) {
             Mahjong mahjActor = new Mahjong(texture);
             mahjActor.setPosition(0, mHandsY);

@@ -11,16 +11,25 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
-import com.nova.game.Constants;
 
 public class Assets {
     private static Assets mInstance;
     private AssetManager mAssetManager;
     public FreeTypeFontGenerator mGeneratror;
     private BitmapFont mFont;
+    // game screen resources
     private TextureRegion[][] mBigMahjTextureRegions;
     private TextureRegion[][] mMiddleMahjTextureRegions;
     private TextureRegion[][] mSmallMahjTextureRegions;
+    public TextureRegion[][] mMahjRemainNum;
+    public Texture mBaseGameScreenBackground;
+    public Texture mOwnerDefaultMahjBackground;
+    public Texture mOwnerFlatMahjBackground;
+    public Texture mVerticalFlatMahjBackground;
+    public Texture mHorizontalFlatMahjBackground;
+    public Texture mTopDefaultMahjBackground;
+    public Texture mLeftDefaultMahjBackground;
+    public Texture mRightDefaultMahjBackground;
 
     private Assets() {
         mAssetManager = new AssetManager();
@@ -35,7 +44,7 @@ public class Assets {
 
     public void load() {
         loadFont();
-        updateMahjTextureRegions();
+        updateGameScreenResources();
 
 //        mAssetManager.finishLoading();
     }
@@ -52,6 +61,19 @@ public class Assets {
         size1Params.fontParameters.characters += "狠心离开再等一会退出游戏取消房间号聊天点击输入语音消息长按说话松结束发送倔强的电脑彼岸石浩在路上快点吧我等花儿都谢了大家好很高兴见到又断线网络怎么这差和你合作真是太愉们交个朋友能不告诉联系方式呀还吵有什专心玩要走决天亮各意思离开会再想念：";
         size1Params.fontParameters.size = 30;
         mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
+    }
+
+    private void updateGameScreenResources() {
+        updateMahjTextureRegions();
+        mMahjRemainNum = TextureRegion.split(new Texture("SceneGame/mahj_remain_num.png"), 15, 21);
+        mBaseGameScreenBackground = new Texture("SceneGame/background.jpg");
+        mOwnerDefaultMahjBackground = new Texture("SceneGame/mahj_me.png");
+        mOwnerFlatMahjBackground = new Texture("SceneGame/mahj_flat_me.png");
+        mVerticalFlatMahjBackground = new Texture("SceneGame/mahj_flat_vertical.png");
+        mHorizontalFlatMahjBackground = new Texture("SceneGame/mahj_flat_horizontal.png");
+        mTopDefaultMahjBackground = new Texture("SceneGame/mahj_top.png");
+        mLeftDefaultMahjBackground = new Texture("SceneGame/mahj_left.png");
+        mRightDefaultMahjBackground = new Texture("SceneGame/mahj_right.png");
     }
 
     private void updateMahjTextureRegions() {

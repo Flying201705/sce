@@ -1,6 +1,7 @@
 package com.nova.game.actor.mahj;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.nova.game.assetmanager.Assets;
 
 /**
  * Created by zhangxx on 17-10-18.
@@ -24,7 +25,7 @@ public class HorizontalFlatMahjong extends Mahjong {
 
     @Override
     protected Texture getMahjBackground() {
-        return new Texture("SceneGame/mahj_flat_horizontal.png");
+        return Assets.getInstance().mHorizontalFlatMahjBackground;
     }
 
     @Override

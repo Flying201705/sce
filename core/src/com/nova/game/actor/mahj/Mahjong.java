@@ -107,7 +107,7 @@ public class Mahjong extends Actor {
     }
 
     protected Texture getMahjBackground() {
-        return new Texture("SceneGame/mahj_me.png");
+        return Assets.getInstance().mOwnerDefaultMahjBackground;
     }
 
     private TextureRegion getMahj(int index) {
