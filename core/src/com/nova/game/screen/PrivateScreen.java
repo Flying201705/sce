@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nova.game.BaseDialog;
 import com.nova.game.BaseGame;
 import com.nova.game.Constants;
 import com.nova.game.actor.Player;
@@ -26,9 +25,7 @@ public class PrivateScreen extends BaseGameScreen {
     private Player mTopPlayer;
     private Player mLeftPlayer;
     private Label mRoomString;
-    private BaseDialog mQuitDialog;
     private boolean mWaitFriend = false;
-    private boolean mIsRoomQuit = false;
 
     private BitmapFont mFont;
 
@@ -83,21 +80,6 @@ public class PrivateScreen extends BaseGameScreen {
         mStage.addActor(startGame);
 
         initPlayer();
-
-        mQuitDialog = new BaseDialog("离开房间");
-        mQuitDialog.setPrimaryButton("狠心离开", new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mIsRoomQuit = true;
-                doBackKeyAction();
-            }
-        });
-        mQuitDialog.setSecondaryButton("再等一会", new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mQuitDialog.remove();
-            }
-        });
     }
 
     @Override
@@ -117,17 +99,23 @@ public class PrivateScreen extends BaseGameScreen {
     }
 
     @Override
-    public void doBackKeyAction() {
-        if (mIsRoomQuit) {
-            super.doBackKeyAction();
-            return;
-        }
+    public String getQuitTitle() {
+        return "离开房间";
+    }
 
-        if (!mStage.getActors().contains(mQuitDialog, false)) {
-            mStage.addActor(mQuitDialog);
-        } else {
-            mQuitDialog.remove();
-        }
+    @Override
+    public String getQuitPrimary() {
+        return "狠心离开";
+    }
+
+    @Override
+    public String getQuitSecondary() {
+        return "再等一会";
+    }
+
+    @Override
+    public void handleQuitEvent() {
+        super.handleQuitEvent();
     }
 
     private void initPlayer() {

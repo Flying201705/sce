@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
+import nova.common.game.mahjong.util.MahjGameCommand;
 
 public class ChannelManager {
 	private static ChannelManager mInstance;
@@ -70,7 +71,7 @@ public class ChannelManager {
 		ByteBuf bytebuf = Unpooled.buffer();
 		bytebuf.writeInt(messagetype);
 		// type: 0-文本 1-语音 2-文本&语音
-		bytebuf.writeInt(0);
+		bytebuf.writeInt(MahjGameCommand.MessageType.TYPE_MESSAGE);
 		bytebuf.writeInt(room);
 		bytebuf.writeInt(playerId);
 		bytebuf.writeInt(text.getBytes().length);
@@ -91,7 +92,7 @@ public class ChannelManager {
 			ByteBuf bytebuf = Unpooled.buffer();
 			bytebuf.writeInt(messagetype);
 			// type: 0-文本 1-语音 2-文本&语音
-			bytebuf.writeInt(1);
+			bytebuf.writeInt(MahjGameCommand.MessageType.TYPE_VOICE);
 			bytebuf.writeInt(room);
 			bytebuf.writeInt(playerId);
 			bytebuf.writeInt(filebuf.length);
@@ -110,7 +111,7 @@ public class ChannelManager {
 		ByteBuf bytebuf = Unpooled.buffer();
 		bytebuf.writeInt(messagetype);
 		// type: 0-文本 1-语音 2-文本&语音
-		bytebuf.writeInt(2);
+		bytebuf.writeInt(MahjGameCommand.MessageType.TYPE_MESSAGE_VOICE);
 		bytebuf.writeInt(room);
 		bytebuf.writeInt(playerId);
 		bytebuf.writeInt(position.getBytes().length);

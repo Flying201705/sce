@@ -57,7 +57,7 @@ public class Assets {
 
         FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
         size1Params.fontFileName = "Font/font.ttf";
-        size1Params.fontParameters.characters += "狠心离开再等一会退出游戏取消房间号黄黑红绿人倔强的电脑彼岸石浩在路上：";
+        size1Params.fontParameters.characters += "狠心离开再等一会退出游戏取消房间号聊天点击输入语音消息长按说话松结束发送倔强的电脑彼岸石浩在路上快点吧我等花儿都谢了大家好很高兴见到又断线网络怎么这差和你合作真是太愉们交个朋友能不告诉联系方式呀还吵有什专心玩要走决天亮各意思离开会再想念：";
         size1Params.fontParameters.size = 30;
         mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
     }

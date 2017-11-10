@@ -6,7 +6,10 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.nova.game.Constants;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.model.MahjRoomController;
 import com.nova.game.utils.UIUtil;
 
 import nova.common.room.data.PlayerInfo;
@@ -17,7 +20,6 @@ public class Player extends Actor {
     private int mDirection = 0;
 
     private PlayerInfo mPlayerInfo;
-
     private Texture mImage;
     private BitmapFont mFont;
     private TextureRegion[][] mGoldNums;
@@ -81,6 +83,8 @@ public class Player extends Actor {
             mFont.draw(batch, mName, getX(), getY() + 60);
             drawGold(batch, getX(), getY() + 20);
         }
+
+        drawMessage(batch, parentAlpha);
     }
 
     private void drawGold(Batch batch, float x, float y) {
@@ -96,6 +100,35 @@ public class Player extends Actor {
             batch.draw(mGoldNums[0][bit % 10], x + bitCount * 15, y);
             goldStr = goldStr.substring(1, goldStr.length());
             bitCount++;
+        }
+    }
+
+    private void drawMessage(Batch batch, float parentAlpha) {
+        // 消息
+        String message = MahjRoomController.getInstance().getPlayerMessage(mPlayerInfo.getId());
+        if (message != null) {
+            Label.LabelStyle ls = new Label.LabelStyle();
+            // ls.background = new NinePatchDrawable(new NinePatch(getPlayerMessageBackground(), 40, 40, 40, 40));
+            ls.font = Assets.getInstance().getFont();
+            Label label = new Label(message, ls);
+            label.setWidth(330);
+            label.setWrap(true);
+            float messageX;
+            float messageY;
+            if (getX() < Constants.WORLD_WIDTH / 2) {
+                messageX = getX();
+            } else {
+                messageX = getX() - 250;
+            }
+
+            if (getY() < Constants.WORLD_HEIGHT - 50) {
+                messageY = getY() + 100;
+            } else {
+                messageY = getY() - 20;
+            }
+
+            label.setPosition(messageX, messageY);
+            label.draw(batch, parentAlpha);
         }
     }
 }

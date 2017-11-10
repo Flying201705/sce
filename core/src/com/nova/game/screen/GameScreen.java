@@ -4,12 +4,10 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.nova.game.BaseDialog;
 import com.nova.game.actor.GameInfo;
 import com.nova.game.actor.Player;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
-import com.nova.game.actor.MahjActor;
 import com.nova.game.actor.Match;
 import com.nova.game.actor.MyHandMahjongs;
 import com.nova.game.actor.MyOutMahjongs;
@@ -48,9 +46,7 @@ public class GameScreen extends BaseGameScreen {
     private LeftOutMahjongs mLeftOuts;
     private Match mMatch;
     private OperationButton mOperationButton;
-    private BaseDialog mQuitDialog;
     private boolean mIsDealt = false;
-    private boolean mIsGameQuit = false;
 
     private MahjGameController mController = MahjGameController.create(getGameType());
 
@@ -159,22 +155,6 @@ public class GameScreen extends BaseGameScreen {
         mOperationButton.setBounds(0, 100, 1280, 200);
         mOperationButton.setButtonClickListener(mButtonClick);
         mStage.addActor(mOperationButton);
-
-        mQuitDialog = new BaseDialog("退出游戏");
-        mQuitDialog.setPrimaryButton("退出", new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mIsGameQuit = true;
-                mController.stopGame();
-                doBackKeyAction();
-            }
-        });
-        mQuitDialog.setSecondaryButton("取消", new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                mQuitDialog.remove();
-            }
-        });
     }
 
     private void initPlayer() {
@@ -202,14 +182,14 @@ public class GameScreen extends BaseGameScreen {
 
     private void updatePlayer() {
         HashMap<Integer, PlayerInfo> players = mController.getPlayerInfos();
-        PlayerInfo myPlayerInfo = players.get(getPlayerIdByPosition(0));
+        // PlayerInfo myPlayerInfo = players.get(getPlayerIdByPosition(0));
         PlayerInfo rightPlayerInfo = players.get(getPlayerIdByPosition(1));
         PlayerInfo topPlayerInfo = players.get(getPlayerIdByPosition(2));
         PlayerInfo leftPlayerInfo = players.get(getPlayerIdByPosition(3));
-        if (myPlayerInfo != null) {
-            // mMyPlayer.setPlayerInfo(myPlayerInfo);
-            // mMyPlayer.setVisible(true);
-        }
+        /*if (myPlayerInfo != null) {
+            mMyPlayer.setPlayerInfo(myPlayerInfo);
+            mMyPlayer.setVisible(true);
+        }*/
 
         if (rightPlayerInfo != null) {
             mRightPlayer.setPlayerInfo(rightPlayerInfo);
@@ -272,17 +252,9 @@ public class GameScreen extends BaseGameScreen {
     }
 
     @Override
-    public void doBackKeyAction() {
-        if (mIsGameQuit) {
-            super.doBackKeyAction();
-            return;
-        }
-
-        if (!mStage.getActors().contains(mQuitDialog, false)) {
-            mStage.addActor(mQuitDialog);
-        } else {
-            mQuitDialog.remove();
-        }
+    public void handleQuitEvent() {
+        super.handleQuitEvent();
+        mController.stopGame();
     }
 
     private void updateMahjong() {

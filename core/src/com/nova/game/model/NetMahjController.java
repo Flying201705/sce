@@ -29,12 +29,12 @@ class NetMahjController extends MahjController {
     @Override
     public void activeOutData(int playerId, int data) {
         super.activeOutData(playerId, data);
-        mRequest.activeOutData(MahjRoomController.getInstance().getRoomId(), playerId, data);
+        mRequest.activeOutData(MahjRoomController.getInstance().getRoomId(), data);
     }
 
     @Override
     public void activeOperateData(int playerId, int operateType) {
         super.activeOperateData(playerId, operateType);
-        mRequest.activeOperateData(MahjRoomController.getInstance().getRoomId(), playerId, operateType);
+        mRequest.activeOperateData(MahjRoomController.getInstance().getRoomId(), operateType);
     }
 }

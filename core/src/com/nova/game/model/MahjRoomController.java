@@ -2,6 +2,7 @@ package com.nova.game.model;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -52,9 +53,13 @@ public class MahjRoomController implements PlayerInfoController.PlayerInfoChange
         @Override
         public void handleMessage() {
             for (int i = 0; i < 4; i++) {
-                if (mPlayerMessages.get(i) != null) {
-                    if (System.currentTimeMillis() - mPlayerMessages.get(i).getTime() >= 3000) {
-                        mPlayerMessages.remove(i);
+                if (mPlayerInfos.get(i) == null) {
+                    continue;
+                }
+                int id = mPlayerInfos.get(i).getId();
+                if (mPlayerMessages.get(id) != null) {
+                    if (System.currentTimeMillis() - mPlayerMessages.get(id).getTime() >= 3000) {
+                        mPlayerMessages.remove(id);
                     }
                 }
             }
