@@ -46,7 +46,7 @@ public class TestScreen extends BaseScreen {
         mBatch = new SpriteBatch();
 
         mBg = new Texture("SceneGame/background.jpg");
-        mBg2 = new Texture("test/bg_11.png");
+        mBg2 = new Texture("Actors/TimeBack.png");
 
         Operator operator = new Operator(mBg2);
         mStage.addActor(operator);
@@ -210,8 +210,8 @@ public class TestScreen extends BaseScreen {
 
         public Operator(Texture bg) {
             mOperatorBg = new Sprite(bg);
-            mOperatorBg2 = new Sprite(new Texture("test/mj_12.png"));
-            mOperatorBg3 = new Sprite(new Texture("test/mj_13.png"));
+            mOperatorBg2 = new Sprite(new Texture("Actors/TimeBack2.png"));
+            mOperatorBg3 = new Sprite(new Texture("Actors/TimePoint0.png"));
         }
         @Override
         public void draw(Batch batch, float parentAlpha) {

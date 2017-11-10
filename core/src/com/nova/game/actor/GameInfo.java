@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.actor.mahj.OwnerMahjong;
+import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.utils.Log;
 
 /**
  * Created by zhangxx on 17-10-18.
@@ -28,7 +30,7 @@ public class GameInfo extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         drawRemainSize(batch);
-        drawGodData(batch);
+        drawGodData(batch, parentAlpha);
     }
 
     public void updateRemainSize(int size) {
@@ -47,15 +49,13 @@ public class GameInfo extends Actor {
         batch.draw(mRemainNums[0][remain_one], getX() + 30, getY() + 25);
     }
 
-    private void drawGodData(Batch batch) {
+    private void drawGodData(Batch batch, float parentAlpha) {
         if (mGodIndex <= 0) {
             return;
         }
 
-        MahjActor godActor = new MahjActor(Assets.getInstance().getMahjHandMeTexture(mGodIndex));
-        godActor.setScale(0.43f);
-        godActor.setCanStandUp(true);
-        godActor.setPosition(getX() + 55, getY() + 10);
-        godActor.draw(batch, 1.0f);
+        VerticalFlatMahjong upFlatMahj = new VerticalFlatMahjong(mGodIndex);
+        upFlatMahj.setPosition(getX() + 55, getY() + 10);
+        upFlatMahj.draw(batch, parentAlpha);
     }
 }

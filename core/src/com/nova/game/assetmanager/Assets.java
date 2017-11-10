@@ -34,18 +34,10 @@ public class Assets {
     }
 
     public void load() {
-        loadMahjTexture();
         loadFont();
         updateMahjTextureRegions();
 
 //        mAssetManager.finishLoading();
-    }
-
-    private void loadMahjTexture() {
-        addTexture("SceneGame/1/mingmah_");
-        addTexture("SceneGame/2/handmah_");
-        addTexture("SceneGame/2/mingmah_");
-        addTexture("SceneGame/3/mingmah_");
     }
 
     private void loadFont() {
@@ -68,22 +60,6 @@ public class Assets {
         mSmallMahjTextureRegions = TextureRegion.split(new Texture("SceneGame/mj_small.png"), 37, 42);
     }
 
-    private void addTexture(String path) {
-        int i, j, index;
-        for (i = 0, j = 1, index = 0; i < Constants.MAHJ_IMAGE_EACH_COUNT; i++, j++) {
-            if (index > 2) {
-                if (j > 4) {
-                    j = 1;
-                    index++;
-                }
-            } else if (j > 9) {
-                j = 1;
-                index++;
-            }
-            mAssetManager.load(path + (index * 10 + j) + ".png", Texture.class);
-        }
-    }
-
     public TextureRegion getMahjTextureRegion(int index, int type) {
         index -= 1;
         int color = index / 10;
@@ -100,22 +76,6 @@ public class Assets {
         } else {
             return mBigMahjTextureRegions[color][face];
         }
-    }
-
-    public Texture getMahjMatchLeftTexture(int index) {
-        return mAssetManager.get("SceneGame/3/mingmah_" + index + ".png");
-    }
-
-    public Texture getMahjMatchMeTexture(int index) {
-        return mAssetManager.get("SceneGame/2/mingmah_" + index + ".png");
-    }
-
-    public Texture getMahjHandMeTexture(int index) {
-        return mAssetManager.get("SceneGame/2/handmah_" + index + ".png");
-    }
-
-    public Texture getMahjMatchRightTexture(int index) {
-        return mAssetManager.get("SceneGame/1/mingmah_" + index + ".png");
     }
 
     public BitmapFont getFont() {
