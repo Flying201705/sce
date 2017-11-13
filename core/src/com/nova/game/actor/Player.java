@@ -34,7 +34,7 @@ public class Player extends Actor {
     public Player(int direction) {
         mDirection = direction;
 
-        mImage = new Texture("Head/Head0.png");
+        mImage = Assets.getInstance().mDefaultHead[0];
         mFont = Assets.getInstance().getFont();
 
         mGoldNums = TextureRegion.split(new Texture("Head/gold_img.png"), 15, 21);
@@ -57,10 +57,8 @@ public class Player extends Actor {
         mGold = mPlayerInfo.getGold();
         if (mPlayerInfo.getHeaddatas() != null && mPlayerInfo.getHeaddatas().length > 0) {
             mImage = UIUtil.bytes2Texture(mPlayerInfo.getHeaddatas());
-        }else if (mPlayerInfo.getSex() == 1) {
-            mImage = new Texture("Head/Head1.png");
-        } else {
-            mImage = new Texture("Head/Head0.png");
+        }else if (mPlayerInfo.getSex() <= 1) {
+            mImage = Assets.getInstance().mDefaultHead[mPlayerInfo.getSex()];
         }
     }
 

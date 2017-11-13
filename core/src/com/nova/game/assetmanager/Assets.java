@@ -23,6 +23,7 @@ public class Assets {
     private TextureRegion[][] mSmallMahjTextureRegions;
     public TextureRegion[][] mMahjRemainNum;
     public Texture mBaseGameScreenBackground;
+    public Texture[] mDefaultHead;
     public Texture mOwnerDefaultMahjBackground;
     public Texture mOwnerFlatMahjBackground;
     public Texture mVerticalFlatMahjBackground;
@@ -67,6 +68,9 @@ public class Assets {
         updateMahjTextureRegions();
         mMahjRemainNum = TextureRegion.split(new Texture("SceneGame/mahj_remain_num.png"), 15, 21);
         mBaseGameScreenBackground = new Texture("SceneGame/background.jpg");
+        mDefaultHead = new Texture[2];
+        mDefaultHead[0] = new Texture("Head/Head0.png");
+        mDefaultHead[1] = new Texture("Head/Head1.png");
         mOwnerDefaultMahjBackground = new Texture("SceneGame/mahj_me.png");
         mOwnerFlatMahjBackground = new Texture("SceneGame/mahj_flat_me.png");
         mVerticalFlatMahjBackground = new Texture("SceneGame/mahj_flat_vertical.png");
