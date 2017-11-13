@@ -1,10 +1,6 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.utils.Align;
 import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
 
@@ -29,7 +25,7 @@ public class MyOutMahjongs extends Group {
         clear();
 
         int count = 0;
-        float x = 0, y = getHeight();
+        float x = 0, y = getHeight(), offestY = 15f;
         for (MahjData mahj : mahjs) {
             VerticalFlatMahjong mahjActor = new VerticalFlatMahjong(mahj.getIndex());
             if (count < 6) {
@@ -42,16 +38,16 @@ public class MyOutMahjongs extends Group {
             } else if (count >= 6 && count < 14) {
                 if (count == 6) {
                     x = mahjActor.getWidth();
-                    y -= mahjActor.getHeight();
+                    y -= mahjActor.getHeight() - offestY;
                 } else {
-                    x += (count - 6) * mahjActor.getWidth() - 2;
+                    x += mahjActor.getWidth() - 2;
                 }
             } else if (count >= 14) {
                 if (count == 14) {
                     x = 0;
-                    y -= mahjActor.getHeight();
+                    y -= mahjActor.getHeight() - offestY;
                 } else {
-                    x += (count - 14) * mahjActor.getWidth() - 2;
+                    x += mahjActor.getWidth() - 2;
                 }
 
             }

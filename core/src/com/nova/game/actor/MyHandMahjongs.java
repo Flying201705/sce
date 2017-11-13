@@ -2,9 +2,6 @@ package com.nova.game.actor;
 
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.SnapshotArray;
 import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.actor.mahj.OwnerFlatMahjong;
@@ -54,6 +51,28 @@ public class MyHandMahjongs extends Group {
 
         mCurrY = getY();
 
+        // 测试用程序开始
+        /**
+        ArrayList<MahjData> datas = new ArrayList<MahjData>();
+        for (int i = 0; i < 4; i++) {
+            datas.add(new MahjData(12));
+        }
+        mahjGroupData = new MahjGroupData(0, datas);
+        ArrayList<MahjData> matchdatas = new ArrayList<MahjData>();
+        for (int i = 0; i < 3; i++) {
+            matchdatas.add(new MahjData(23));
+        }
+        for (int i = 0; i < 4; i++) {
+            matchdatas.add(new MahjData(24));
+        }
+        for (int i = 0; i < 3; i++) {
+            matchdatas.add(new MahjData(24));
+        }
+        mahjGroupData.setMatchDatas(matchdatas);
+        mahjGroupData.setLatestData(new MahjData(14));
+         **/
+        // 测试用程序结束
+
         setMatchMahjs(mahjGroupData.getMatchDatas());
         setHandMahjs(mahjGroupData.getDatas());
         setLastestMahjong(mahjGroupData.getLatestData());
@@ -70,23 +89,26 @@ public class MyHandMahjongs extends Group {
         mMatchX = getX();
 
         int count = 0, index = 0;
+        float offsetX = 4f;
         for (MahjData mahj : mahjs) {
             OwnerFlatMahjong mahjActor = new OwnerFlatMahjong(mahj.getIndex());
             mMatchs.addActor(mahjActor);
+
             if (count >= 3) {
+                count = 0;
                 if (index == mahj.getIndex()) {
-                    count = 0;
-                    mahjActor.setPosition(mMatchX - mahjActor.getWidth(), mCurrY + 10);
+                    mahjActor.setPosition(mMatchX - (mahjActor.getWidth() - offsetX), 15);
+                    mMatchX += 5f;
                 } else {
-                    count = 0;
-                    mMatchX += mahjActor.getWidth();
-                    mahjActor.setPosition(mMatchX, mCurrY);
+                    mMatchX += mahjActor.getWidth() - offsetX + 5f;
+                    mahjActor.setPosition(mMatchX, 0);
+                    count++;
                 }
             } else {
-                mMatchX += mahjActor.getWidth();
-                mahjActor.setPosition(mMatchX, mCurrY);
+                mMatchX += mahjActor.getWidth() - offsetX;
+                mahjActor.setPosition(mMatchX, 0);
+                count++;
             }
-            count++;
             index = mahj.getIndex();
         }
 
