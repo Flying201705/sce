@@ -70,7 +70,7 @@ public class MyHandMahjongs extends Group {
         }
         mahjGroupData.setMatchDatas(matchdatas);
         mahjGroupData.setLatestData(new MahjData(14));
-         **/
+        **/
         // 测试用程序结束
 
         setMatchMahjs(mahjGroupData.getMatchDatas());
@@ -90,6 +90,7 @@ public class MyHandMahjongs extends Group {
 
         int count = 0, index = 0;
         float offsetX = 4f;
+        float offsetY = 15f;
         for (MahjData mahj : mahjs) {
             OwnerFlatMahjong mahjActor = new OwnerFlatMahjong(mahj.getIndex());
             mMatchs.addActor(mahjActor);
@@ -97,16 +98,16 @@ public class MyHandMahjongs extends Group {
             if (count >= 3) {
                 count = 0;
                 if (index == mahj.getIndex()) {
-                    mahjActor.setPosition(mMatchX - (mahjActor.getWidth() - offsetX), 15);
+                    mahjActor.setPosition(mMatchX - (mahjActor.getWidth() - offsetX), 15 + offsetY);
                     mMatchX += 5f;
                 } else {
                     mMatchX += mahjActor.getWidth() - offsetX + 5f;
-                    mahjActor.setPosition(mMatchX, 0);
+                    mahjActor.setPosition(mMatchX, offsetY);
                     count++;
                 }
             } else {
                 mMatchX += mahjActor.getWidth() - offsetX;
-                mahjActor.setPosition(mMatchX, 0);
+                mahjActor.setPosition(mMatchX, offsetY);
                 count++;
             }
             index = mahj.getIndex();

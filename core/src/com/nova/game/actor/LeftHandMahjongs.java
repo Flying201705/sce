@@ -100,7 +100,7 @@ public class LeftHandMahjongs extends Group {
         mHandMahjs = mahjs;
         mHands.clear();
 
-        mHandsY = mMatchY - 10;
+        mHandsY = mMatchY - 20;
         for (int i = 0; i < mahjs.size(); i++) {
             Mahjong mahjActor = new Mahjong(mAssets.mLeftDefaultMahjBackground);
             mHandsY -= mahjActor.getHeight() - 29;

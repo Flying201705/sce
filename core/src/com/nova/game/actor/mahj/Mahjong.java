@@ -88,13 +88,13 @@ public class Mahjong extends Actor {
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
         if (mIsCanStandUp && mIsStandUp) {
-            batch.draw(mBackground, getX(), getY() + 10);
+            batch.draw(mBackground, getX(), getY() + 30);
         } else {
             batch.draw(mBackground, getX(), getY());
         }
         if (mMahjSprite != null) {
             if (mIsCanStandUp && mIsStandUp) {
-                mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY() + 10);
+                mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY() + 30);
             } else {
                 mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY());
             }

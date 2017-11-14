@@ -145,7 +145,7 @@ public class GameScreen extends BaseGameScreen {
         mStage.addActor(mTopOuts);
 
         mLeftOuts = new LeftOutMahjongs();
-        mLeftOuts.setBounds(343, 210, 150, 320);
+        mLeftOuts.setBounds(353, 210, 150, 320);
         mStage.addActor(mLeftOuts);
 
         mMatch = new Match();

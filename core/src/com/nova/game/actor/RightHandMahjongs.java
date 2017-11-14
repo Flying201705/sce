@@ -64,7 +64,7 @@ public class RightHandMahjongs extends Group {
     public void setMatchMahjs(int where, ArrayList<MahjData> mahjs) {
         mMatchs.clear();
 
-        mMatchY = mHandsY - 10;
+        mMatchY = mHandsY - 20;
 
         int count = 0, index = 0;
         float offsetY = 17f;
