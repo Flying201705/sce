@@ -1,6 +1,5 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
 
@@ -8,20 +7,10 @@ import java.util.ArrayList;
 
 import nova.common.game.mahjong.data.MahjData;
 
-public class MyOutMahjongs extends Group {
-    private Assets mAssets;
-    private ArrayList<MahjData> mOutMahjs;
+public class MyOutMahjongs extends OutMahjongs {
 
-    public MyOutMahjongs() {
-        mAssets = Assets.getInstance();
-    }
-
-    public void setOutMahjongs(ArrayList<MahjData> mahjs) {
-//        if (mahjs != null && mOutMahjs != null && mahjs.containsAll(mOutMahjs)) {
-//            return;
-//        }
-
-        mOutMahjs = mahjs;
+    @Override
+    protected void updateOutMahjongs(ArrayList<MahjData> mahjs) {
         clear();
 
         int count = 0;
@@ -55,5 +44,8 @@ public class MyOutMahjongs extends Group {
             addActor(mahjActor);
             count++;
         }
+
+        mLatestX = x;
+        mLatestY = y;
     }
 }

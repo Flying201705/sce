@@ -1,15 +1,16 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nova.game.actor.mahj.VerticalFlatMahjong;
+import com.nova.game.assetmanager.Assets;
+
 import java.util.ArrayList;
+
 import nova.common.game.mahjong.data.MahjData;
 
-public class TopOutMahjongs extends Group {
-    public TopOutMahjongs() {
-    }
+public class TopOutMahjongs extends OutMahjongs {
 
-    public void setOutMahjongs(ArrayList<MahjData> mahjs) {
+    @Override
+    protected void updateOutMahjongs(ArrayList<MahjData> mahjs) {
         clear();
 
         float currX = 0, currY = 0, offsetX = 5f, offsetY = 15f;
@@ -28,5 +29,8 @@ public class TopOutMahjongs extends Group {
             mahjActor.setPosition(currX, currY);
             addActor(mahjActor);
         }
+
+        mLatestX = currX + getOriginX();
+        mLatestY = currY;
     }
 }

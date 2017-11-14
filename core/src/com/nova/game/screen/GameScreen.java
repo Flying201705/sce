@@ -47,6 +47,7 @@ public class GameScreen extends BaseGameScreen {
     private Match mMatch;
     private OperationButton mOperationButton;
     private boolean mIsDealt = false;
+    private int mLatestOutPlayer = -1;
 
     private MahjGameController mController = MahjGameController.create(getGameType());
 
@@ -311,7 +312,43 @@ public class GameScreen extends BaseGameScreen {
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
         }
 
+        updateLatestOutMark();
+
         mOperationButton.update(mController.getMatchType());
+    }
+
+    private void updateLatestOutMark() {
+        if (mLatestOutPlayer != mController.getLastOutPlayer()) {
+            mLatestOutPlayer = mController.getLastOutPlayer();
+            switch (mLatestOutPlayer) {
+                case 0:
+                    mMyOuts.setLatestOutMark(true);
+                    mRightOuts.setLatestOutMark(false);
+                    mTopOuts.setLatestOutMark(false);
+                    mLeftOuts.setLatestOutMark(false);
+                    break;
+                case 1:
+                    mMyOuts.setLatestOutMark(false);
+                    mRightOuts.setLatestOutMark(true);
+                    mTopOuts.setLatestOutMark(false);
+                    mLeftOuts.setLatestOutMark(false);
+                    break;
+                case 2:
+                    mMyOuts.setLatestOutMark(false);
+                    mRightOuts.setLatestOutMark(false);
+                    mTopOuts.setLatestOutMark(true);
+                    mLeftOuts.setLatestOutMark(false);
+                    break;
+                case 3:
+                    mMyOuts.setLatestOutMark(false);
+                    mRightOuts.setLatestOutMark(false);
+                    mTopOuts.setLatestOutMark(false);
+                    mLeftOuts.setLatestOutMark(true);
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void updateTimeUint() {

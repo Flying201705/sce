@@ -1,16 +1,16 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.Group;
 import com.nova.game.actor.mahj.HorizontalFlatMahjong;
+import com.nova.game.assetmanager.Assets;
+
 import java.util.ArrayList;
+
 import nova.common.game.mahjong.data.MahjData;
 
-public class LeftOutMahjongs extends Group {
+public class LeftOutMahjongs extends OutMahjongs {
 
-    public LeftOutMahjongs() {
-    }
-
-    public void setOutMahjongs(ArrayList<MahjData> mahjs) {
+    @Override
+    protected void updateOutMahjongs(ArrayList<MahjData> mahjs) {
         clear();
 
         float currX = getWidth(), currY = getHeight(), offsetY = 15f;
@@ -30,5 +30,8 @@ public class LeftOutMahjongs extends Group {
             }
             mahjActor.setPosition(currX, currY);
         }
+
+        mLatestX = currX;
+        mLatestY = currY;
     }
 }

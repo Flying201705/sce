@@ -116,8 +116,8 @@ public class MainScreen extends BaseScreen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-//                 mGame.setScreen(new GameScreen(mGame));
-                mGame.setScreen(new NetMahjGameScreen(mGame));
+                 mGame.setScreen(new GameScreen(mGame));
+//                mGame.setScreen(new NetMahjGameScreen(mGame));
             }
         });
         startButton.setPosition(900, 450);

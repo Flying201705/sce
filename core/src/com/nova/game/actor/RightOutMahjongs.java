@@ -1,8 +1,5 @@
 package com.nova.game.actor;
 
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.Group;
-import com.badlogic.gdx.utils.SnapshotArray;
 import com.nova.game.actor.mahj.HorizontalFlatMahjong;
 import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.assetmanager.Assets;
@@ -11,20 +8,10 @@ import java.util.ArrayList;
 
 import nova.common.game.mahjong.data.MahjData;
 
-public class RightOutMahjongs extends Group {
-    private Assets mAssets;
-    private ArrayList<MahjData> mOutMahjs;
+public class RightOutMahjongs extends OutMahjongs {
 
-    public RightOutMahjongs() {
-        mAssets = Assets.getInstance();
-    }
-
-    public void setOutMahjongs(ArrayList<MahjData> mahjs) {
-//        if (mahjs != null && mOutMahjs != null && mahjs.containsAll(mOutMahjs)) {
-//            return;
-//        }
-
-        mOutMahjs = mahjs;
+    @Override
+    protected void updateOutMahjongs(ArrayList<MahjData> mahjs) {
         clear();
 
         float currX = 0, currY = 0, offset = 15f;
@@ -44,5 +31,8 @@ public class RightOutMahjongs extends Group {
 
             mahjActor.setPosition(currX, currY);
         }
+
+        mLatestX = currX;
+        mLatestY = currY;
     }
 }
