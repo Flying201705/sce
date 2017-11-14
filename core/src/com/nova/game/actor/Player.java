@@ -40,9 +40,9 @@ public class Player extends Actor {
         mGoldNums = TextureRegion.split(new Texture("Head/gold_img.png"), 15, 21);
 
         if (mDirection == HORIZONTAL) {
-            setSize(200, 102);
+            setSize(200, 90);
         } else {
-            setSize(102, 150);
+            setSize(120, 130);
         }
     }
 
@@ -69,17 +69,19 @@ public class Player extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (mDirection == HORIZONTAL) {
-            batch.draw(mImage, getX(), getY(), 80, 80);
+            batch.draw(Assets.getInstance().mPlayerInfoBackground, getX(), getY(), getWidth(), getHeight());
+            batch.draw(mImage, getX() + 5, getY() + 5, 80, 80);
             mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
-            mFont.draw(batch, mName, getX() + 85, getY() + 65);
-            drawGold(batch, getX() + 85, getY() + 15);
+            mFont.draw(batch, mName, getX() + 90, getY() + 70);
+            drawGold(batch, getX() + 90, getY() + 20);
         } else {
-            batch.draw(mImage, getX(), getY() + getHeight() - 80, 80, 80);
+            batch.draw(Assets.getInstance().mPlayerInfoBackground, getX(), getY(), getWidth(), getHeight());
+            batch.draw(mImage, getX() + (getWidth() - 80) / 2, getY() + getHeight() - 80 - 5, 80, 80);
             mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
-            mFont.draw(batch, mName, getX(), getY() + 60);
-            drawGold(batch, getX(), getY() + 20);
+            mFont.draw(batch, mName, getX() + 5, getY() + 40);
+            drawGold(batch, getX() + 10, getY());
         }
 
         drawMessage(batch, parentAlpha);

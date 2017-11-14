@@ -97,7 +97,7 @@ public class GameScreen extends BaseGameScreen {
 
         // 游戏信息展示区域
         mGameInfo = new GameInfo();
-        mGameInfo.setPosition(0, 600);
+        mGameInfo.setPosition(10, 630);
         mStage.addActor(mGameInfo);
 
         mTime.setTimeUnitListener(mTimeListener);

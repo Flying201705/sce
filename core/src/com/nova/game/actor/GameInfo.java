@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.nova.game.actor.mahj.InfoMahjong;
 import com.nova.game.actor.mahj.VerticalFlatMahjong;
 import com.nova.game.assetmanager.Assets;
 
@@ -13,12 +14,14 @@ import com.nova.game.assetmanager.Assets;
 
 public class GameInfo extends Actor {
 
+    private Texture mGameInfoBg;
     private Texture mMahjBg;
     private TextureRegion[][] mRemainNums;
     private int mRemainSize = 0;
     private int mGodIndex = 0;
 
     public GameInfo() {
+        mGameInfoBg = Assets.getInstance().mGameInfoBackground;
         mMahjBg = Assets.getInstance().mTopDefaultMahjBackground;
         mRemainNums = Assets.getInstance().mMahjRemainNum;
     }
@@ -26,6 +29,7 @@ public class GameInfo extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+        batch.draw(mGameInfoBg, getX(), getY());
         drawRemainSize(batch);
         drawGodData(batch, parentAlpha);
     }
@@ -41,9 +45,10 @@ public class GameInfo extends Actor {
     private void drawRemainSize(Batch batch) {
         int remain_ten = mRemainSize / 10;
         int remain_one = mRemainSize % 10;
-        batch.draw(mMahjBg, getX() + 10, getY() + 10);
-        batch.draw(mRemainNums[0][remain_ten], getX() + 15, getY() + 25);
-        batch.draw(mRemainNums[0][remain_one], getX() + 30, getY() + 25);
+        float remainX = getX() + 23, remainY = getY() + 12;
+        batch.draw(mMahjBg, remainX, remainY);
+        batch.draw(mRemainNums[0][remain_ten], remainX + 5, remainY + 15);
+        batch.draw(mRemainNums[0][remain_one], remainX + 20, remainY + 15);
     }
 
     private void drawGodData(Batch batch, float parentAlpha) {
@@ -51,8 +56,8 @@ public class GameInfo extends Actor {
             return;
         }
 
-        VerticalFlatMahjong upFlatMahj = new VerticalFlatMahjong(mGodIndex);
-        upFlatMahj.setPosition(getX() + 55, getY() + 10);
-        upFlatMahj.draw(batch, parentAlpha);
+        InfoMahjong godMahj = new InfoMahjong(mGodIndex);
+        godMahj.setPosition(getX() + 87, getY() + 12);
+        godMahj.draw(batch, parentAlpha);
     }
 }

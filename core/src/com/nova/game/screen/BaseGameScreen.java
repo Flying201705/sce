@@ -55,9 +55,9 @@ public class BaseGameScreen extends BaseScreen {
         mTime.setPosition(564, 330);
         mStage.addActor(mTime);
 
-        TextureRegion[][] smTR = TextureRegion.split(new Texture(Gdx.files.internal("SceneGame/btn_message.png")), 100, 100);
-        ImageButton smBtn = new ImageButton(new TextureRegionDrawable(smTR[0][0]), new TextureRegionDrawable(smTR[0][1]));
-        smBtn.setBounds(35, 200, 50, 50);
+        TextureRegion[][] smTR = TextureRegion.split(new Texture(Gdx.files.internal("SceneGame/btn_message.png")), 50, 51);
+        ImageButton smBtn = new ImageButton(new TextureRegionDrawable(smTR[0][1]), new TextureRegionDrawable(smTR[0][0]));
+        smBtn.setPosition(35, 120);
         smBtn.addListener(mMessageListener);
         mStage.addActor(smBtn);
 

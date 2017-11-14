@@ -24,6 +24,9 @@ public class Assets {
     public TextureRegion[][] mMahjRemainNum;
     public Texture mBaseGameScreenBackground;
     public Texture[] mDefaultHead;
+    public Texture mPlayerInfoBackground;
+    public Texture mGameInfoBackground;
+    public Texture mInfoMahjBackground;
     public Texture mOwnerDefaultMahjBackground;
     public Texture mOwnerFlatMahjBackground;
     public Texture mVerticalFlatMahjBackground;
@@ -71,6 +74,9 @@ public class Assets {
         mDefaultHead = new Texture[2];
         mDefaultHead[0] = new Texture("Head/Head0.png");
         mDefaultHead[1] = new Texture("Head/Head1.png");
+        mPlayerInfoBackground = new Texture("Head/player_info_background.png");
+        mGameInfoBackground = new Texture("SceneGame/game_info_background.png");
+        mInfoMahjBackground = new Texture("SceneGame/mahj_info_background.png");
         mOwnerDefaultMahjBackground = new Texture("SceneGame/mahj_me.png");
         mOwnerFlatMahjBackground = new Texture("SceneGame/mahj_flat_me.png");
         mVerticalFlatMahjBackground = new Texture("SceneGame/mahj_flat_vertical.png");
