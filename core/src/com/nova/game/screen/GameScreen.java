@@ -8,10 +8,10 @@ import com.nova.game.actor.GameInfo;
 import com.nova.game.actor.Player;
 import com.nova.game.actor.LeftHandMahjongs;
 import com.nova.game.actor.LeftOutMahjongs;
-import com.nova.game.actor.Match;
+import com.nova.game.actor.Operate;
 import com.nova.game.actor.MyHandMahjongs;
 import com.nova.game.actor.MyOutMahjongs;
-import com.nova.game.actor.OperationButton;
+import com.nova.game.actor.MatchButton;
 import com.nova.game.actor.RightHandMahjongs;
 import com.nova.game.actor.RightOutMahjongs;
 import com.nova.game.actor.TimeUnit;
@@ -26,6 +26,7 @@ import com.nova.game.widget.SceButton;
 import java.util.HashMap;
 
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.util.MahjConstant;
 import nova.common.room.data.PlayerInfo;
 
 public class GameScreen extends BaseGameScreen {
@@ -44,8 +45,11 @@ public class GameScreen extends BaseGameScreen {
     private RightOutMahjongs mRightOuts;
     private TopOutMahjongs mTopOuts;
     private LeftOutMahjongs mLeftOuts;
-    private Match mMatch;
-    private OperationButton mOperationButton;
+    private Operate mMyOperate;
+    private Operate mRightOperate;
+    private Operate mTopOperate;
+    private Operate mLeftOperate;
+    private MatchButton mMatchButton;
     private boolean mIsDealt = false;
     private int mLatestOutPlayer = -1;
 
@@ -60,7 +64,7 @@ public class GameScreen extends BaseGameScreen {
 
         @Override
         public void onTimeOut() {
-            mOperationButton.clear();
+            mMatchButton.clear();
         }
     };
 
@@ -71,7 +75,7 @@ public class GameScreen extends BaseGameScreen {
         }
     };
 
-    private OperationButton.ButtonClickListener mButtonClick = new OperationButton.ButtonClickListener() {
+    private MatchButton.ButtonClickListener mButtonClick = new MatchButton.ButtonClickListener() {
         @Override
         public void operate(int type) {
             mTime.stopThinkingTime();
@@ -149,13 +153,23 @@ public class GameScreen extends BaseGameScreen {
         mLeftOuts.setBounds(353, 210, 150, 320);
         mStage.addActor(mLeftOuts);
 
-        mMatch = new Match();
-        mStage.addActor(mMatch);
+        mMyOperate = new Operate();
+        mMyOperate.setPosition(550, 150);
+        mStage.addActor(mMyOperate);
+        mRightOperate = new Operate();
+        mRightOperate.setPosition(980, 340);
+        mStage.addActor(mRightOperate);
+        mTopOperate = new Operate();
+        mTopOperate.setPosition(550, 450);
+        mStage.addActor(mTopOperate);
+        mLeftOperate = new Operate();
+        mLeftOperate.setPosition(200, 340);
+        mStage.addActor(mLeftOperate);
 
-        mOperationButton = new OperationButton();
-        mOperationButton.setBounds(0, 100, 1280, 200);
-        mOperationButton.setButtonClickListener(mButtonClick);
-        mStage.addActor(mOperationButton);
+        mMatchButton = new MatchButton();
+        mMatchButton.setBounds(0, 100, 1280, 200);
+        mMatchButton.setButtonClickListener(mButtonClick);
+        mStage.addActor(mMatchButton);
     }
 
     private void initPlayer() {
@@ -279,35 +293,45 @@ public class GameScreen extends BaseGameScreen {
         mTopHands.updateMahjs(2, topGroupData);
         mLeftHands.updateMahjs(3, leftGroupData);
 
+
+        if (myGroupData != null) {
+            mMyPlayer.setTingFlag((myGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING);
+        }
+        if (rightGroupData != null) {
+            mRightPlayer.setTingFlag((rightGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING);
+        }
+        if (topGroupData != null) {
+            mTopPlayer.setTingFlag((topGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING);
+        }
+        if (leftGroupData != null) {
+            mLeftPlayer.setTingFlag((leftGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING);
+        }
+
         if (rightGroupData != null) {
             if (rightGroupData.getOperateType() != 0) {
-                mMatch.setPosition(980, 340);
-                mMatch.update(rightGroupData.getOperateType());
-                rightGroupData.setOperateType(0);
+                mRightOperate.update(rightGroupData.getOperateType());
+                // rightGroupData.setOperateType(0);
             }
             mRightOuts.setOutMahjongs(rightGroupData.getOutDatas());
         }
         if (topGroupData != null) {
             if (topGroupData.getOperateType() != 0) {
-                mMatch.setPosition(550, 450);
-                mMatch.update(topGroupData.getOperateType());
-                topGroupData.setOperateType(0);
+                mTopOperate.update(topGroupData.getOperateType());
+                // topGroupData.setOperateType(0);
             }
             mTopOuts.setOutMahjongs(topGroupData.getOutDatas());
         }
         if (leftGroupData != null) {
             if (leftGroupData.getOperateType() != 0) {
-                mMatch.setPosition(200, 340);
-                mMatch.update(leftGroupData.getOperateType());
-                leftGroupData.setOperateType(0);
+                mLeftOperate.update(leftGroupData.getOperateType());
+                // leftGroupData.setOperateType(0);
             }
             mLeftOuts.setOutMahjongs(leftGroupData.getOutDatas());
         }
         if (myGroupData != null) {
             if (myGroupData.getOperateType() != 0) {
-                mMatch.setPosition(550, 150);
-                mMatch.update(myGroupData.getOperateType());
-                myGroupData.setOperateType(0);
+                mMyOperate.update(myGroupData.getOperateType());
+                // myGroupData.setOperateType(0);
             }
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
         }

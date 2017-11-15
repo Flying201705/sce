@@ -6,11 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
-import com.nova.game.model.MahjGameController;
+import com.nova.game.utils.Log;
 
 import nova.common.game.mahjong.util.MahjConstant;
 
-public class Match extends Actor {
+public class Operate extends Actor {
     private Texture mPengImage;
     private Texture mGangImage;
     private Texture mChiImage;
@@ -20,7 +20,7 @@ public class Match extends Actor {
     private int mType;
     private boolean mIsTypeDisplay = false;
 
-    public Match() {
+    public Operate() {
         mPengImage = new Texture("Animation/eff_peng.png");
         mGangImage = new Texture("Animation/eff_gang.png");
         mChiImage = new Texture("Animation/eff_chi.png");
@@ -36,27 +36,26 @@ public class Match extends Actor {
             return;
         }
 
+        // 处理 mtype为 MAHJ_MATCH_TING | MAHJ_MATCH_GANG, type为MAHJ_MATCH_TING的情况
+        if ((mType & type) == type) {
+            mType = type;
+            return;
+        }
+
         if (!mIsTypeDisplay) {
             mIsTypeDisplay = true;
             mType = type;
-            switch (mType) {
-                case MahjConstant.MAHJ_MATCH_PENG:
-                    mImage = mPengImage;
-                    break;
-                case MahjConstant.MAHJ_MATCH_GANG:
-                    mImage = mGangImage;
-                    break;
-                case MahjConstant.MAHJ_MATCH_CHI:
-                    mImage = mChiImage;
-                    break;
-                case MahjConstant.MAHJ_MATCH_TING:
-                    mImage = mTingImage;
-                    break;
-                case MahjConstant.MAHJ_MATCH_HU:
-                    mImage = mHuImage;
-                    break;
-                default:
-                    break;
+
+            if ((mType & MahjConstant.MAHJ_MATCH_PENG) == MahjConstant.MAHJ_MATCH_PENG) {
+                mImage = mPengImage;
+            } else if ((mType & MahjConstant.MAHJ_MATCH_GANG) == MahjConstant.MAHJ_MATCH_GANG) {
+                mImage = mGangImage;
+            } else if ((mType & MahjConstant.MAHJ_MATCH_CHI) == MahjConstant.MAHJ_MATCH_CHI) {
+                mImage = mChiImage;
+            } else if ((mType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU) {
+                mImage = mHuImage;
+            } else if ((mType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
+                mImage = mTingImage;
             }
 
             clearActions();
@@ -77,12 +76,6 @@ public class Match extends Actor {
             batch.draw(mImage, getX(), getY(), getOriginX(), getOriginY(),
                     getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation(),
                     0, 0, mImage.getWidth(), mImage.getHeight(), false, false);
-        }
-
-        if (!mIsTypeDisplay && mType == MahjConstant.MAHJ_MATCH_TING) {
-            batch.draw(mTingImage, getX(), getY(), getOriginX(), getOriginY(),
-                    getWidth(), getHeight(), 0.2f, 0.2f, getRotation(),
-                    0, 0, mTingImage.getWidth(), mTingImage.getHeight(), false, false);
         }
     }
 }

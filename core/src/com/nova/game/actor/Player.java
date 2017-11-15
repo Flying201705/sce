@@ -23,7 +23,7 @@ public class Player extends Actor {
     private Texture mImage;
     private BitmapFont mFont;
     private TextureRegion[][] mGoldNums;
-
+    private boolean mIsTing;
     private String mName = "游客";
     private int mGold = 0;
 
@@ -36,8 +36,7 @@ public class Player extends Actor {
 
         mImage = Assets.getInstance().mDefaultHead[0];
         mFont = Assets.getInstance().getFont();
-
-        mGoldNums = TextureRegion.split(new Texture("Head/gold_img.png"), 15, 21);
+        mGoldNums = Assets.getInstance().mHeadGoldNums;
 
         if (mDirection == HORIZONTAL) {
             setSize(200, 90);
@@ -66,11 +65,18 @@ public class Player extends Actor {
         return mPlayerInfo;
     }
 
+    public void setTingFlag(boolean isTing) {
+        mIsTing = isTing;
+    }
+
     @Override
     public void draw(Batch batch, float parentAlpha) {
         if (mDirection == HORIZONTAL) {
             batch.draw(Assets.getInstance().mPlayerInfoBackground, getX(), getY(), getWidth(), getHeight());
             batch.draw(mImage, getX() + 5, getY() + 5, 80, 80);
+            if (mIsTing) {
+                batch.draw(Assets.getInstance().mHeadTingFlags[0], getX(), getY());
+            }
             mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX() + 90, getY() + 70);
@@ -78,6 +84,9 @@ public class Player extends Actor {
         } else {
             batch.draw(Assets.getInstance().mPlayerInfoBackground, getX(), getY(), getWidth(), getHeight());
             batch.draw(mImage, getX() + (getWidth() - 80) / 2, getY() + getHeight() - 80 - 5, 80, 80);
+            if (mIsTing) {
+                batch.draw(Assets.getInstance().mHeadTingFlags[1], getX() + (getWidth() - 80) / 2, getY() + getHeight() - 80 - 5);
+            }
             mFont.setColor(Color.GREEN);
             mFont.getData().setScale(0.65f);
             mFont.draw(batch, mName, getX() + 5, getY() + 40);

@@ -8,7 +8,7 @@ import com.nova.game.widget.SceButton;
 
 import nova.common.game.mahjong.util.MahjConstant;
 
-public class OperationButton extends HorizontalGroup {
+public class MatchButton extends HorizontalGroup {
     private int mMatchType = 0;
     private SceButton mPengButton;
     private SceButton mGangButton;
@@ -54,7 +54,7 @@ public class OperationButton extends HorizontalGroup {
         void operate(int type);
     }
 
-    public OperationButton() {
+    public MatchButton() {
         mPengButton = new SceButton("Animation/btn_peng.png");
         mGangButton = new SceButton("Animation/btn_gang.png");
         mChiButton = new SceButton("Animation/btn_chi.png");

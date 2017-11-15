@@ -48,6 +48,9 @@ public class GameRequestDispatcher {
         JsonObject json = new JsonObject();
         json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_GAME_START);
+        // ≤‚ ‘≥Ã–Ú
+        // json.addProperty("debug", 2);
+        // ≤‚ ‘≥Ã–Ú
         mChannel.sendMessage(GameCommand.MAHJ_TYPE_GAME, json.toString());
     }
 

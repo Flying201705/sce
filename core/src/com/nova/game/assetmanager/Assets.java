@@ -24,6 +24,8 @@ public class Assets {
     public TextureRegion[][] mMahjRemainNum;
     public Texture mBaseGameScreenBackground;
     public Texture[] mDefaultHead;
+    public Texture[] mHeadTingFlags;
+    public TextureRegion[][] mHeadGoldNums;
     public Texture mPlayerInfoBackground;
     public Texture mGameInfoBackground;
     public Texture mInfoMahjBackground;
@@ -74,6 +76,10 @@ public class Assets {
         mDefaultHead = new Texture[2];
         mDefaultHead[0] = new Texture("Head/Head0.png");
         mDefaultHead[1] = new Texture("Head/Head1.png");
+        mHeadTingFlags = new Texture[2];
+        mHeadTingFlags[0] = new Texture("Head/ting_horizontal.png");
+        mHeadTingFlags[1] = new Texture("Head/ting_vertical.png");
+        mHeadGoldNums = TextureRegion.split(new Texture("Head/gold_img.png"), 15, 21);
         mPlayerInfoBackground = new Texture("Head/player_info_background.png");
         mGameInfoBackground = new Texture("SceneGame/game_info_background.png");
         mInfoMahjBackground = new Texture("SceneGame/mahj_info_background.png");
