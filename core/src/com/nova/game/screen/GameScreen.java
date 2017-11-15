@@ -338,7 +338,7 @@ public class GameScreen extends BaseGameScreen {
 
         updateLatestOutMark();
 
-        mOperationButton.update(mController.getMatchType());
+        mMatchButton.update(mController.getMatchType());
     }
 
     private void updateLatestOutMark() {
