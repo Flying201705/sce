@@ -338,7 +338,12 @@ public class GameScreen extends BaseGameScreen {
 
         updateLatestOutMark();
 
-        mMatchButton.update(mController.getMatchType());
+        // 听牌之后不再显示听牌
+        if ((myGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
+            mMatchButton.update(mController.getMatchType() & 23);
+        } else {
+            mMatchButton.update(mController.getMatchType());
+        }
     }
 
     private void updateLatestOutMark() {
