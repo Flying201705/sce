@@ -30,9 +30,13 @@ public class RightOutMahjongs extends OutMahjongs {
             }
 
             mahjActor.setPosition(currX, currY);
-        }
 
-        mLatestX = currX;
-        mLatestY = currY;
+            if (i == mahjs.size() - 1) {
+                mLatestX = currX;
+                mLatestY = currY;
+                mLatestW = mahjActor.getWidth();
+                mLatestH = mahjActor.getHeight();
+            }
+        }
     }
 }

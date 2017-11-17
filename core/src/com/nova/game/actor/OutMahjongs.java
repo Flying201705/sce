@@ -10,7 +10,7 @@ import nova.common.game.mahjong.data.MahjData;
 public abstract class OutMahjongs extends Group {
     private ArrayList<MahjData> mOutMahjs;
     private LatestOutMahjongMark mLatestmahjongMark;
-    protected float mLatestX, mLatestY;
+    protected float mLatestX, mLatestY, mLatestW, mLatestH;
 
     public OutMahjongs() {
         mLatestmahjongMark = new LatestOutMahjongMark();
@@ -32,7 +32,11 @@ public abstract class OutMahjongs extends Group {
         mLatestmahjongMark.setVisible(show);
         if (show) {
             Log.i("liuhao", "setLatestOutMark x:" + mLatestX + "; y:" + mLatestY);
-            mLatestmahjongMark.setPosition(mLatestX, mLatestY);
+
+            float x = mLatestX + (mLatestW - mLatestmahjongMark.getWidth()) / 2;
+            float y = mLatestY + mLatestH / 2;
+
+            mLatestmahjongMark.setPosition(x, y);
             addActor(mLatestmahjongMark);
         }
     }

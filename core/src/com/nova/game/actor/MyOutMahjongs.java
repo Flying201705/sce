@@ -43,9 +43,13 @@ public class MyOutMahjongs extends OutMahjongs {
             mahjActor.setPosition(x, y);
             addActor(mahjActor);
             count++;
-        }
 
-        mLatestX = x;
-        mLatestY = y;
+            if (count == mahjs.size()) {
+                mLatestX = x;
+                mLatestY = y;
+                mLatestW = mahjActor.getWidth();
+                mLatestH = mahjActor.getHeight();
+            }
+        }
     }
 }

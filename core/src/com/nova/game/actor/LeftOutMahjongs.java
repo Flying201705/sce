@@ -29,9 +29,13 @@ public class LeftOutMahjongs extends OutMahjongs {
                 currY = getHeight() - (i - 14) * (mahjActor.getHeight() - offsetY);
             }
             mahjActor.setPosition(currX, currY);
-        }
 
-        mLatestX = currX;
-        mLatestY = currY;
+            if (i == mahjs.size() - 1) {
+                mLatestX = currX;
+                mLatestY = currY;
+                mLatestW = mahjActor.getWidth();
+                mLatestH = mahjActor.getHeight();
+            }
+        }
     }
 }

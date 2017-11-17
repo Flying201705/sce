@@ -28,9 +28,13 @@ public class TopOutMahjongs extends OutMahjongs {
             }
             mahjActor.setPosition(currX, currY);
             addActor(mahjActor);
-        }
 
-        mLatestX = currX + getOriginX();
-        mLatestY = currY;
+            if (i == mahjs.size() - 1) {
+                mLatestX = currX;
+                mLatestY = currY;
+                mLatestW = mahjActor.getWidth();
+                mLatestH = mahjActor.getHeight();
+            }
+        }
     }
 }
