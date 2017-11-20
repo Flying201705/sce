@@ -3,7 +3,9 @@ package com.nova.game.assetmanager;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.MusicLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -11,12 +13,13 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
+import com.nova.game.font.LazyBitmapFont;
 
 public class Assets {
     private static Assets mInstance;
     private AssetManager mAssetManager;
-    public FreeTypeFontGenerator mGeneratror;
-    private BitmapFont mFont;
+    private LazyBitmapFont mFont;
+
     // game screen resources
     private TextureRegion[][] mBigMahjTextureRegions;
     private TextureRegion[][] mMiddleMahjTextureRegions;
@@ -56,17 +59,8 @@ public class Assets {
     }
 
     private void loadFont() {
-        FileHandleResolver resolver = new InternalFileHandleResolver();
-        mAssetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));
-        mAssetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(resolver));
-
-        mGeneratror = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
-
-        FreeTypeFontLoaderParameter size1Params = new FreeTypeFontLoaderParameter();
-        size1Params.fontFileName = "Font/font.ttf";
-        size1Params.fontParameters.characters += "狠心离开再等一会退出游戏取消房间号聊天点击输入语音消息长按说话松结束发送倔强的电脑彼岸石浩在路上快点吧我等花儿都谢了大家好很高兴见到又断线网络怎么这差和你合作真是太愉们交个朋友能不告诉联系方式呀还吵有什专心玩要走决天亮各意思离开会再想念：";
-        size1Params.fontParameters.size = 30;
-        mAssetManager.load("size30.ttf", BitmapFont.class, size1Params);
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
+        mFont = new LazyBitmapFont(generator, 30);
     }
 
     private void updateGameScreenResources() {
@@ -116,14 +110,18 @@ public class Assets {
         }
     }
 
-    public BitmapFont getFont() {
-        return mAssetManager.get("size30.ttf");
+    public LazyBitmapFont getFont() {
+        return mFont;
     }
 
     public void clear() {
         if (mAssetManager != null) {
             mAssetManager.dispose();
             mAssetManager = null;
+        }
+
+        if (mFont != null) {
+            mFont.dispose();
         }
     }
 

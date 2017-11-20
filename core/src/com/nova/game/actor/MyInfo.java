@@ -3,12 +3,11 @@ package com.nova.game.actor;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator.FreeTypeFontParameter;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.nova.game.Constants;
 import com.nova.game.assetmanager.Assets;
+import com.nova.game.font.LazyBitmapFont;
 
 public class MyInfo extends Group {
     private Texture mHeadBg;
@@ -22,8 +21,7 @@ public class MyInfo extends Group {
     private String mGold;
     private String mCrystal;
 
-    private FreeTypeFontParameter mParameter;
-    private BitmapFont mFont;
+    private LazyBitmapFont mFont;
 
     public MyInfo() {
         mHeadBg = new Texture("Head/head_background.png");
@@ -35,9 +33,7 @@ public class MyInfo extends Group {
         mName = "游客";
         mGold = "0";
 
-        mParameter = new FreeTypeFontParameter();
-        mParameter.size = 36;
-        mFont = Assets.getInstance().mGeneratror.generateFont(mParameter);
+        mFont = Assets.getInstance().getFont();
     }
 
     public void setHeadImage(Texture headImage) {
@@ -56,9 +52,6 @@ public class MyInfo extends Group {
         }
 
         mName = name;
-
-        mParameter.characters += name;
-        mFont = Assets.getInstance().mGeneratror.generateFont(mParameter);
     }
 
     public void setGold(int gold) {

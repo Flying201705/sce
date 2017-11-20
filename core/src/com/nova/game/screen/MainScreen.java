@@ -1,6 +1,7 @@
 package com.nova.game.screen;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
@@ -9,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.nova.game.BaseGame;
@@ -16,6 +18,7 @@ import com.nova.game.BaseScreen;
 import com.nova.game.BaseStage;
 import com.nova.game.Constants;
 import com.nova.game.actor.MyInfo;
+import com.nova.game.assetmanager.Assets;
 import com.nova.game.dialog.JoinRoomDialog;
 import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjRoomController;
@@ -48,6 +51,15 @@ public class MainScreen extends BaseScreen {
         image.setPosition(50, 0);
         image.setScale(1.2f);
         mStage.addActor(image);
+
+        //测试字体
+        Label.LabelStyle style = new Label.LabelStyle();
+        style.font = Assets.getInstance().getFont();
+
+        Label label = new Label("我就随便打句话来测试这个汉字类好使不", style);
+        label.setPosition(100, 100);
+        label.setColor(Color.RED);
+        mStage.addActor(label);
 
         initTop();
         initMiddle();
@@ -116,8 +128,8 @@ public class MainScreen extends BaseScreen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                 mGame.setScreen(new GameScreen(mGame));
-//                mGame.setScreen(new NetMahjGameScreen(mGame));
+//                 mGame.setScreen(new GameScreen(mGame));
+                mGame.setScreen(new NetMahjGameScreen(mGame));
             }
         });
         startButton.setPosition(900, 450);
