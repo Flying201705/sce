@@ -55,6 +55,7 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
     private void updateGameData(MahjResponeData responeData) {
         MahjGameData gameData = new MahjGameData();
         gameData.setBanker(responeData.getBanker());
+        gameData.setWinner(responeData.getWinner());
         gameData.setCurrent(responeData.getCurrent());
         gameData.setLastout(responeData.getLastout());
         gameData.setGod(responeData.getGod());

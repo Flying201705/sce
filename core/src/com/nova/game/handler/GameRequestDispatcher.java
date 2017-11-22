@@ -49,7 +49,7 @@ public class GameRequestDispatcher {
         json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_GAME_START);
         // 测试程序
-        // json.addProperty("debug", 2);
+        // json.addProperty("debug", 4);
         // 测试程序
         mChannel.sendMessage(GameCommand.MAHJ_TYPE_GAME, json.toString());
     }
@@ -66,6 +66,14 @@ public class GameRequestDispatcher {
         JsonObject json = new JsonObject();
         json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
         json.addProperty("com", MahjGameCommand.REQUEST_GAME_STOP);
+        json.addProperty("room", room);
+        mChannel.sendMessage(GameCommand.MAHJ_TYPE_GAME, json.toString());
+    }
+
+    public void resumeGame(int room) {
+        JsonObject json = new JsonObject();
+        json.addProperty("player", PlayerInfoController.getInstance().getOwnerPlayerId());
+        json.addProperty("com", MahjGameCommand.REQUEST_GAME_RESUME);
         json.addProperty("room", room);
         mChannel.sendMessage(GameCommand.MAHJ_TYPE_GAME, json.toString());
     }

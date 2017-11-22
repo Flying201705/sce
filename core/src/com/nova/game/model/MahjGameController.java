@@ -1,5 +1,7 @@
 package com.nova.game.model;
 
+import com.nova.game.utils.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -52,7 +54,7 @@ public class MahjGameController {
 	}
 
 	public void resetDatas() {
-		mGameData.initDatas();
+		mGameData = new MahjGameData();
 		mGroupDatas.clear();
 		mMatchType = 0;
 		MahjRoomController.getInstance().resetDatas();
@@ -81,6 +83,10 @@ public class MahjGameController {
 
 	public int getBanker() {
 		return mGameData.getBanker();
+	}
+
+	public int getWinner() {
+		return mGameData.getWinner();
 	}
 	
 	public int getCurrentPlayer() {

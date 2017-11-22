@@ -19,7 +19,9 @@ import com.nova.game.BaseGame;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.actor.mahj.Mahjong;
+import com.nova.game.handler.GameRequestDispatcher;
 import com.nova.game.model.MahjGameController;
+import com.nova.game.model.MahjRoomController;
 import com.nova.game.model.PlayerInfoController;
 import com.nova.game.widget.SceButton;
 
@@ -59,7 +61,8 @@ public class GameScreen extends BaseGameScreen {
         @Override
         public void onAnimationFinished() {
             mIsDealt = true;
-            mStartBt.remove();
+            // mStartBt.remove();
+            mStartBt.setVisible(false);
         }
 
         @Override
@@ -110,13 +113,15 @@ public class GameScreen extends BaseGameScreen {
 
         mStartBt = new SceButton("SceneGame/bt_start.png");
         mStartBt.setPosition(540, 100);
+        mStartBt.setVisible(false);
         mStartBt.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                mTime.startTime();
+                // mTime.startTime();
+                new GameRequestDispatcher().resumeGame(MahjRoomController.getInstance().getRoomId());
             }
         });
-        // mStage.addActor(mStartBt);
+        mStage.addActor(mStartBt);
 
         initPlayer();
 
@@ -230,6 +235,13 @@ public class GameScreen extends BaseGameScreen {
 
     @Override
     public void render(float delta) {
+        // 测试程序开始
+        if (mController.getWinner() >= 0) {
+            mStartBt.setVisible(true);
+        } else {
+            mStartBt.setVisible(false);
+        }
+        // 测试程序结束
         updateGameInfo();
         updateTimeUint();
         updateMahjong();
