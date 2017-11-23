@@ -75,6 +75,7 @@ public class GameScreen extends BaseGameScreen {
         @Override
         public void handleOutData(int index) {
             mController.handleOutData(index);
+            A
         }
     };
 

@@ -2,17 +2,12 @@ package com.nova.game.assetmanager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.MusicLoader;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
-import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader.FreeTypeFontLoaderParameter;
+import com.badlogic.gdx.utils.Array;
 import com.nova.game.font.LazyBitmapFont;
 
 public class Assets {
@@ -40,6 +35,10 @@ public class Assets {
     public Texture mLeftDefaultMahjBackground;
     public Texture mRightDefaultMahjBackground;
 
+    private Music mBGM;
+    private Array<Sound> mSound;
+    private Array<Sound> mGSound;
+
     private Assets() {
         mAssetManager = new AssetManager();
     }
@@ -53,14 +52,77 @@ public class Assets {
 
     public void load() {
         loadFont();
+        loadMusic();
         updateGameScreenResources();
-
-//        mAssetManager.finishLoading();
     }
 
     private void loadFont() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("Font/font.ttf"));
         mFont = new LazyBitmapFont(generator, 30);
+    }
+
+    private void loadMusic() {
+        mBGM = Gdx.audio.newMusic(Gdx.files.internal("raw/g_backMusic.mp3"));
+        // 0万1条2筒3东4中5GOD
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8tiao")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9tiao")));
+
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8tong")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9tong")));
+
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8wan")));
+        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9wan")));
+
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8tiao")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9tiao")));
+
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8tong")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9tong")));
+
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8wan")));
+        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9wan")));
     }
 
     private void updateGameScreenResources() {
@@ -114,6 +176,14 @@ public class Assets {
         return mFont;
     }
 
+    public float getProgress() {
+        return mAssetManager.getProgress();
+    }
+
+    public boolean update() {
+        return mAssetManager.update();
+    }
+
     public void clear() {
         if (mAssetManager != null) {
             mAssetManager.dispose();
@@ -123,13 +193,19 @@ public class Assets {
         if (mFont != null) {
             mFont.dispose();
         }
+
+        mBGM.dispose();
+
+        for (Sound sound : mSound) {
+            sound.dispose();
+        }
+
+        for (Sound sound : mGSound) {
+            sound.dispose();
+        }
     }
 
-    public float getProgress() {
-        return mAssetManager.getProgress();
-    }
-
-    public boolean update() {
-        return mAssetManager.update();
+    public Music getBGM() {
+        return mBGM;
     }
 }
