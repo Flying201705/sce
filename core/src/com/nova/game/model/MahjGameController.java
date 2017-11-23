@@ -1,7 +1,5 @@
 package com.nova.game.model;
 
-import com.nova.game.utils.Log;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -153,7 +151,7 @@ public class MahjGameController {
 		}
 
         if (getCurrentPlayer() == ownerPlayerId) {
-			mMatchType |= mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
+			// mMatchType |= mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
 			MahjData latestData = mGroupDatas.get(ownerPlayerId).getLatestData();
 			if (latestData != null && latestData.getIndex() != 0) {
 				mMatchType |= mGroupDatas.get(ownerPlayerId).updateMatchTypeForGetMahj();
