@@ -39,7 +39,7 @@ public class MatchButton extends HorizontalGroup {
             } else if (actor == mHuButton) {
                 type = MahjConstant.MAHJ_MATCH_HU;
             } else if (actor == mGuoButton) {
-                type = 0;
+                type = MahjConstant.MAHJ_MATCH_GUO;
             }
 
             if (mButtonClickListener != null) {
