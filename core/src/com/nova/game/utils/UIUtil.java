@@ -74,6 +74,12 @@ public class UIUtil {
         }
         return windowStyle;
     }
+
+    public static WindowStyle getTransparentWindowStyle() {
+        WindowStyle windowStyle = new WindowStyle(Assets.getInstance().getFont(), Color.GOLD, null);
+        windowStyle.stageBackground = getTranslucentDrawable();
+        return windowStyle;
+    }
 	
     public static WindowStyle getDefaultWindowStyle(Drawable background) {
         WindowStyle windowStyle = new WindowStyle(Assets.getInstance().getFont(), Color.BLACK, background);

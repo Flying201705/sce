@@ -11,6 +11,10 @@ class MahjController implements MahjGameDispatcher {
 	public void startGame(int roomId) {
 
 	}
+
+	public void resumeGame(int roomId) {
+
+	}
 	
 	public void stopGame(int roomId) {
 		

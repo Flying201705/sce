@@ -61,6 +61,10 @@ public class MahjGameController {
 	public void startGame(int roomId) {
 		mManager.startGame(roomId);
 	}
+
+	public void resumeGame(int roomId) {
+		mManager.resumeGame(roomId);
+	}
 	
 	public void stopGame() {
 		mManager.stopGame(MahjRoomController.getInstance().getRoomId());

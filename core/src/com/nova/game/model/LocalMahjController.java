@@ -26,7 +26,13 @@ public class LocalMahjController extends MahjController {
 		room.setTestGameDelay(0);
 		room.startGame();
 	}
-	
+
+	@Override
+	public void resumeGame(int roomId) {
+		super.resumeGame(roomId);
+
+	}
+
 	@Override
 	public void activeOutData(int playerId, int data) {
 		super.activeOutData(playerId, data);

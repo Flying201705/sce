@@ -21,6 +21,14 @@ class NetMahjController extends MahjController {
     }
 
     @Override
+    public void resumeGame(int roomId) {
+        super.resumeGame(roomId);
+        if (roomId >= 0) {
+            mRequest.resumeGame(roomId);
+        }
+    }
+
+    @Override
     public void stopGame(int roomId) {
         super.stopGame(roomId);
         mRequest.stopGame(roomId);

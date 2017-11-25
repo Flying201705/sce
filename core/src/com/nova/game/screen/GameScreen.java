@@ -19,11 +19,10 @@ import com.nova.game.BaseGame;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.actor.mahj.Mahjong;
-import com.nova.game.handler.GameRequestDispatcher;
+import com.nova.game.dialog.GameEndDialog;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.model.MahjRoomController;
 import com.nova.game.model.PlayerInfoController;
-import com.nova.game.widget.SceButton;
 
 import java.util.HashMap;
 
@@ -34,7 +33,6 @@ import nova.common.room.data.PlayerInfo;
 public class GameScreen extends BaseGameScreen {
     // 游戏信息展示区域
     private GameInfo mGameInfo;
-    private SceButton mStartBt;
     private Player mMyPlayer;
     private Player mRightPlayer;
     private Player mTopPlayer;
@@ -52,6 +50,7 @@ public class GameScreen extends BaseGameScreen {
     private Operate mTopOperate;
     private Operate mLeftOperate;
     private MatchButton mMatchButton;
+    private GameEndDialog mEndDialog;
     private boolean mIsDealt = false;
     private int mLatestOutPlayer = -1;
 
@@ -61,8 +60,6 @@ public class GameScreen extends BaseGameScreen {
         @Override
         public void onAnimationFinished() {
             mIsDealt = true;
-            // mStartBt.remove();
-            mStartBt.setVisible(false);
         }
 
         @Override
@@ -75,7 +72,6 @@ public class GameScreen extends BaseGameScreen {
         @Override
         public void handleOutData(int index) {
             mController.handleOutData(index);
-            A
         }
     };
 
@@ -111,18 +107,6 @@ public class GameScreen extends BaseGameScreen {
 
         mTime.setTimeUnitListener(mTimeListener);
         mTime.startTime();
-
-        mStartBt = new SceButton("SceneGame/bt_start.png");
-        mStartBt.setPosition(540, 100);
-        mStartBt.setVisible(false);
-        mStartBt.addListener(new ClickListener() {
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                // mTime.startTime();
-                new GameRequestDispatcher().resumeGame(MahjRoomController.getInstance().getRoomId());
-            }
-        });
-        mStage.addActor(mStartBt);
 
         initPlayer();
 
@@ -176,6 +160,16 @@ public class GameScreen extends BaseGameScreen {
         mMatchButton.setBounds(0, 100, 1280, 200);
         mMatchButton.setButtonClickListener(mButtonClick);
         mStage.addActor(mMatchButton);
+
+        mEndDialog = new GameEndDialog();
+        mEndDialog.setVisible(false);
+        mEndDialog.setResumeButton(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mController.resumeGame(MahjRoomController.getInstance().getRoomId());
+            }
+        });
+        mStage.addActor(mEndDialog);
     }
 
     private void initPlayer() {
@@ -238,9 +232,10 @@ public class GameScreen extends BaseGameScreen {
     public void render(float delta) {
         // 测试程序开始
         if (mController.getWinner() >= 0) {
-            mStartBt.setVisible(true);
+            mEndDialog.setResult(getGameResultByWinner(mController.getWinner()));
+            mEndDialog.setVisible(true);
         } else {
-            mStartBt.setVisible(false);
+            mEndDialog.setVisible(false);
         }
         // 测试程序结束
         updateGameInfo();
@@ -414,5 +409,17 @@ public class GameScreen extends BaseGameScreen {
             playerId = playerId - 4;
         }
         return playerId;
+    }
+
+    private int getGameResultByWinner(int winner) {
+        if (winner > 4) {
+            return GameEndDialog.RESULT_DRAW;
+        }
+
+        if (winner == mController.getOwnerPlayerIndex()) {
+            return GameEndDialog.RESULT_WIN;
+        } else {
+            return GameEndDialog.RESULT_LOSE;
+        }
     }
 }
