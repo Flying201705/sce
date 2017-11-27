@@ -27,6 +27,7 @@ public class Assets {
     public Texture mPlayerInfoBackground;
     public Texture mGameInfoBackground;
     public Texture mInfoMahjBackground;
+    public Texture mCoverMahjBackground;
     public Texture mOwnerDefaultMahjBackground;
     public Texture mOwnerFlatMahjBackground;
     public Texture mVerticalFlatMahjBackground;
@@ -139,6 +140,7 @@ public class Assets {
         mPlayerInfoBackground = new Texture("Head/player_info_background.png");
         mGameInfoBackground = new Texture("SceneGame/game_info_background.png");
         mInfoMahjBackground = new Texture("SceneGame/mahj_info_background.png");
+        mCoverMahjBackground = new Texture("SceneGame/mahj_cover_bg.png");
         mOwnerDefaultMahjBackground = new Texture("SceneGame/mahj_me.png");
         mOwnerFlatMahjBackground = new Texture("SceneGame/mahj_flat_me.png");
         mVerticalFlatMahjBackground = new Texture("SceneGame/mahj_flat_vertical.png");

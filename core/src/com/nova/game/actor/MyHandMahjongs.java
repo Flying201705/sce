@@ -7,11 +7,10 @@ import com.nova.game.actor.mahj.Mahjong;
 import com.nova.game.actor.mahj.OwnerFlatMahjong;
 import com.nova.game.actor.mahj.OwnerMahjong;
 import com.nova.game.assetmanager.Assets;
-
 import java.util.ArrayList;
-
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.util.MahjConstant;
 
 public class MyHandMahjongs extends Group {
     private Assets mAssets;
@@ -36,6 +35,7 @@ public class MyHandMahjongs extends Group {
         mHands = new Group();
 
         mLastestMahj = new OwnerMahjong();
+        mLastestMahj.setCanOperate(true);
         mLastestMahj.setCanStandUp(true);
         mLastestMahj.setVisible(false);
 
@@ -76,9 +76,11 @@ public class MyHandMahjongs extends Group {
         setMatchMahjs(mahjGroupData.getMatchDatas());
         setHandMahjs(mahjGroupData.getDatas());
         setLastestMahjong(mahjGroupData.getLatestData());
+        boolean isCanOperate = (mahjGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) != MahjConstant.MAHJ_MATCH_TING;
+        updateCanOperateForMahj(isCanOperate);
     }
 
-    public void setMatchMahjs(ArrayList<MahjData> mahjs) {
+    private void setMatchMahjs(ArrayList<MahjData> mahjs) {
         if (isListMahjDataEqual(mahjs, mMactchMahjs)) {
             return;
         }
@@ -115,7 +117,7 @@ public class MyHandMahjongs extends Group {
 
     }
 
-    public void setHandMahjs(ArrayList<MahjData> mahjs) {
+    private void setHandMahjs(ArrayList<MahjData> mahjs) {
         if (isListMahjDataEqual(mahjs, mHandMahjs)) {
             return;
         }
@@ -136,7 +138,7 @@ public class MyHandMahjongs extends Group {
         }
     }
 
-    public void setLastestMahjong(MahjData mahjong) {
+    private void setLastestMahjong(MahjData mahjong) {
         if (mahjong != null && mahjong.getIndex() != 0) {
             mLastestMahj.setVisible(true);
             mLastestMahj.setMahjData(mahjong);
@@ -166,6 +168,20 @@ public class MyHandMahjongs extends Group {
     private void handleOutData(int index) {
         if (mCallback != null) {
             mCallback.handleOutData(index);
+        }
+    }
+
+    private void updateCanOperateForMahj(boolean isCanOperate) {
+        for (Actor actor : mMatchs.getChildren()) {
+            if (actor instanceof Mahjong) {
+                ((Mahjong) actor).setCanOperate(isCanOperate);
+            }
+        }
+
+        for (Actor actor : mHands.getChildren()) {
+            if (actor instanceof Mahjong) {
+                ((Mahjong) actor).setCanOperate(isCanOperate);
+            }
         }
     }
 

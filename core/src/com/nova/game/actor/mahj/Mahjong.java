@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.nova.game.assetmanager.Assets;
-
 import nova.common.game.mahjong.data.MahjData;
 
 /**
@@ -26,6 +25,7 @@ public class Mahjong extends Actor {
     public static final int MAHJ_DIRECTION_RIGHT = 1;
 
     private MahjData mMahjData;
+    private boolean mIsCanOperate = true;
     private boolean mIsCanStandUp = false;
     private boolean mIsStandUp = false;
 
@@ -87,18 +87,23 @@ public class Mahjong extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
-        if (mIsCanStandUp && mIsStandUp) {
+        if (mIsCanOperate && mIsCanStandUp && mIsStandUp) {
             batch.draw(mBackground, getX(), getY() + 30);
         } else {
             batch.draw(mBackground, getX(), getY());
         }
+
         if (mMahjSprite != null) {
-            if (mIsCanStandUp && mIsStandUp) {
+            if (mIsCanOperate && mIsCanStandUp && mIsStandUp) {
                 mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY() + 30);
             } else {
                 mMahjSprite.setPosition(getX() + getOffsetX(), getY() + getOffsetY());
             }
             mMahjSprite.draw(batch);
+        }
+
+        if (!mIsCanOperate) {
+            batch.draw(Assets.getInstance().mCoverMahjBackground, getX(), getY(), getWidth(), getHeight());
         }
     }
 
@@ -122,6 +127,14 @@ public class Mahjong extends Actor {
         }
 
         return 0;
+    }
+
+    public void setCanOperate(boolean canOperate) {
+        mIsCanOperate = canOperate;
+    }
+
+    public boolean isCanOperate() {
+        return mIsCanOperate;
     }
 
     public void setCanStandUp(boolean canStandUp) {

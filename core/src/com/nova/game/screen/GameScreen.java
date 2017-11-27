@@ -258,7 +258,7 @@ public class GameScreen extends BaseGameScreen {
         Actor actor = mStage.hit(tmp.x, tmp.y, true);
         if (actor instanceof Mahjong) {
             Mahjong mahjActor = (Mahjong) actor;
-            if (mahjActor.isCanStandUp()) {
+            if (mahjActor.isCanOperate() && mahjActor.isCanStandUp()) {
                 if (mahjActor.isStandUp()) {
                     mController.handleOutData((mahjActor.getMahjData().getIndex()));
                 } else {
