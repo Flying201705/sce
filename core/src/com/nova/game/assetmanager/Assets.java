@@ -10,6 +10,9 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.utils.Array;
 import com.nova.game.font.LazyBitmapFont;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Assets {
     private static Assets mInstance;
     private AssetManager mAssetManager;
@@ -37,12 +40,8 @@ public class Assets {
     public Texture mRightDefaultMahjBackground;
 
     private Music mBGM;
-    private Array<Sound> mSound = new Array<Sound>();
-    private Array<Sound> mGSound = new Array<Sound>();
-
-    private Assets() {
-        mAssetManager = new AssetManager();
-    }
+    private Map<Integer, Sound> mSound = new HashMap<Integer, Sound>();
+    private Map<Integer, Sound> mGSound = new HashMap<Integer, Sound>();
 
     public static Assets getInstance() {
         if (mInstance == null) {
@@ -52,6 +51,10 @@ public class Assets {
     }
 
     public void load() {
+        if (mAssetManager == null) {
+            mAssetManager = new AssetManager();
+        }
+
         loadFont();
         loadMusic();
         updateGameScreenResources();
@@ -64,66 +67,66 @@ public class Assets {
 
     private void loadMusic() {
         mBGM = Gdx.audio.newMusic(Gdx.files.internal("raw/backMusic.mp3"));
-        // 0万1条2筒3东4中5GOD
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/1tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/2tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/3tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/4tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/5tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/6tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/7tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/8tiao.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/9tiao.mp3")));
+        // 0万1筒2条3东4中5GOD
+        mSound.put(1, Gdx.audio.newSound(Gdx.files.internal("raw/1wan.mp3")));
+        mSound.put(2, Gdx.audio.newSound(Gdx.files.internal("raw/2wan.mp3")));
+        mSound.put(3, Gdx.audio.newSound(Gdx.files.internal("raw/3wan.mp3")));
+        mSound.put(4, Gdx.audio.newSound(Gdx.files.internal("raw/4wan.mp3")));
+        mSound.put(5, Gdx.audio.newSound(Gdx.files.internal("raw/5wan.mp3")));
+        mSound.put(6, Gdx.audio.newSound(Gdx.files.internal("raw/6wan.mp3")));
+        mSound.put(7, Gdx.audio.newSound(Gdx.files.internal("raw/7wan.mp3")));
+        mSound.put(8, Gdx.audio.newSound(Gdx.files.internal("raw/8wan.mp3")));
+        mSound.put(9, Gdx.audio.newSound(Gdx.files.internal("raw/9wan.mp3")));
 
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/1tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/2tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/3tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/4tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/5tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/6tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/7tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/8tong.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/9tong.mp3")));
+        mSound.put(11, Gdx.audio.newSound(Gdx.files.internal("raw/1tong.mp3")));
+        mSound.put(12, Gdx.audio.newSound(Gdx.files.internal("raw/2tong.mp3")));
+        mSound.put(13, Gdx.audio.newSound(Gdx.files.internal("raw/3tong.mp3")));
+        mSound.put(14, Gdx.audio.newSound(Gdx.files.internal("raw/4tong.mp3")));
+        mSound.put(15, Gdx.audio.newSound(Gdx.files.internal("raw/5tong.mp3")));
+        mSound.put(16, Gdx.audio.newSound(Gdx.files.internal("raw/6tong.mp3")));
+        mSound.put(17, Gdx.audio.newSound(Gdx.files.internal("raw/7tong.mp3")));
+        mSound.put(18, Gdx.audio.newSound(Gdx.files.internal("raw/8tong.mp3")));
+        mSound.put(19, Gdx.audio.newSound(Gdx.files.internal("raw/9tong.mp3")));
 
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/1wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/2wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/3wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/4wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/5wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/6wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/7wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/8wan.mp3")));
-        mSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/9wan.mp3")));
+        mSound.put(21, Gdx.audio.newSound(Gdx.files.internal("raw/1tiao.mp3")));
+        mSound.put(22, Gdx.audio.newSound(Gdx.files.internal("raw/2tiao.mp3")));
+        mSound.put(23, Gdx.audio.newSound(Gdx.files.internal("raw/3tiao.mp3")));
+        mSound.put(24, Gdx.audio.newSound(Gdx.files.internal("raw/4tiao.mp3")));
+        mSound.put(25, Gdx.audio.newSound(Gdx.files.internal("raw/5tiao.mp3")));
+        mSound.put(26, Gdx.audio.newSound(Gdx.files.internal("raw/6tiao.mp3")));
+        mSound.put(27, Gdx.audio.newSound(Gdx.files.internal("raw/7tiao.mp3")));
+        mSound.put(28, Gdx.audio.newSound(Gdx.files.internal("raw/8tiao.mp3")));
+        mSound.put(29, Gdx.audio.newSound(Gdx.files.internal("raw/9tiao.mp3")));
 
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8tiao.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9tiao.mp3")));
+        mGSound.put(1, Gdx.audio.newSound(Gdx.files.internal("raw/g_1wan.mp3")));
+        mGSound.put(2, Gdx.audio.newSound(Gdx.files.internal("raw/g_2wan.mp3")));
+        mGSound.put(3, Gdx.audio.newSound(Gdx.files.internal("raw/g_3wan.mp3")));
+        mGSound.put(4, Gdx.audio.newSound(Gdx.files.internal("raw/g_4wan.mp3")));
+        mGSound.put(5, Gdx.audio.newSound(Gdx.files.internal("raw/g_5wan.mp3")));
+        mGSound.put(6, Gdx.audio.newSound(Gdx.files.internal("raw/g_6wan.mp3")));
+        mGSound.put(7, Gdx.audio.newSound(Gdx.files.internal("raw/g_7wan.mp3")));
+        mGSound.put(8, Gdx.audio.newSound(Gdx.files.internal("raw/g_8wan.mp3")));
+        mGSound.put(9, Gdx.audio.newSound(Gdx.files.internal("raw/g_9wan.mp3")));
 
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8tong.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9tong.mp3")));
+        mGSound.put(11, Gdx.audio.newSound(Gdx.files.internal("raw/g_1tong.mp3")));
+        mGSound.put(12, Gdx.audio.newSound(Gdx.files.internal("raw/g_2tong.mp3")));
+        mGSound.put(13, Gdx.audio.newSound(Gdx.files.internal("raw/g_3tong.mp3")));
+        mGSound.put(14, Gdx.audio.newSound(Gdx.files.internal("raw/g_4tong.mp3")));
+        mGSound.put(15, Gdx.audio.newSound(Gdx.files.internal("raw/g_5tong.mp3")));
+        mGSound.put(16, Gdx.audio.newSound(Gdx.files.internal("raw/g_6tong.mp3")));
+        mGSound.put(17, Gdx.audio.newSound(Gdx.files.internal("raw/g_7tong.mp3")));
+        mGSound.put(18, Gdx.audio.newSound(Gdx.files.internal("raw/g_8tong.mp3")));
+        mGSound.put(19, Gdx.audio.newSound(Gdx.files.internal("raw/g_9tong.mp3")));
 
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_1wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_2wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_3wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_4wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_5wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_6wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_7wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_8wan.mp3")));
-        mGSound.add(Gdx.audio.newSound(Gdx.files.internal("raw/g_9wan.mp3")));
+        mGSound.put(21, Gdx.audio.newSound(Gdx.files.internal("raw/g_1tiao.mp3")));
+        mGSound.put(22, Gdx.audio.newSound(Gdx.files.internal("raw/g_2tiao.mp3")));
+        mGSound.put(23, Gdx.audio.newSound(Gdx.files.internal("raw/g_3tiao.mp3")));
+        mGSound.put(24, Gdx.audio.newSound(Gdx.files.internal("raw/g_4tiao.mp3")));
+        mGSound.put(25, Gdx.audio.newSound(Gdx.files.internal("raw/g_5tiao.mp3")));
+        mGSound.put(26, Gdx.audio.newSound(Gdx.files.internal("raw/g_6tiao.mp3")));
+        mGSound.put(27, Gdx.audio.newSound(Gdx.files.internal("raw/g_7tiao.mp3")));
+        mGSound.put(28, Gdx.audio.newSound(Gdx.files.internal("raw/g_8tiao.mp3")));
+        mGSound.put(29, Gdx.audio.newSound(Gdx.files.internal("raw/g_9tiao.mp3")));
     }
 
     private void updateGameScreenResources() {
@@ -178,6 +181,14 @@ public class Assets {
         return mFont;
     }
 
+    public Music getBGM() {
+        return mBGM;
+    }
+
+    public Sound getMajongSound(boolean male, int inedx) {
+        return male ? mSound.get(inedx) : mGSound.get(inedx);
+    }
+
     public float getProgress() {
         return mAssetManager.getProgress();
     }
@@ -198,16 +209,19 @@ public class Assets {
 
         mBGM.dispose();
 
-        for (Sound sound : mSound) {
-            sound.dispose();
+        for (int i = 0; i < mSound.size(); i++) {
+            Sound sound = mSound.get(i);
+            if (sound != null) {
+                sound.dispose();
+            }
         }
 
-        for (Sound sound : mGSound) {
-            sound.dispose();
+        for (int j = 0; j < mGSound.size(); j++) {
+            Sound sound = mGSound.get(j);
+            if (sound != null) {
+                sound.dispose();
+            }
         }
-    }
 
-    public Music getBGM() {
-        return mBGM;
     }
 }

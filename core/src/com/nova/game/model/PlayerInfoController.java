@@ -174,4 +174,8 @@ public class PlayerInfoController {
             Log.e(TAG, e.toString());
         }
     }
+
+    public int getPlayerSex(int id) {
+        return mPlayerCaches.get(id).getSex();
+    }
 }

@@ -1,5 +1,6 @@
 package com.nova.game.screen;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -19,6 +20,7 @@ import com.nova.game.BaseGame;
 import com.nova.game.actor.TopHandMahjongs;
 import com.nova.game.actor.TopOutMahjongs;
 import com.nova.game.actor.mahj.Mahjong;
+import com.nova.game.assetmanager.Assets;
 import com.nova.game.dialog.GameEndDialog;
 import com.nova.game.model.MahjGameController;
 import com.nova.game.model.MahjRoomController;

@@ -44,6 +44,8 @@ public class MainScreen extends BaseScreen {
         Gdx.input.setInputProcessor(mStage);
         Gdx.input.setCatchBackKey(true);
 
+        Assets.getInstance().getBGM().play();
+
         mBatch = new SpriteBatch();
         mBg = new Texture("SceneMain/background.jpg");
 
@@ -67,12 +69,12 @@ public class MainScreen extends BaseScreen {
 
     @Override
     public void resume() {
-//        Assets.getInstance().getBGM().play();
+        Assets.getInstance().getBGM().play();
     }
 
     @Override
     public void pause() {
-//        Assets.getInstance().getBGM().pause();
+        Assets.getInstance().getBGM().pause();
     }
 
     @Override
