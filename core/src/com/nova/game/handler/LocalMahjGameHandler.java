@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.nova.game.model.MahjGameController;
+import com.nova.game.model.MahjRoomController;
 
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
@@ -11,8 +12,10 @@ import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.game.mahjong.data.MahjResponeData;
 import nova.common.game.mahjong.data.MahjResponeResolver;
 import nova.common.game.mahjong.handler.MahjGameHandler;
+import nova.common.room.data.PlayerInfo;
+import nova.common.room.handler.RoomHandler;
 
-public class LocalMahjGameHandler implements MahjGameHandler {
+public class LocalMahjGameHandler implements MahjGameHandler, RoomHandler {
 
 	@Override
 	public void onGameInfoChange(int roomId, MahjResponeData responeData) {
@@ -37,5 +40,10 @@ public class LocalMahjGameHandler implements MahjGameHandler {
 	
 	private void updateGroupDatas(HashMap<Integer, MahjGroupData> groupDatas) {
 		MahjGameController.getInstance().setGroupDatas(groupDatas);
+	}
+
+	@Override
+	public void onRoomInfoChange(int roomId, HashMap<Integer, PlayerInfo> playerInfos) {
+		MahjRoomController.getInstance().setPlayerInfos(playerInfos);
 	}
 }
