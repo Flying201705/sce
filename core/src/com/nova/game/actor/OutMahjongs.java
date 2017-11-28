@@ -1,8 +1,7 @@
 package com.nova.game.actor;
 
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Group;
-import com.nova.game.utils.Log;
-
 import java.util.ArrayList;
 
 import nova.common.game.mahjong.data.MahjData;
@@ -11,10 +10,10 @@ public abstract class OutMahjongs extends Group {
     private ArrayList<MahjData> mOutMahjs;
     private LatestOutMahjongMark mLatestmahjongMark;
     protected float mLatestX, mLatestY, mLatestW, mLatestH;
+    private boolean mLastOutMarkShow = false;
 
     public OutMahjongs() {
         mLatestmahjongMark = new LatestOutMahjongMark();
-        mLatestmahjongMark.setVisible(false);
     }
 
     public void setOutMahjongs(ArrayList<MahjData> mahjs) {
@@ -29,15 +28,18 @@ public abstract class OutMahjongs extends Group {
     protected abstract void updateOutMahjongs(ArrayList<MahjData> mahjs);
 
     public void setLatestOutMark(boolean show) {
-        mLatestmahjongMark.setVisible(show);
-        if (show) {
-            Log.i("liuhao", "setLatestOutMark x:" + mLatestX + "; y:" + mLatestY);
+        mLastOutMarkShow = show;
+    }
 
-            float x = mLatestX + (mLatestW - mLatestmahjongMark.getWidth()) / 2;
-            float y = mLatestY + mLatestH / 2;
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
 
+        if (mLastOutMarkShow) {
+            float x = getX() + mLatestX + (mLatestW - mLatestmahjongMark.getWidth()) / 2;
+            float y = getY() + mLatestY + mLatestH / 2;
             mLatestmahjongMark.setPosition(x, y);
-            addActor(mLatestmahjongMark);
+            mLatestmahjongMark.draw(batch, parentAlpha);
         }
     }
 }

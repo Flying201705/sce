@@ -385,6 +385,10 @@ public class GameScreen extends BaseGameScreen {
                     mLeftOuts.setLatestOutMark(true);
                     break;
                 default:
+                    mMyOuts.setLatestOutMark(false);
+                    mRightOuts.setLatestOutMark(false);
+                    mTopOuts.setLatestOutMark(false);
+                    mLeftOuts.setLatestOutMark(false);
                     break;
             }
         }
