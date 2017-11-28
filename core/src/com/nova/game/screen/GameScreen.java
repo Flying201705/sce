@@ -346,7 +346,11 @@ public class GameScreen extends BaseGameScreen {
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
         }
 
-        updateLatestOutMark();
+        if (mLatestOutPlayer != mController.getLastOutPlayer()) {
+            mLatestOutPlayer = mController.getLastOutPlayer();
+            updateLatestOutMark();
+            playLatestOutSound(playerDatas);
+        }
 
         // 听牌之后不再显示听牌
         if ((myGroupData.getOperateType() & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
@@ -357,40 +361,54 @@ public class GameScreen extends BaseGameScreen {
     }
 
     private void updateLatestOutMark() {
-        if (mLatestOutPlayer != mController.getLastOutPlayer()) {
-            mLatestOutPlayer = mController.getLastOutPlayer();
-            switch (mLatestOutPlayer) {
-                case 0:
-                    mMyOuts.setLatestOutMark(true);
-                    mRightOuts.setLatestOutMark(false);
-                    mTopOuts.setLatestOutMark(false);
-                    mLeftOuts.setLatestOutMark(false);
-                    break;
-                case 1:
-                    mMyOuts.setLatestOutMark(false);
-                    mRightOuts.setLatestOutMark(true);
-                    mTopOuts.setLatestOutMark(false);
-                    mLeftOuts.setLatestOutMark(false);
-                    break;
-                case 2:
-                    mMyOuts.setLatestOutMark(false);
-                    mRightOuts.setLatestOutMark(false);
-                    mTopOuts.setLatestOutMark(true);
-                    mLeftOuts.setLatestOutMark(false);
-                    break;
-                case 3:
-                    mMyOuts.setLatestOutMark(false);
-                    mRightOuts.setLatestOutMark(false);
-                    mTopOuts.setLatestOutMark(false);
-                    mLeftOuts.setLatestOutMark(true);
-                    break;
-                default:
-                    mMyOuts.setLatestOutMark(false);
-                    mRightOuts.setLatestOutMark(false);
-                    mTopOuts.setLatestOutMark(false);
-                    mLeftOuts.setLatestOutMark(false);
-                    break;
-            }
+        switch (mLatestOutPlayer) {
+            case 0:
+                mMyOuts.setLatestOutMark(true);
+                mRightOuts.setLatestOutMark(false);
+                mTopOuts.setLatestOutMark(false);
+                mLeftOuts.setLatestOutMark(false);
+                break;
+            case 1:
+                mMyOuts.setLatestOutMark(false);
+                mRightOuts.setLatestOutMark(true);
+                mTopOuts.setLatestOutMark(false);
+                mLeftOuts.setLatestOutMark(false);
+                break;
+            case 2:
+                mMyOuts.setLatestOutMark(false);
+                mRightOuts.setLatestOutMark(false);
+                mTopOuts.setLatestOutMark(true);
+                mLeftOuts.setLatestOutMark(false);
+                break;
+            case 3:
+                mMyOuts.setLatestOutMark(false);
+                mRightOuts.setLatestOutMark(false);
+                mTopOuts.setLatestOutMark(false);
+                mLeftOuts.setLatestOutMark(true);
+                break;
+            default:
+                mMyOuts.setLatestOutMark(false);
+                mRightOuts.setLatestOutMark(false);
+                mTopOuts.setLatestOutMark(false);
+                mLeftOuts.setLatestOutMark(false);
+                break;
+        }
+    }
+
+    private void playLatestOutSound(HashMap<Integer, MahjGroupData> playerDatas) {
+        MahjGroupData groupData = playerDatas.get(mController.getLastOutPlayer());
+        if (groupData == null || groupData.getOutDatas().size() <= 0) {
+            return;
+        }
+
+        PlayerInfo playerInfo = mController.getPlayerInfos().get(mLatestOutPlayer);
+        boolean male = true;
+        if (playerInfo != null) {
+            male = playerInfo.getSex() > 0;
+        }
+        Sound sound = Assets.getInstance().getMajongSound(male, groupData.getLastOutData().getIndex());
+        if (sound != null) {
+            sound.play();
         }
     }
 

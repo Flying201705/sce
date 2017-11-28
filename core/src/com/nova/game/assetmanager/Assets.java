@@ -68,6 +68,7 @@ public class Assets {
 
     private void loadMusic() {
         mBGM = Gdx.audio.newMusic(Gdx.files.internal("raw/backMusic.mp3"));
+        mBGM.setLooping(true);
         // 0万1筒2条3东4中5GOD
         mSound.put(1, Gdx.audio.newSound(Gdx.files.internal("raw/1wan.mp3")));
         mSound.put(2, Gdx.audio.newSound(Gdx.files.internal("raw/2wan.mp3")));
@@ -188,8 +189,8 @@ public class Assets {
         return mBGM;
     }
 
-    public Sound getMajongSound(boolean male, int inedx) {
-        return male ? mSound.get(inedx) : mGSound.get(inedx);
+    public Sound getMajongSound(boolean male, int index) {
+        return male ? mSound.get(index) : mGSound.get(index);
     }
 
     public float getProgress() {
