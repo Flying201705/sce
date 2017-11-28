@@ -15,7 +15,7 @@ import nova.common.game.mahjong.data.MahjData;
 public class Mahjong extends Actor {
 
     private Texture mBackground;
-    private Sprite mMahjSprite;
+    private MahjongCard mMahjSprite;
 
     public static final int MAHJ_TYPE_SMALL = 0;
     public static final int MAHJ_TYPE_MIDDLE = 1;
@@ -52,7 +52,7 @@ public class Mahjong extends Actor {
         }
 
         if (index > 0) {
-            mMahjSprite = new Sprite(getMahj(index));
+            mMahjSprite = new MahjongCard(index, getMahj(index));
         }
 
         setSize(mBackground.getWidth(), mBackground.getHeight());
@@ -102,8 +102,11 @@ public class Mahjong extends Actor {
             mMahjSprite.draw(batch);
         }
 
+        // draw灰层或者选中层
         if (!mIsCanOperate) {
-            batch.draw(Assets.getInstance().mCoverMahjBackground, getX(), getY(), getWidth(), getHeight());
+            batch.draw(Assets.getInstance().mMahjDisableCover, getX(), getY(), getWidth(), getHeight());
+        } else if (mIsCanStandUp && mIsStandUp) {
+            batch.draw(Assets.getInstance().mMahjStandUpCover, getX(), getY() + 30, getWidth(), getHeight());
         }
     }
 
@@ -156,7 +159,7 @@ public class Mahjong extends Actor {
     public void setMahjData(MahjData mahjData) {
         if (mMahjData != mahjData) {
             mMahjData = mahjData;
-            mMahjSprite = new Sprite(getMahj(mMahjData.getIndex()));
+            mMahjSprite = new MahjongCard(mMahjData.getIndex(), getMahj(mMahjData.getIndex()));
         }
     }
 

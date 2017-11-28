@@ -7,7 +7,6 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
-import com.badlogic.gdx.utils.Array;
 import com.nova.game.font.LazyBitmapFont;
 
 import java.util.HashMap;
@@ -30,7 +29,9 @@ public class Assets {
     public Texture mPlayerInfoBackground;
     public Texture mGameInfoBackground;
     public Texture mInfoMahjBackground;
-    public Texture mCoverMahjBackground;
+    public Texture mMahjDisableCover;
+    public Texture mMahjStandUpCover;
+    public Texture mGodMahjCorner;
     public Texture mOwnerDefaultMahjBackground;
     public Texture mOwnerFlatMahjBackground;
     public Texture mVerticalFlatMahjBackground;
@@ -143,7 +144,9 @@ public class Assets {
         mPlayerInfoBackground = new Texture("Head/player_info_background.png");
         mGameInfoBackground = new Texture("SceneGame/game_info_background.png");
         mInfoMahjBackground = new Texture("SceneGame/mahj_info_background.png");
-        mCoverMahjBackground = new Texture("SceneGame/mahj_cover_bg.png");
+        mMahjDisableCover = new Texture("SceneGame/mahj_cover_disable.png");
+        mMahjStandUpCover = new Texture("SceneGame/mahj_cover_select.png");
+        mGodMahjCorner = new Texture("SceneGame/mahj_god_corner.png");
         mOwnerDefaultMahjBackground = new Texture("SceneGame/mahj_me.png");
         mOwnerFlatMahjBackground = new Texture("SceneGame/mahj_flat_me.png");
         mVerticalFlatMahjBackground = new Texture("SceneGame/mahj_flat_vertical.png");
