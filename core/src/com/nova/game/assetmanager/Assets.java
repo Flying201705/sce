@@ -12,6 +12,8 @@ import com.nova.game.font.LazyBitmapFont;
 import java.util.HashMap;
 import java.util.Map;
 
+import nova.common.game.mahjong.util.MahjConstant;
+
 public class Assets {
     private static Assets mInstance;
     private AssetManager mAssetManager;
@@ -43,6 +45,9 @@ public class Assets {
     private Music mBGM;
     private Map<Integer, Sound> mSound = new HashMap<Integer, Sound>();
     private Map<Integer, Sound> mGSound = new HashMap<Integer, Sound>();
+    private Map<Integer, Sound> mOperateSound = new HashMap<Integer, Sound>();
+    private Map<Integer, Sound> mGOperateSound = new HashMap<Integer, Sound>();
+
 
     public static Assets getInstance() {
         if (mInstance == null) {
@@ -100,6 +105,15 @@ public class Assets {
         mSound.put(28, Gdx.audio.newSound(Gdx.files.internal("raw/8tiao.mp3")));
         mSound.put(29, Gdx.audio.newSound(Gdx.files.internal("raw/9tiao.mp3")));
 
+        mSound.put(31, Gdx.audio.newSound(Gdx.files.internal("raw/dongfeng.mp3")));
+        mSound.put(32, Gdx.audio.newSound(Gdx.files.internal("raw/nanfeng.mp3")));
+        mSound.put(33, Gdx.audio.newSound(Gdx.files.internal("raw/xifeng.mp3")));
+        mSound.put(34, Gdx.audio.newSound(Gdx.files.internal("raw/beifeng.mp3")));
+
+        mSound.put(41, Gdx.audio.newSound(Gdx.files.internal("raw/zhong.mp3")));
+        mSound.put(42, Gdx.audio.newSound(Gdx.files.internal("raw/fa.mp3")));
+        mSound.put(43, Gdx.audio.newSound(Gdx.files.internal("raw/bai.mp3")));
+
         mGSound.put(1, Gdx.audio.newSound(Gdx.files.internal("raw/g_1wan.mp3")));
         mGSound.put(2, Gdx.audio.newSound(Gdx.files.internal("raw/g_2wan.mp3")));
         mGSound.put(3, Gdx.audio.newSound(Gdx.files.internal("raw/g_3wan.mp3")));
@@ -129,6 +143,27 @@ public class Assets {
         mGSound.put(27, Gdx.audio.newSound(Gdx.files.internal("raw/g_7tiao.mp3")));
         mGSound.put(28, Gdx.audio.newSound(Gdx.files.internal("raw/g_8tiao.mp3")));
         mGSound.put(29, Gdx.audio.newSound(Gdx.files.internal("raw/g_9tiao.mp3")));
+
+        mGSound.put(31, Gdx.audio.newSound(Gdx.files.internal("raw/g_dongfeng.mp3")));
+        mGSound.put(32, Gdx.audio.newSound(Gdx.files.internal("raw/g_nanfeng.mp3")));
+        mGSound.put(33, Gdx.audio.newSound(Gdx.files.internal("raw/g_xifeng.mp3")));
+        mGSound.put(34, Gdx.audio.newSound(Gdx.files.internal("raw/g_beifeng.mp3")));
+
+        mGSound.put(41, Gdx.audio.newSound(Gdx.files.internal("raw/g_zhong.mp3")));
+        mGSound.put(42, Gdx.audio.newSound(Gdx.files.internal("raw/g_fa.mp3")));
+        mGSound.put(43, Gdx.audio.newSound(Gdx.files.internal("raw/g_bai.mp3")));
+
+        mOperateSound.put(MahjConstant.MAHJ_MATCH_CHI, Gdx.audio.newSound(Gdx.files.internal("raw/chi.mp3")));
+        mOperateSound.put(MahjConstant.MAHJ_MATCH_PENG, Gdx.audio.newSound(Gdx.files.internal("raw/peng.mp3")));
+        mOperateSound.put(MahjConstant.MAHJ_MATCH_GANG, Gdx.audio.newSound(Gdx.files.internal("raw/gang.mp3")));
+        mOperateSound.put(MahjConstant.MAHJ_MATCH_TING, Gdx.audio.newSound(Gdx.files.internal("raw/ting.mp3")));
+        mOperateSound.put(MahjConstant.MAHJ_MATCH_HU, Gdx.audio.newSound(Gdx.files.internal("raw/hu.mp3")));
+
+        mGOperateSound.put(MahjConstant.MAHJ_MATCH_CHI, Gdx.audio.newSound(Gdx.files.internal("raw/g_chi.mp3")));
+        mGOperateSound.put(MahjConstant.MAHJ_MATCH_PENG, Gdx.audio.newSound(Gdx.files.internal("raw/g_peng.mp3")));
+        mGOperateSound.put(MahjConstant.MAHJ_MATCH_GANG, Gdx.audio.newSound(Gdx.files.internal("raw/g_gang.mp3")));
+        mGOperateSound.put(MahjConstant.MAHJ_MATCH_TING, Gdx.audio.newSound(Gdx.files.internal("raw/g_ting.mp3")));
+        mGOperateSound.put(MahjConstant.MAHJ_MATCH_HU, Gdx.audio.newSound(Gdx.files.internal("raw/g_hu.mp3")));
     }
 
     private void updateGameScreenResources() {
@@ -191,6 +226,10 @@ public class Assets {
 
     public Sound getMajongSound(boolean male, int index) {
         return male ? mSound.get(index) : mGSound.get(index);
+    }
+
+    public Sound getOperateSound(boolean male, int index) {
+        return male ? mOperateSound.get(index) : mGOperateSound.get(index);
     }
 
     public float getProgress() {

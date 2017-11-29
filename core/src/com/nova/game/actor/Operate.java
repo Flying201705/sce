@@ -1,11 +1,13 @@
 package com.nova.game.actor;
 
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.utils.Align;
+import com.nova.game.assetmanager.Assets;
 import com.nova.game.utils.Log;
 
 import nova.common.game.mahjong.util.MahjConstant;
@@ -19,6 +21,7 @@ public class Operate extends Actor {
     private Texture mImage;
     private int mType;
     private boolean mIsTypeDisplay = false;
+    private boolean mIsMale = true;
 
     public Operate() {
         mPengImage = new Texture("Animation/eff_peng.png");
@@ -67,7 +70,16 @@ public class Operate extends Actor {
                 }
             }));
             addAction(action);
+
+            Sound sound = Assets.getInstance().getOperateSound(mIsMale, mType);
+            if (sound != null) {
+                sound.play();
+            }
         }
+    }
+
+    public void setSex(boolean male) {
+        mIsMale = male;
     }
 
     @Override

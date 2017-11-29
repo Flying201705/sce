@@ -179,6 +179,7 @@ public class GameScreen extends BaseGameScreen {
         mMyPlayer.setPosition(20, 20);
         PlayerInfo myPlayerInfo = PlayerInfoController.getInstance().getOwnerInfo();
         mMyPlayer.setPlayerInfo(myPlayerInfo);
+//        mMyOperate.setSex(myPlayerInfo.getSex() == 0);
         mStage.addActor(mMyPlayer);
 
         mRightPlayer = new Player(Player.VERTICAL);
@@ -211,12 +212,14 @@ public class GameScreen extends BaseGameScreen {
         if (rightPlayerInfo != null) {
             mRightPlayer.setPlayerInfo(rightPlayerInfo);
             mRightPlayer.setVisible(true);
+            mRightOperate.setSex(rightPlayerInfo.getSex() == 0);
         } else {
             mRightPlayer.setVisible(false);
         }
 
         if (topPlayerInfo != null) {
             mTopPlayer.setPlayerInfo(topPlayerInfo);
+            mTopOperate.setSex(topPlayerInfo.getSex() == 0);
             mTopPlayer.setVisible(true);
         } else {
             mTopPlayer.setVisible(false);
@@ -224,6 +227,7 @@ public class GameScreen extends BaseGameScreen {
 
         if (leftPlayerInfo != null) {
             mLeftPlayer.setPlayerInfo(leftPlayerInfo);
+            mLeftOperate.setSex(leftPlayerInfo.getSex() == 0);
             mLeftPlayer.setVisible(true);
         } else {
             mLeftPlayer.setVisible(false);

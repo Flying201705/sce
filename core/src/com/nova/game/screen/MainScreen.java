@@ -3,7 +3,6 @@ package com.nova.game.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -140,8 +139,8 @@ public class MainScreen extends BaseScreen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // mGame.setScreen(new GameScreen(mGame));
-                mGame.setScreen(new NetMahjGameScreen(mGame));
+                 mGame.setScreen(new GameScreen(mGame));
+//                mGame.setScreen(new NetMahjGameScreen(mGame));
             }
         });
         startButton.setPosition(900, 450);
