@@ -17,6 +17,8 @@ public class MahjGameController {
 	private HashMap<Integer, MahjGroupData> mGroupDatas = new HashMap<Integer, MahjGroupData>();
 	private int mMatchType = 0;
 	private boolean mIsTingMatched = false;
+
+	private boolean mGameMassageProcessFinish = true;
 	
 	private MahjGameController(String type) {
 		createGameManagerByType(type);
@@ -70,7 +72,15 @@ public class MahjGameController {
 		mManager.stopGame(MahjRoomController.getInstance().getRoomId());
 		resetDatas();
 	}
-	
+
+	public void setGameMessageProcessFinish(boolean finish) {
+		mGameMassageProcessFinish = finish;
+	}
+
+	public boolean isGameMassageProcessFinish() {
+		return mGameMassageProcessFinish;
+	}
+
 	public void setGameData(MahjGameData data) {
 		mGameData = data;
 	}

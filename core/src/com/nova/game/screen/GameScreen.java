@@ -346,7 +346,7 @@ public class GameScreen extends BaseGameScreen {
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
         }
 
-        if (mLatestOutPlayer != mController.getLastOutPlayer()) {
+        if (mController.isGameMassageProcessFinish() && mLatestOutPlayer != mController.getLastOutPlayer()) {
             mLatestOutPlayer = mController.getLastOutPlayer();
             updateLatestOutMark();
             playLatestOutSound(playerDatas);

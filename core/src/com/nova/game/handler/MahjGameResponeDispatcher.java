@@ -45,11 +45,13 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
     }
 
     private void processorGameInfoChange(String message) {
+        MahjGameController.getInstance().setGameMessageProcessFinish(false);
         Type type = new TypeToken<MahjResponeData>() {}.getType();
         Gson gson = new Gson();
         MahjResponeData responeData = gson.fromJson(message, type);
         updateGameData(responeData);
         updateGroupDatas(responeData);
+        MahjGameController.getInstance().setGameMessageProcessFinish(true);
     }
 
     private void updateGameData(MahjResponeData responeData) {
