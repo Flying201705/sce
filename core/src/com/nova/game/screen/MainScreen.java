@@ -122,10 +122,22 @@ public class MainScreen extends BaseScreen {
         mStage.addActor(quitButton);
 
         Button settingButton = new SceButton("SceneMain/bt_setting.png");
+        settingButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mGame.setScreen(new TestGameScreen(mGame));
+            }
+        });
         settingButton.setPosition(1100, 640);
         mStage.addActor(settingButton);
 
         Button newsButton = new SceButton("SceneMain/bt_news.png");
+        newsButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                mGame.setScreen(new GameScreen(mGame));
+            }
+        });
         newsButton.setPosition(1000, 640);
         mStage.addActor(newsButton);
 
@@ -139,7 +151,6 @@ public class MainScreen extends BaseScreen {
         startButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                 // mGame.setScreen(new GameScreen(mGame));
                  mGame.setScreen(new NetMahjGameScreen(mGame));
             }
         });

@@ -30,6 +30,8 @@ public class MahjGameController {
 			mManager = new LocalMahjController();
 		} else if (type.equals("net")) {
 			mManager = new NetMahjController();
+		} else if (type.equals("test")) {
+			mManager = new TestMahjController();
 		} else {
 			mManager = new MahjController();
 		}

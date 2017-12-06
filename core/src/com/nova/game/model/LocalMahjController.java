@@ -4,7 +4,7 @@ import com.nova.game.handler.LocalMahjGameHandler;
 
 import nova.common.GameCommand;
 import nova.common.game.mahjong.MahjGameManager;
-import nova.common.game.mahjong.handler.FileLogRecorderManager;
+import nova.common.game.mahjong.handler.FileRecorderManager;
 import nova.common.game.mahjong.handler.MahjGameDispatcher;
 import nova.common.game.mahjong.util.TestMahjConstant;
 import nova.common.room.RoomController;
@@ -16,8 +16,8 @@ public class LocalMahjController extends MahjController {
 
 	public LocalMahjController() {
 		// 初始化LOG文件系统
-		FileLogRecorderManager.getInstance().setFilePath("/sdcard/sce/mahj/temp/");
-		FileLogRecorderManager.getInstance().startRecord();
+		FileRecorderManager.getInstance().setFilePath("/sdcard/sce/mahj/temp/");
+		FileRecorderManager.getInstance().startRecord();
 	}
 	
 	@Override
