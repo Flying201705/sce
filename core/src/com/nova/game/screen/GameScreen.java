@@ -110,8 +110,6 @@ public class GameScreen extends BaseGameScreen {
         mTime.setTimeUnitListener(mTimeListener);
         mTime.startTime();
 
-        initPlayer();
-
         mMyHands = new MyHandMahjongs();
         mMyHands.setPosition(80, 6);
         mMyHands.sethandOutDataCallback(mCallBack);
@@ -158,6 +156,8 @@ public class GameScreen extends BaseGameScreen {
         mLeftOperate.setPosition(200, 340);
         mStage.addActor(mLeftOperate);
 
+        initPlayer();
+
         mMatchButton = new MatchButton();
         mMatchButton.setBounds(0, 100, 1280, 200);
         mMatchButton.setButtonClickListener(mButtonClick);
@@ -179,7 +179,7 @@ public class GameScreen extends BaseGameScreen {
         mMyPlayer.setPosition(20, 20);
         PlayerInfo myPlayerInfo = PlayerInfoController.getInstance().getOwnerInfo();
         mMyPlayer.setPlayerInfo(myPlayerInfo);
-//        mMyOperate.setSex(myPlayerInfo.getSex() == 0);
+        mMyOperate.setSex(myPlayerInfo.getSex() == 0);
         mStage.addActor(mMyPlayer);
 
         mRightPlayer = new Player(Player.VERTICAL);
@@ -323,28 +323,28 @@ public class GameScreen extends BaseGameScreen {
 
         if (rightGroupData != null) {
             if (rightGroupData.getOperateType() != 0) {
-                mRightOperate.update(rightGroupData.getOperateType());
+                mRightOperate.update(rightGroupData.getOperateType(), rightGroupData.getMatchDatas());
                 // rightGroupData.setOperateType(0);
             }
             mRightOuts.setOutMahjongs(rightGroupData.getOutDatas());
         }
         if (topGroupData != null) {
             if (topGroupData.getOperateType() != 0) {
-                mTopOperate.update(topGroupData.getOperateType());
+                mTopOperate.update(topGroupData.getOperateType(), topGroupData.getMatchDatas());
                 // topGroupData.setOperateType(0);
             }
             mTopOuts.setOutMahjongs(topGroupData.getOutDatas());
         }
         if (leftGroupData != null) {
             if (leftGroupData.getOperateType() != 0) {
-                mLeftOperate.update(leftGroupData.getOperateType());
+                mLeftOperate.update(leftGroupData.getOperateType(), leftGroupData.getMatchDatas());
                 // leftGroupData.setOperateType(0);
             }
             mLeftOuts.setOutMahjongs(leftGroupData.getOutDatas());
         }
         if (myGroupData != null) {
             if (myGroupData.getOperateType() != 0) {
-                mMyOperate.update(myGroupData.getOperateType());
+                mMyOperate.update(myGroupData.getOperateType(), myGroupData.getMatchDatas());
                 // myGroupData.setOperateType(0);
             }
             mMyOuts.setOutMahjongs(myGroupData.getOutDatas());
