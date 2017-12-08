@@ -19,8 +19,10 @@ public class LocalMahjGameHandler implements MahjGameHandler, RoomHandler {
 
 	@Override
 	public void onGameInfoChange(int roomId, MahjResponeData responeData) {
+		MahjGameController.getInstance().setGameMessageProcessFinish(false);
 		updateGameData(responeData);
 		updateGroupDatas(MahjResponeResolver.getGroupDatasForResponeData(responeData));
+		MahjGameController.getInstance().setGameMessageProcessFinish(true);
 	}
 	
 	private void updateGameData(MahjResponeData responeData) {
