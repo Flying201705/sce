@@ -39,11 +39,9 @@ public class Operate extends Actor {
     }
 
     public void update(int type, ArrayList<MahjData> matchData) {
-        if (mIsTypeDisplay
-                || ((mType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU
-                && (type & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU)
-                || ((mType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING
-                && (type & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING)) {
+        if (mIsTypeDisplay ||
+                (mType == type && ((mType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU
+                || (mType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING))) {
             return;
         }
 
@@ -58,15 +56,21 @@ public class Operate extends Actor {
         mIsTypeDisplay = true;
         mType = type;
 
+        int soundType = -1;
         if ((mType & MahjConstant.MAHJ_MATCH_PENG) == MahjConstant.MAHJ_MATCH_PENG) {
+            soundType = MahjConstant.MAHJ_MATCH_PENG;
             mImage = mPengImage;
         } else if ((mType & MahjConstant.MAHJ_MATCH_GANG) == MahjConstant.MAHJ_MATCH_GANG) {
+            soundType = MahjConstant.MAHJ_MATCH_GANG;
             mImage = mGangImage;
         } else if ((mType & MahjConstant.MAHJ_MATCH_CHI) == MahjConstant.MAHJ_MATCH_CHI) {
+            soundType = MahjConstant.MAHJ_MATCH_CHI;
             mImage = mChiImage;
         } else if ((mType & MahjConstant.MAHJ_MATCH_HU) == MahjConstant.MAHJ_MATCH_HU) {
+            soundType = MahjConstant.MAHJ_MATCH_HU;
             mImage = mHuImage;
         } else if ((mType & MahjConstant.MAHJ_MATCH_TING) == MahjConstant.MAHJ_MATCH_TING) {
+            soundType = MahjConstant.MAHJ_MATCH_TING;
             mImage = mTingImage;
         }
 
@@ -80,7 +84,7 @@ public class Operate extends Actor {
         }));
         addAction(action);
 
-        Sound sound = Assets.getInstance().getOperateSound(mIsMale, mType);
+        Sound sound = Assets.getInstance().getOperateSound(mIsMale, soundType);
         if (sound != null) {
             sound.play();
         }
