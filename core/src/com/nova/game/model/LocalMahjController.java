@@ -9,10 +9,12 @@ import nova.common.game.mahjong.handler.MahjGameDispatcher;
 import nova.common.game.mahjong.util.TestMahjConstant;
 import nova.common.room.RoomController;
 import nova.common.room.RoomManager;
+import nova.common.room.data.PlayerInfo;
 
 public class LocalMahjController extends MahjController {
 
 	private MahjGameDispatcher mDispatcher;
+	private int mRoomId;
 
 	public LocalMahjController() {
 		// 初始化LOG文件系统
@@ -29,19 +31,13 @@ public class LocalMahjController extends MahjController {
 		/**----开启测试LOG开始----**/
 		// MahjGameManager.debug = true;
 		/**----开启测试LOG结束----**/
-		RoomManager room = RoomController.getInstance(GameCommand.MAHJ_TYPE_GAME).getRoomManager(-1);
-		room.setRoomHandler(new LocalMahjGameHandler());
-		MahjGameManager gameManager = (MahjGameManager)room.getGameManager();
-		gameManager.setHandler(new LocalMahjGameHandler());
-		setDispatcher(gameManager);
-		room.setTestGameDelay(0);
-		room.startGame();
+		handleGameStart();
 	}
 
 	@Override
 	public void resumeGame(int roomId) {
 		super.resumeGame(roomId);
-
+		RoomController.getInstance(GameCommand.MAHJ_TYPE_GAME).getRoomManager(mRoomId).resumeGame();
 	}
 
 	@Override
@@ -58,5 +54,17 @@ public class LocalMahjController extends MahjController {
 	
 	private void setDispatcher(MahjGameDispatcher dispatcher) {
 		mDispatcher = dispatcher;
+	}
+
+	private void handleGameStart() {
+		RoomController mahjRoomController = RoomController.getInstance(GameCommand.MAHJ_TYPE_GAME);
+		PlayerInfo player = PlayerInfoController.getInstance().getOwnerInfo();
+		mRoomId = mahjRoomController.searchSuitableRoom(player);
+		RoomManager roomManager = mahjRoomController.getRoomManager(mRoomId);
+		roomManager.setRoomHandler(new LocalMahjGameHandler());
+		((MahjGameManager)roomManager.getGameManager()).setHandler(new LocalMahjGameHandler());
+		setDispatcher((MahjGameManager)roomManager.getGameManager());
+		roomManager.setTestGameDelay(0);
+		roomManager.startGame();
 	}
 }
