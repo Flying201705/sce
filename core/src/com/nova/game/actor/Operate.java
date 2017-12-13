@@ -90,8 +90,8 @@ public class Operate extends Actor {
         }
     }
 
-    public void setSex(boolean male) {
-        mIsMale = male;
+    public void setSex(int sex) {
+        mIsMale = sex > 0;
     }
 
     @Override
