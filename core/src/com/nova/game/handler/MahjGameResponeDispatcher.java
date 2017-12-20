@@ -34,6 +34,9 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
             case MahjGameCommand.RESPONE_GAME_INFO_UPDATE:
                 processorGameInfoChange(message);
                 break;
+            case MahjGameCommand.RESPONE_PLAYER_INFO_UPDATE:
+                processorPlayerInfoChange(message);
+                break;
             case MahjGameCommand.RESPONE_ROOM_INFO_UPDATE:
                 processorRoomInfoChange(message);
                 break;
@@ -71,6 +74,24 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
 
     private void updateGroupDatas(MahjResponeData responeData) {
         MahjGameController.getInstance().setGroupDatas(MahjResponeResolver.getGroupDatasForResponeData(responeData));
+    }
+
+    private void processorPlayerInfoChange(String message) {
+        try {
+            JsonObject json = new JsonParser().parse(message).getAsJsonObject();
+            int roomId = json.get("room").getAsInt();
+            MahjRoomController.getInstance().setRoomId(roomId);
+            Type type = new TypeToken<ArrayList<PlayerInfo>>() {}.getType();
+            Gson gson = new Gson();
+            ArrayList<PlayerInfo> infos = gson.fromJson(json.get("players").toString(), type);
+            HashMap<Integer, PlayerInfo> playerInfos = new HashMap<Integer, PlayerInfo>();
+            for (int i = 0; i < infos.size(); i++) {
+                playerInfos.put(i, infos.get(i));
+            }
+            MahjRoomController.getInstance().changePlayerInfos(playerInfos);
+        } catch (Exception e) {
+            GameLogger.getInstance().e("MahjGameResponeDispatcher", "processorPlayerInfoChange, e = " + e.toString());
+        }
     }
 
     private void processorRoomInfoChange(String message) {

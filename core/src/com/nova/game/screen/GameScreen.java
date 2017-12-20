@@ -200,14 +200,14 @@ public class GameScreen extends BaseGameScreen {
 
     private void updatePlayer() {
         HashMap<Integer, PlayerInfo> players = mController.getPlayerInfos();
-        // PlayerInfo myPlayerInfo = players.get(getPlayerIdByPosition(0));
+        PlayerInfo myPlayerInfo = players.get(getPlayerIdByPosition(0));
         PlayerInfo rightPlayerInfo = players.get(getPlayerIdByPosition(1));
         PlayerInfo topPlayerInfo = players.get(getPlayerIdByPosition(2));
         PlayerInfo leftPlayerInfo = players.get(getPlayerIdByPosition(3));
-        /*if (myPlayerInfo != null) {
+
+        if (myPlayerInfo != null) {
             mMyPlayer.setPlayerInfo(myPlayerInfo);
-            mMyPlayer.setVisible(true);
-        }*/
+        }
 
         if (rightPlayerInfo != null) {
             mRightPlayer.setPlayerInfo(rightPlayerInfo);

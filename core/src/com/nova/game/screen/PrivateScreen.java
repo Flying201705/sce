@@ -163,9 +163,14 @@ public class PrivateScreen extends BaseGameScreen {
         // }
 
         HashMap<Integer, PlayerInfo> players = mRoomController.getPlayerInfos();
+        PlayerInfo myPlayerInfo = players.get(getPlayerIdByPosition(0));
         PlayerInfo rightPlayerInfo = players.get(getPlayerIdByPosition(1));
         PlayerInfo topPlayerInfo = players.get(getPlayerIdByPosition(2));
         PlayerInfo leftPlayerInfo = players.get(getPlayerIdByPosition(3));
+        if (myPlayerInfo != null) {
+            mMyPlayer.setPlayerInfo(myPlayerInfo);
+        }
+
         if (rightPlayerInfo != null) {
             mRightPlayer.setPlayerInfo(rightPlayerInfo);
             mRightPlayer.setVisible(true);

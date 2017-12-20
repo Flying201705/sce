@@ -116,7 +116,11 @@ public class PlayerInfoController {
     }
 
     public void updatePlayerInfo(PlayerInfo info) {
-        if (mPlayerCaches.containsKey(info.getId())) {
+        updatePlayerInfo(info, false);
+    }
+
+    public void updatePlayerInfo(PlayerInfo info, boolean isForce) {
+        if (mPlayerCaches.containsKey(info.getId()) && !isForce) {
             PlayerInfo cachePlayerInfo = mPlayerCaches.get(info.getId());
             updatePlayerInfo(info, cachePlayerInfo);
         } else {

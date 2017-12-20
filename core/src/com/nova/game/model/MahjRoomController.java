@@ -101,7 +101,11 @@ public class MahjRoomController implements PlayerInfoController.PlayerInfoChange
         mPlayerInfos.clear();
         mPlayerInfos.putAll(players);
         updateOwnerPlayerIndex();
-        updatePlayerInfos();
+        changePlayerInfos(false);
+    }
+
+    public void changePlayerInfos(HashMap<Integer, PlayerInfo> players) {
+        changePlayerInfos(true);
     }
 
     public HashMap<Integer, PlayerInfo> getPlayerInfos() {
@@ -207,13 +211,22 @@ public class MahjRoomController implements PlayerInfoController.PlayerInfoChange
         }
     }
 
-    private void updatePlayerInfos() {
+    private void changePlayerInfos(boolean isForce) {
         for (int i = 0; i < mPlayerInfos.size(); i++) {
             if (mPlayerInfos.get(i) == null) {
                 continue;
             }
-            updatePlayerInfoFromCache(mPlayerInfos.get(i));
+
+            if (isForce) {
+                updatePlayerInfoFromServer(mPlayerInfos.get(i));
+            } else {
+                updatePlayerInfoFromCache(mPlayerInfos.get(i));
+            }
         }
+    }
+
+    private void updatePlayerInfoFromServer(PlayerInfo info) {
+        PlayerInfoController.getInstance().updatePlayerInfo(info, true);
     }
 
     private void updatePlayerInfoFromCache(PlayerInfo info) {
