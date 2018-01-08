@@ -11,6 +11,7 @@ import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjGroupData;
 import nova.common.game.mahjong.data.MahjResponeData;
 import nova.common.game.mahjong.data.MahjResponeResolver;
+import nova.common.game.mahjong.data.MahjResultData;
 import nova.common.game.mahjong.handler.MahjGameHandler;
 import nova.common.room.data.PlayerInfo;
 import nova.common.room.handler.RoomHandler;
@@ -24,7 +25,12 @@ public class LocalMahjGameHandler implements MahjGameHandler, RoomHandler {
 		updateGroupDatas(MahjResponeResolver.getGroupDatasForResponeData(responeData));
 		MahjGameController.getInstance().setGameMessageProcessFinish(true);
 	}
-	
+
+	@Override
+	public void handleGameResult(int roomId, HashMap<Integer, MahjResultData> results) {
+
+	}
+
 	private void updateGameData(MahjResponeData responeData) {
 		MahjGameData gameData = new MahjGameData();
 		gameData.setBanker(responeData.getBanker());

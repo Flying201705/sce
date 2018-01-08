@@ -6,6 +6,7 @@ import java.util.HashMap;
 import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjGroupData;
+import nova.common.game.mahjong.data.MahjResultData;
 import nova.common.game.mahjong.util.MahjConstant;
 import nova.common.room.data.PlayerInfo;
 
@@ -15,6 +16,7 @@ public class MahjGameController {
 	private MahjController mManager;
 	private MahjGameData mGameData;
 	private HashMap<Integer, MahjGroupData> mGroupDatas = new HashMap<Integer, MahjGroupData>();
+	private HashMap<Integer, MahjResultData> mResultDatas = new HashMap<Integer, MahjResultData>();
 	private int mMatchType = 0;
 	private boolean mIsTingMatched = false;
 
@@ -136,6 +138,14 @@ public class MahjGameController {
 	
 	public HashMap<Integer, MahjGroupData> getGroupDatas() {
 		return mGroupDatas;
+	}
+
+	public void setResultDatas(HashMap<Integer, MahjResultData> datas) {
+		mResultDatas = datas;
+	}
+
+	public HashMap<Integer, MahjResultData> getResultDatas() {
+		return mResultDatas;
 	}
 
 	public int getMatchType() {

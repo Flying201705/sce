@@ -1,5 +1,6 @@
 package com.nova.game.handler;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.nova.game.model.MahjGameController;
@@ -10,6 +11,7 @@ import nova.common.game.mahjong.data.MahjData;
 import nova.common.game.mahjong.data.MahjGameData;
 import nova.common.game.mahjong.data.MahjResponeData;
 import nova.common.game.mahjong.data.MahjResponeResolver;
+import nova.common.game.mahjong.data.MahjResultData;
 import nova.common.game.mahjong.handler.GameLogger;
 import nova.common.game.mahjong.util.MahjGameCommand;
 import nova.common.room.data.PlayerInfo;
@@ -33,6 +35,9 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
         switch (commandId) {
             case MahjGameCommand.RESPONE_GAME_INFO_UPDATE:
                 processorGameInfoChange(message);
+                break;
+            case MahjGameCommand.RESPONE_GAME_RESULT:
+                processorGameResult(message);
                 break;
             case MahjGameCommand.RESPONE_PLAYER_INFO_UPDATE:
                 processorPlayerInfoChange(message);
@@ -74,6 +79,34 @@ public class MahjGameResponeDispatcher implements ResponseDispatcherManager.Game
 
     private void updateGroupDatas(MahjResponeData responeData) {
         MahjGameController.getInstance().setGroupDatas(MahjResponeResolver.getGroupDatasForResponeData(responeData));
+    }
+
+    private void processorGameResult(String message) {
+        JsonObject json = new JsonParser().parse(message).getAsJsonObject();
+        JsonArray datas = json.get("result").getAsJsonArray();
+        Type type = new TypeToken<ArrayList<MahjResultData>>() {}.getType();
+        Gson gson = new Gson();
+        ArrayList<MahjResultData> temps = gson.fromJson(datas.toString(), type);
+        HashMap<Integer, MahjResultData> results = new HashMap<Integer, MahjResultData>();
+        for (int i = 0; i < temps.size(); i++) {
+            results.put(i, temps.get(i));
+        }
+
+        /**
+        // LOG打印跟踪番数
+        for (int i = 0; i < 4; i++) {
+            if (results.get(i).getOrders() != null && results.get(i).getOrders().size() > 0) {
+                Log.e("zhangxx", "Player " + i + " 总番数：" + results.get(i).getTotalFan() + "， 赢：" + results.get(i).getBalance());
+                Log.e("zhangxx", "   " + results.get(i).getOrders());
+                for (FanData data : results.get(i).getFanDatas()) {
+                    Log.e("zhangxx", "   "  + data.getNum() + "番" + "  " + data.getFanDisplayType());
+                }
+            } else {
+                Log.e("zhangxx", "Player " + i + " 总番数：" + results.get(i).getTotalFan() + "， 输：" + results.get(i).getBalance());
+            }
+        }
+        **/
+        MahjGameController.getInstance().setResultDatas(results);
     }
 
     private void processorPlayerInfoChange(String message) {
